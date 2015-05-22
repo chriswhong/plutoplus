@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./favicon.ico">
+
+    <title>Starter Template for Bootstrap</title>
+
+    <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="icon" type="image/png" href="./favicon.png">
+  </head>
+
+  <style>
+    html, body, #container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      padding-top: 50px;
+    }
+
+    #map {
+      height: 100%;
+    }
+
+    .numberCircle {
+      border-radius: 50%;
+      behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+      width: 36px;
+      height: 36px;
+      padding: 8px;
+      background: #fff;
+      border: 2px solid black;
+      color: black;
+      text-align: center;
+      font: 32px Arial, sans-serif;
+      display: inline-block;
+      font-size: 15px;
+    }
+
+    .box {
+      background:#444;
+    }
+
+    #sidebar h3 {
+      display: inline-block;
+      margin-top: 0;
+      position: relative;
+      top: 2px;
+      margin-left: 7px;
+    }
+
+    .state-icon {
+    left: -5px;
+    }
+    .list-group-item-primary {
+        color: rgb(255, 255, 255);
+        background-color: rgb(66, 139, 202);
+    }
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Pluto Data Downloader</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div id="container">
+
+      <div id="map" class="col-md-8">
+      </div>
+      <div id="sidebar" class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="numberCircle">1</div> <h3>Choose Area</h3>
+            <div class="radio">
+              <label>
+                <input type="radio" value="">
+                Current Map View
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" value="" disabled>
+                Neighborhood (coming soon)
+              </label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" value="" disabled>
+                Draw a polygon (coming soon)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="numberCircle">2</div> <h3>Choose Columns</h3>
+            <a href="#" id="selectAll" class="btn btn-xs btn-primary">Select All</a>
+            <div class="well" style="max-height: 300px;overflow: auto;">
+              <ul class="list-group checked-list-box fieldList">
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="numberCircle">3</div> <h3>Download!</h3><br/>
+            <a href="#" id="geojson" class="btn btn-sm btn-success download">geoJson</a>
+          </div>
+        </div>
+
+      </div> 
+
+    </div><!-- /.container -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/checkbox.js"></script>
+    <script>
+
+    var map = new L.Map('map', { 
+      center: [40.70663644882689,-73.97815704345703],
+      zoom: 14
+    });
+
+    L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
+      attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+    }).addTo(map);
+
+    //pluto plus main
+    var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/3a52aa84-00c6-11e5-9106-0e0c41326911/viz.json';
+
+    cartodb.createLayer(map, layerUrl)
+      .addTo(map)
+      .on('done', function(layer) {
+
+      }).on('error', function() {
+        //log the error
+      });
+
+    //Logs current map center and zoom level for use in map init options
+    //Use it to find that perfect intial view without having to use trial and error
+    map.on('dragend',getInit).on('zoomend',getInit);
+     
+    function getInit() {
+      var c = map.getCenter();
+      console.log('center: [' + c.lat + ',' + c.lng + '],\nzoom: ' + map.getZoom());
+    }
+
+    //get list of columns in PLUTO data
+
+    $.getJSON("https://cwhong.cartodb.com/api/v2/sql?q=SELECT * FROM pluto14v2 LIMIT 1",function(data){
+      console.log(data);
+      var fields = Object.keys(data.rows[0]);
+      console.log(fields);
+
+      fields.forEach(function(field) {
+        var listItem = '<li class="list-group-item">' + field + '</li>'
+        $('.fieldList').append(listItem);
+      });
+
+      addCheckboxes();
+
+      // $('.list-group-item').on('click',function(){
+      //   listChecked();
+      // })
+
+    });
+
+    $('#selectAll').click(function(){
+      $(".fieldList li").click(); 
+      listChecked();
+    }); 
+
+    $('.download').click(function(){
+
+      //get current view
+      var bbox = map.getBounds();
+      console.log(bbox);
+
+
+      var type = $(this).attr('id');
+
+      var checked = listChecked();
+
+      var q = 'SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl,';
+      for(var i=0;i<checked.length;i++) {
+        if(checked[i]!='bbl') {
+          q+= checked[i] + ',';
+        }
+      }
+
+      q=q.slice(0,-1);
+
+      var bboxString = bbox._southWest.lng + ',' 
+        + bbox._southWest.lat + ','
+        + bbox._northEast.lng + ','
+        + bbox._northEast.lat;
+
+      q+= ' FROM pluto14v2) b ON a.sbbl = b.bbl '
+      q+= 'WHERE ST_Contains(ST_MakeEnvelope(' + bboxString + ',4326), a.the_geom)'
+
+      console.log(q);
+
+      var url = 'https://cwhong.cartodb.com/api/v2/sql?format=geojson&q=' + q;
+
+      console.log(url);
+
+      window.open(url, 'My Download'); 
+
+    });
+
+
+
+
+//skipfields=sbbl
+//WHERE ST_Contains(ST_MakeEnvelope(xxx, xxx, xxx, xxx), bg.the_geom);
+
+// SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT address,allzoning1,allzoning2,appbbl,appdate,areasource,assessland,assesstot,bbl as bbl2,bldgarea,bldgclass,bldgdepth,bldgfront,block,borocode,borough,bsmtcode,builtcode,builtfar,cb2010,cd,comarea,commfar,condono,council,ct2010,easements,edesignum,exemptland,exempttot,ext,facilfar,factryarea,firecomp,garagearea,healtharea,histdist,irrlotcode,landmark,landuse,lot,lotarea,lotdepth,lotfront,lottype,ltdheight,numbldgs,numfloors,officearea,otherarea,overlay1,overlay2,ownername,ownertype,plutomapid,policeprct,proxcode,resarea,residfar,retailarea,sanborn,schooldist,spdist1,spdist2,splitzone,strgearea,taxmap,tract2010,unitsres,unitstotal,version,xcoord,ycoord,yearalter1,yearalter2,yearbuilt,zipcode,zmcode,zonedist1,zonedist2,zonedist3,zonedist4,zonemap FROM pluto14v2) b ON a.bbl = b.bbl2
+
+
+    </script>
+  </body>
+</html>
