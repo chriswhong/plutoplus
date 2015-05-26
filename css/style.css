@@ -55,6 +55,12 @@ body {
   color:white;
 }
 
+#twitter-widget-0 {
+  position: relative !important; 
+  top: 14px;
+  left: 13px;
+}
+
 /*Custom Navbar from http://twitterbootstrap3navbars.w3masters.nl/*/
 
 .navbar-custom {
