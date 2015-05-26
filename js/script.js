@@ -10,7 +10,7 @@ L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x
 }).addTo(map);
 
   //add cartodb named map
-var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/3a52aa84-00c6-11e5-9106-0e0c41326911/viz.json';
+var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/2602ab80-0353-11e5-89a0-0e0c41326911/viz.json';
 
 cartodb.createLayer(map, layerUrl)
   .addTo(map)
