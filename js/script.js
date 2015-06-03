@@ -86,7 +86,7 @@ $.getJSON('data/fields.json',function(data){
   initCheckboxes();
 });
 
-//$('#splashModal').modal('show');
+$('#splashModal').modal('show');
 
 //listeners
 $('#selectAll').click(function(){
