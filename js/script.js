@@ -1,3 +1,6 @@
+var areaType='currentView';
+var drawnLayer;
+
 //initialize map
 var map = new L.Map('map', { 
   center: [40.70663644882689,-73.97815704345703],
@@ -9,7 +12,57 @@ L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x
   attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
 }).addTo(map);
 
-  //add cartodb named map
+//leaflet draw stuff
+
+var options = {
+    position: 'topright',
+    draw: {
+        polyline:false,
+        polygon: {
+            allowIntersection: false, // Restricts shapes to simple polygons
+            drawError: {
+                color: '#e1e100', // Color the shape will turn when intersects
+                message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+            },
+            shapeOptions: {
+                color: '#bada55'
+            }
+        },
+        circle: false, // Turns off this drawing tool
+        rectangle: {
+            shapeOptions: {
+                clickable: false
+            }
+        },
+        marker:false
+    }
+};
+
+var drawControl = new L.Control.Draw(options);
+
+var customPolygon;
+map.on('draw:created', function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+
+    console.log(e.layer);
+    drawnLayer=e.layer;
+
+    var coords = e.layer._latlngs;
+    console.log(coords);
+    customPolygon = makeSqlPolygon(coords);
+    // Do whatever else you need to. (save to db, add to map etc)
+    map.addLayer(layer);
+});
+
+map.on('draw:drawstart', function (e) {
+  console.log('start');
+  if (drawnLayer) {
+    map.removeLayer(drawnLayer);
+  }
+});
+
+//add cartodb named map
 var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/2602ab80-0353-11e5-89a0-0e0c41326911/viz.json';
 
 cartodb.createLayer(map, layerUrl)
@@ -33,7 +86,7 @@ $.getJSON('data/fields.json',function(data){
   initCheckboxes();
 });
 
-$('#splashModal').modal('show');
+//$('#splashModal').modal('show');
 
 //listeners
 $('#selectAll').click(function(){
@@ -41,12 +94,25 @@ $('#selectAll').click(function(){
   listChecked();
 }); 
 
+$('input[type=radio][name=area]').change(function() {
+  if(this.value == 'polygon') {
+    areaType='polygon';
+    map.addControl(drawControl);
+  }
+  if(this.value == 'currentView') {
+    areaType='currentView';
+    map.removeControl(drawControl);
+  }
+})
+
+
 $('.download').click(function(){
 
   var data = {};
 
   //get current view, download type, and checked fields
   var bbox = map.getBounds();
+  data.intersects = customPolygon;
   data.type = $(this).attr('id');
   var checked = listChecked();
 
@@ -60,12 +126,24 @@ $('.download').click(function(){
   data.fields=data.fields.slice(0,-1);
 
 
-  data.bboxString = bbox._southWest.lng + ',' 
+
+
+  if(areaType == 'currentView') {
+    var bboxString = bbox._southWest.lng + ',' 
     + bbox._southWest.lat + ','
     + bbox._northEast.lng + ','
     + bbox._northEast.lat;
 
-  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl,{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS(ST_MakeEnvelope({{bboxString}},4326), a.the_geom)';
+    data.intersects = 'ST_MakeEnvelope(' + bboxString + ',4326)';
+  }
+
+  if(areaType == 'polygon') {
+    data.intersects = customPolygon;
+  }
+  
+  
+
+  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl,{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
@@ -79,8 +157,27 @@ $('.download').click(function(){
 });
 
 //functions
+//turns an array of latLngs into an ST_POLYGONFROMTEXT
+function makeSqlPolygon(coords) {
+  var s = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
+  var firstCoord;
+  coords.forEach(function(coord,i){
+    console.log(coord);
+    s+=coord.lng + " " + coord.lat + ","
 
+    //remember the first coord
+    if(i==0) {
+      firstCoord = coord;
+    }
 
+    if(i==coords.length-1) {
+      s+=firstCoord.lng + " " + firstCoord.lat;
+    }
+  });
+  s+="))\'),4326)"
+  console.log(s);
+  return s;
+}
 
 function initCheckboxes() {
   //sweet checkbox list from http://bootsnipp.com/snippets/featured/checked-list-group

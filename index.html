@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/leaflet.draw.css">
 
     <link rel="icon" type="image/png" href="./favicon.png">
   </head>
@@ -81,20 +82,20 @@
             <div class="numberCircle">1</div> <h3>Choose Area</h3>
             <div class="radio">
               <label>
-                <input type="radio" value="" checked>
+                <input type="radio" name="area" value="currentView" checked>
                 Current Map View
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" value="" disabled>
+                <input type="radio" name="area" value="" disabled>
                 Neighborhood (coming soon)
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" value="" disabled>
-                Draw a polygon (coming soon)
+                <input type="radio" name="area" value="polygon">
+                Draw a polygon
               </label>
             </div>
           </div>
@@ -124,6 +125,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
+    <script src="js/leaflet.draw.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="js/script.js"></script>
