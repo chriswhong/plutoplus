@@ -53,6 +53,7 @@ map.on('draw:created', function (e) {
     customPolygon = makeSqlPolygon(coords);
     // Do whatever else you need to. (save to db, add to map etc)
     map.addLayer(layer);
+    $('.download').removeAttr('disabled');
 });
 
 map.on('draw:drawstart', function (e) {
@@ -98,10 +99,14 @@ $('input[type=radio][name=area]').change(function() {
   if(this.value == 'polygon') {
     areaType='polygon';
     map.addControl(drawControl);
+    $('.download').attr('disabled','disabled');
   }
   if(this.value == 'currentView') {
     areaType='currentView';
     map.removeControl(drawControl);
+    if (drawnLayer) {
+    map.removeLayer(drawnLayer);
+  }
   }
 })
 
