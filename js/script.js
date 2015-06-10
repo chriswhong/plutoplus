@@ -79,9 +79,38 @@ $.getJSON('data/fields.json',function(data){
 
   console.log(data.length);
   data.forEach(function(field) {
-    var listItem = '<li class="list-group-item">' + field.name + '</li>'
+    var listItem = '<li id = "' + field.name + '" class="list-group-item">' 
+      + field.name 
+      + '<span class="glyphicon glyphicon-info-sign icon-right" aria-hidden="true"></span></li>'
+    
     $('.fieldList').append(listItem);
+    $('#' + field.name).data("description",field.description);
+    
   });
+
+  //listener for hovers
+  $('.icon-right').hover(showDescription,hideDescription);
+
+  function showDescription() {
+    var o = $(this).offset();
+
+    var data = $(this).parent().data('description');
+    console.log(data);
+
+    $('#infoWindow')
+      .html(data)
+      .css('top',o.top)
+      .css('left',o.left-210)
+      .fadeIn(150);
+
+    
+  }
+
+  function hideDescription() {
+    $('#infoWindow')
+      .fadeOut(150);
+  }
+
 
   //custom functionality for checkboxes
   initCheckboxes();
@@ -146,7 +175,10 @@ $('.download').click(function(){
     data.intersects = customPolygon;
   }
   
-  
+  if(data.type == 'cartodb') {
+    data.type = 'geojson';
+    data.cartodb = true;
+  }
 
   var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl,{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
@@ -157,7 +189,18 @@ $('.download').click(function(){
 
   console.log("Downloading " + url);
 
-  window.open(url, 'My Download'); 
+  //http://oneclick.cartodb.com/?file={{YOUR FILE URL}}&provider={{PROVIDER NAME}}&logo={{YOUR LOGO URL}}
+  if(data.cartodb) {
+    url = encodeURIComponent(url);
+    console.log(url);
+    url = 'http://oneclick.cartodb.com/?file=' + url + '&provider=plutoplus';
+    console.log(url);
+  } 
+    
+  window.open(url, 'My Download');
+  
+
+   
 
 });
 
