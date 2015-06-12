@@ -1,5 +1,6 @@
 var areaType='currentView';
 var drawnLayer;
+var mainLayer;
 
 //initialize map
 var map = new L.Map('map', { 
@@ -42,6 +43,9 @@ var drawControl = new L.Control.Draw(options);
 
 var customPolygon;
 map.on('draw:created', function (e) {
+    //hide the arrow
+    $('.infoArrow').hide();
+
     var type = e.layerType,
         layer = e.layer;
 
@@ -69,7 +73,8 @@ var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/2602ab80-0353-11e5-89a0-0e
 cartodb.createLayer(map, layerUrl)
   .addTo(map)
   .on('done', function(layer) {
-
+    mainLayer = layer.getSubLayer(0);
+    console.log(mainLayer);
   }).on('error', function() {
     //log the error
   });
@@ -128,11 +133,15 @@ $('input[type=radio][name=area]').change(function() {
   if(this.value == 'polygon') {
     areaType='polygon';
     map.addControl(drawControl);
+    $('.infoArrow').show();
+    mainLayer.setInteraction(false);
     $('.download').attr('disabled','disabled');
   }
   if(this.value == 'currentView') {
     areaType='currentView';
+    mainLayer.setInteraction(true);
     map.removeControl(drawControl);
+    $('.infoArrow').hide();
     if (drawnLayer) {
     map.removeLayer(drawnLayer);
   }
