@@ -116,7 +116,7 @@ $.getJSON('data/fields.json',function(data){
   initCheckboxes();
 });
 
-$('#splashModal').modal('show');
+//$('#splashModal').modal('show');
 
 //listeners
 $('#selectAll').click(function(){
@@ -139,7 +139,7 @@ $('input[type=radio][name=area]').change(function() {
   }
 })
 
-
+//runs when any of the download buttons is clicked
 $('.download').click(function(){
 
   var data = {};
@@ -157,10 +157,12 @@ $('.download').click(function(){
       data.fields+= checked[i] + ',';
     }
   }
-  data.fields=data.fields.slice(0,-1);
 
-
-
+  //only add leading comma if at least one field is selected
+  if(data.fields.length>0) {
+    data.fields=',' + data.fields.slice(0,-1);
+  }
+  
 
   if(areaType == 'currentView') {
     var bboxString = bbox._southWest.lng + ',' 
@@ -180,7 +182,7 @@ $('.download').click(function(){
     data.cartodb = true;
   }
 
-  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl,{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
+  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
