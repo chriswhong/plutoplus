@@ -17,94 +17,7 @@
     <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
     <link rel="stylesheet" href="css/leaflet.draw.css">
     <link rel="stylesheet" href="css/styleguide.min.css">
-
-    <style type="text/css">
-      #map {
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-      }
-      .List-blocks {
-        padding-top: 104px;
-      }
-      .List-blocks > li {
-        border-bottom: 1px solid #e5e5e5;
-      }
-      .button--small > a {
-        padding: 10px;
-        min-width: 90px;
-      }
-      .HeaderFixed--blue {
-        background: #0090D7
-      }
-      a:hover {
-        text-decoration: none;
-      }
-      .button--white a {
-        color: #0090D7;
-        background: #fff;
-      }
-      .desactive {
-        opacity: .3;
-      }
-      .Number-circle {
-        width: 20px;
-        border-radius: 50%;
-        line-height: 20px;
-        font-size: 10px;
-        font-family: 'Lato';
-        margin: 0 3px;
-      }
-
-      .glyphicon-unchecked, .glyphicon-check {
-        cursor: pointer;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #ddd;
-        border-radius: 3px;
-        position: relative;
-        display: inline-block;
-        vertical-align: middle;
-        margin: 0 8px 0 3px;
-      }
-
-      .glyphicon-check:after {
-        content: '\2713';
-        position: absolute;
-        color: #0090D7;
-        text-align: center;
-        line-height: 18px;
-        font-size: 14px;
-        left: 0;
-        right: 0;
-      }
-      .list-group {
-        font: 300 15px/22px Lato;
-      }
-      .list-group > li {
-        margin-bottom: 10px;
-      }
-      .shadow-top {
-        height: 40px;
-        position: absolute;
-        background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 0) 100%);
-        z-index: 2;
-        pointer-events: none;
-      }
-      .shadow-bottom {
-        height: 40px;
-        position: absolute;
-        background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 1) 100%);
-        z-index: 2;
-        pointer-events: none;
-      }
-      .leaflet-control-container .leaflet-top {
-        top: 108px;
-        left: 14px;
-      }
-
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 
     <link rel="icon" type="image/png" href="./favicon.png">
   </head>
@@ -139,7 +52,7 @@
         </div>
       </div>
       <div class="Grid-cell Grid-cell--col3">
-        <div id="sidebar" class="u-padding-m">
+        <div id="sidebar" class="u-padding-m u-pr">
           <ul class="List-blocks">
             <li class="u-vspace-xxl">
               <div class="u-vspace-l">
@@ -206,7 +119,25 @@
               </ul>
             </li>
           </ul>
+          <p class="text-info js-about">2015 - <a href="#">About us</a></p>
         </div> 
+      </div>
+    </div>
+
+
+
+    <div id="modal" class="u-valign u-txt-center" style="display: none;">
+        <div class="modal-inner u-iblock u-malign u-padding-xxl">
+            <div class="modal-header navbar-custom u-vspace-xxl">
+              <h2><strong>ABOUT</strong></h2>
+            </div>
+            <div class="modal-body u-txt-left">
+              <p class="u-vspace-l">PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more.  It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot! That's a lot of open data!</p>
+              <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
+              <p class="u-vspace-l">All data is version 2014v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
+              <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to @chris_whong.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform.  <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
+              Support open Data!</p>
+            </div>
       </div>
     </div>
 
@@ -218,83 +149,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="js/script.js"></script>
-   
 
-   <script>
-      $( document ).ready(function() {
-          var scrollShadow = (function() {
-          var elem, width, height, offset,
-              shadowTop, shadowBottom,
-              timeout;
-          
-          function initShadows() {
-            shadowTop = $("<div>")
-              .addClass("shadow-top")
-              .insertAfter(elem);
-            shadowBottom = $("<div>")
-              .addClass("shadow-bottom")
-              .insertAfter(elem)
-              .css('display', 'block');
-          }
-          
-          function calcPosition() {
-            width = elem.outerWidth();
-            height = elem.outerHeight();
-            offset = elem.position();  
-
-            // update 
-            shadowTop.css({
-              width: width + "px",
-              top: offset.top + "px",
-              left: offset.left + "px"
-            });
-            shadowBottom.css({
-              width: width + "px",
-              top: (offset.top + height-40) + "px",
-              left: offset.left + "px"
-            });
-          }
-          function addScrollListener() {
-            elem.off("scroll.shadow");
-            elem.on("scroll.shadow", function () {
-              if (elem.scrollTop() > 0) {
-                shadowTop.fadeIn(125);
-              } else {
-                shadowTop.fadeOut(125);
-              }
-              if (elem.scrollTop() + height >= elem[0].scrollHeight && elem.scrollTop()!==0 ) {
-                shadowBottom.fadeOut(125);
-              } else {
-                shadowBottom.fadeIn(125);
-              }
-            });
-          }
-          function addResizeListener() {
-            $(window).on("resize.shadow", function(){ 
-              clearTimeout(timeout);
-              timeout = setTimeout(function() {
-                calcPosition();
-                elem.trigger("scroll.shadow");
-              }, 10);
-            });
-          }
-          return {
-            init: function(par) {
-              elem = $(par);
-              initShadows();
-              calcPosition();
-              addScrollListener();
-              addResizeListener();
-              elem.trigger("scroll.shadow");
-            },
-            update: calcPosition
-          };
-          
-        }());
-        // start
-        scrollShadow.init(".well-inner");
-      });
-   </script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
