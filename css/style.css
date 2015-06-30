@@ -124,6 +124,7 @@ a:hover {
   opacity: .3;
   vertical-align: middle;
   margin-top: -3px;
+  background-size: 13px;
 }
 .icon-right:hover {
   opacity: .8;
