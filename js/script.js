@@ -8,10 +8,10 @@ var map = new L.Map('map', {
   zoom: 14
 });
 
-//add a basemap
-L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
-  attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
-}).addTo(map);
+// //add a basemap
+// L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
+//   attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+// }).addTo(map);
 
 //leaflet draw stuff
 
@@ -100,15 +100,12 @@ $.getJSON('data/fields.json',function(data){
     var o = $(this).offset();
 
     var data = $(this).parent().data('description');
-    console.log(data);
 
     $('#infoWindow')
       .html(data)
-      .css('top',o.top)
-      .css('left',o.left-210)
+      .css('top',o.top-10)
+      .css('left',o.left+30)
       .fadeIn(150);
-
-    
   }
 
   function hideDescription() {
@@ -202,10 +199,20 @@ $('.download').click(function(){
 
   //http://oneclick.cartodb.com/?file={{YOUR FILE URL}}&provider={{PROVIDER NAME}}&logo={{YOUR LOGO URL}}
   if(data.cartodb) {
+    //open in cartodb only works if you encodeURIcomponent() on the SQL, 
+    //then concatenate with the rest of the URL, then encodeURIcomponent() the whole thing
+
+    //first, get the SQL
+    var sql = url.split("q=");
+    sql = encodeURIComponent(sql[1]);
+
+
+    url = url.split("SELECT")[0];
+    url += sql;
+
     url = encodeURIComponent(url);
     console.log(url);
-    url = 'http://oneclick.cartodb.com/?file=' + url + '&provider=plutoplus';
-    console.log(url);
+    url = 'http://oneclick.cartodb.com/?file=' + url;
   } 
     
   window.open(url, 'My Download');
@@ -316,3 +323,99 @@ function listChecked() {
   console.log(checkedItems);
   return checkedItems;
 }
+
+
+$( document ).ready(function() {
+    $('.js-about').click(function() {
+
+      $('#modal').fadeIn();
+    });
+
+    $('#modal').click(function() {
+      $(this).fadeOut();
+    });
+
+    $('.modal-inner').click(function(event) {
+      event.stopPropagation();
+    });
+
+    $(document).on('keyup',function(evt) {
+        if (evt.keyCode == 27) {
+          if ($('#modal').css('display')=='block') {
+           $('#modal').fadeOut();
+          }
+        }
+    });
+
+    var scrollShadow = (function() {
+    var elem, width, height, offset,
+        shadowTop, shadowBottom,
+        timeout;
+    
+    function initShadows() {
+      shadowTop = $("<div>")
+        .addClass("shadow-top")
+        .insertAfter(elem);
+      shadowBottom = $("<div>")
+        .addClass("shadow-bottom")
+        .insertAfter(elem)
+        .css('display', 'block');
+    }
+    
+    function calcPosition() {
+      width = elem.outerWidth();
+      height = elem.outerHeight();
+      offset = elem.position();  
+
+      // update 
+      shadowTop.css({
+        width: width + "px",
+        top: offset.top + "px",
+        left: offset.left + "px"
+      });
+      shadowBottom.css({
+        width: width + "px",
+        top: (offset.top + height-40) + "px",
+        left: offset.left + "px"
+      });
+    }
+    function addScrollListener() {
+      elem.off("scroll.shadow");
+      elem.on("scroll.shadow", function () {
+        if (elem.scrollTop() > 0) {
+          shadowTop.fadeIn(125);
+        } else {
+          shadowTop.fadeOut(125);
+        }
+        if (elem.scrollTop() + height >= elem[0].scrollHeight && elem.scrollTop()!==0 ) {
+          shadowBottom.fadeOut(125);
+        } else {
+          shadowBottom.fadeIn(125);
+        }
+      });
+    }
+    function addResizeListener() {
+      $(window).on("resize.shadow", function(){ 
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+          calcPosition();
+          elem.trigger("scroll.shadow");
+        }, 10);
+      });
+    }
+    return {
+      init: function(par) {
+        elem = $(par);
+        initShadows();
+        calcPosition();
+        addScrollListener();
+        addResizeListener();
+        elem.trigger("scroll.shadow");
+      },
+      update: calcPosition
+    };
+    
+  }());
+  // start
+  scrollShadow.init(".well-inner");
+});

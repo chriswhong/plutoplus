@@ -11,130 +11,156 @@
 
     <title>PLUTO Data Downloader powered by CartoDB</title>
 
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+
+
     <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/themes/css/cartodb.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/leaflet.draw.css">
+    <link rel="stylesheet" href="css/styleguide.min.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <link rel="icon" type="image/png" href="./favicon.png">
   </head>
 
   <body>
-
-    <nav class="navbar navbar-fixed-top navbar-custom">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Pluto Data Downloader</a>
+    <div class="HeaderFixed HeaderFixed--blue color-white">
+        <div class="Grid">
+          <div class="Grid-inner Grid-inner--vcenter">
+            <div class="Grid-cell Grid-cell--col6">
+              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong></h1>
+            </div>
+            <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
+              <nav class="">
+                <ul class="u-ilist">
+                  <li class="u-malign"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://chriswhong.github.io/plutoplus" data-text="Custom download tool for NYC's PLUTO #opendata built on @cartoDB" data-via="chris_whong">Tweet</a>
+                  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></li>
+                   <li class="u-malign u-lspace-xl">
+                    <p class="button button--white">
+                      <a class="js-about" href="#">About</a>
+                    </p>
+                  </li>
+                  <li class="u-malign u-lspace-xl">
+                    <p class="button button--white">
+                      <a href="http://github.com/chriswhong/plutoplus">Fork Me on Github</a>
+                    </p>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about" data-toggle="modal" data-target="#splashModal">About</a></li>
-            <li><a href="http://github.com/chriswhong/plutoplus">Fork Me on Github</a></li>
+    </div>
+    <div class="Grid-inner Grid-inner--hfull">
+      <div class="Grid-cell fill-blue Grid-cell--col8 u-pr">
+        <div id="map" class="u-pa">
+          <button type="button" class="infoArrow btn btn-primary btn-arrow-right">Use these buttons to draw your polygon </button>
+        </div>
+      </div>
+      <div class="Grid-cell Grid-cell--col4 sidebar-cell">
+        <div id="sidebar" class="u-padding-m u-pr">
+          <ul class="List-blocks">
+            <li class="u-vspace-xxl">
+              <div class="u-vspace-l">
+                <span class="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">1</span> <h2 class="u-iblock u-malign"><strong>Choose Area</strong></h2>
+              </div>
+
+              <ul class="ListOptions u-vspace-xxl">
+                <li>
+                  <label>
+                    <input class="u-iblock u-malign" type="radio" for="option1" name="area" value="currentView" checked>
+                    <p class="u-iblock u-malign" id="option1"> Current Map View</p>
+                  </label>
+                </li>
+                <li class="desactive">
+                  <label>
+                    <input class="u-iblock u-malign" type="radio" for="option2" name="area" value="" disabled>
+                    <p class="u-iblock u-malign" id="option2"> Neighborhood (coming soon)</p>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input class="u-iblock u-malign" type="radio" for="option3" name="area" value="polygon">
+                    <p class="u-iblock u-malign" id="option3"> Draw a polygon</p>
+                  </label>
+                </li>
+              </ul>
+            </li>
+            <li class="u-vspace-xxl">
+              <div class="u-vspace-l clearfix">
+                <div class="u-left">
+                  <span class="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">2</span> <h2 class="u-iblock u-malign"><strong>Choose Columns</strong></h2>
+                </div>
+                <p class="u-right"><a href="#" id="selectAll">Select All</a></p>
+              </div>
+              <div class="u-vspace-xxl">
+                <div class="well u-pr" style="height: 215px;">
+                  <div class="well-inner" style="height: 215px; overflow: auto;">
+                    <ul class="list-group checked-list-box fieldList u-pr">
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="u-vspace-l">
+                <span class="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">3</span> <h2 class="u-iblock u-malign"><strong>Download!</strong></h2>
+              </div>
+              <ul class="u-ilist u-vspace-xxl">
+                <li>
+                  <p class="button button--small button--blue">
+                    <a href="#" id="geojson" class="btn btn-sm btn-success download">geoJson</a>
+                  </p>
+                </li>
+                <li>
+                  <p class="button button--small button--blue">
+                    <a href="#" id="csv" class="btn btn-sm btn-success download">CSV</a>
+                  </p>
+                </li>
+                <li>
+                  <p class="button button--small button--blue">
+                    <a href="#" id="shp" class="btn btn-sm btn-success download">Shapefile</a>
+                  </p>
+                </li>
+                <li>
+                  <p class="button button--small button--blue">
+                    <a href="#" id="cartodb" class="btn btn-sm btn-success download">Open in CartoDB</a>
+                  </p>
+                </li>
+              </ul>
+            </li>
           </ul>
-          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://chriswhong.github.io/plutoplus" data-text="Custom download tool for NYC's PLUTO #opendata built on @cartoDB" data-via="chris_whong">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-      <!-- Button trigger modal -->
-
-
-<!-- Modal -->
-<div class="modal fade" id="splashModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header navbar-custom">
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-        <h3 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> PLUTO Data Downloader</h3>
-      </div>
-      <div class="modal-body">
-        <h4>About </h4>
-        <p>PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more.  It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot! That's a lot of open data!</p>
-        <p>MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href = "http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
-        <p>All data is version 2014v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
-        <p>If you like this project, or if you hate it, let me know by tweeting to @chris_whong.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform.  <a href = 'http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/'>Write-up at chriswhong.com</a>
-
-        Support open Data!</p>
-      </div>
-      <div class="modal-footer">
-    
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Sweet!  Give me Data!</button>
+          
+        </div> 
       </div>
     </div>
-  </div>
-</div>
-      <div id="container">
-        <div class="container overlay">
 
+
+
+    <div id="modal" class="u-valign u-txt-center" style="display: none;">
+        <div class="modal-inner u-iblock u-malign u-padding-xxl">
+            <div class="modal-header navbar-custom u-vspace-xxl">
+              <h2><strong>ABOUT</strong></h2>
+            </div>
+            <div class="modal-body u-txt-left">
+              <p class="u-vspace-l">PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more.  It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot! That's a lot of open data!</p>
+              <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
+              <p class="u-vspace-l">All data is version 2014v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
+              <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to @chris_whong.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform.  <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
+              Support open Data!</p>
+            </div>
       </div>
-
-      <div id="map" class="col-sm-8">
-        <button type="button" class="infoArrow btn btn-primary btn-arrow-right">Use these buttons to draw your polygon </button>
-      </div>
-      <div id="sidebar" class="col-sm-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="numberCircle">1</div> <h3>Choose Area</h3>
-            <div class="radio">
-              <label>
-                <input type="radio" name="area" value="currentView" checked>
-                Current Map View
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="area" value="" disabled>
-                Neighborhood (coming soon)
-              </label>
-            </div>
-            <div class="radio">
-              <label>
-                <input type="radio" name="area" value="polygon">
-                Draw a polygon
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="numberCircle">2</div> <h3>Choose Columns</h3>
-            <a href="#" id="selectAll" class="btn btn-xs btn-primary">Select All</a>
-            <div class="well" style="max-height: 300px;overflow: auto;">
-              <ul class="list-group checked-list-box fieldList">
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="numberCircle">3</div> <h3>Download!</h3><br/>
-            <a href="#" id="geojson" class="btn btn-sm btn-success download">geoJson</a>
-            <a href="#" id="csv" class="btn btn-sm btn-success download">CSV</a>
-            <a href="#" id="shp" class="btn btn-sm btn-success download">Shapefile</a>
-       <!--      <a href="#" id="cartodb" class="download"><img src="https://cartodb-libs.global.ssl.fastly.net/open-in-cartodb/button-blue.png" title="Open in CartoDB" /></a> -->
-          </div>
-        </div>
-
-      </div> 
-
-    </div><!-- /.container -->
+    </div>
 
     <div id="infoWindow">ZONING, ALL COMPONENTS 1 consists of the zoning classification occupying the greatest percentage of the tax lot's area and a commercial overlay and special purpose district and limited height district assigned to the tax lot</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.13/cartodb.js"></script>
     <script src="js/leaflet.draw.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="js/script.js"></script>
-   
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

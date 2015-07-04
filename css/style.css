@@ -1,269 +1,195 @@
-html,
-body,
-#container {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
-body {
-    padding-top: 50px;
-}
 #map {
-    height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
-.numberCircle {
-    border-radius: 50%;
-    behavior: url(PIE.htc);
-    /* remove if you don't care about IE8 */
-    
-    width: 36px;
-    height: 36px;
-    padding: 8px;
-    background: #fff;
-    border: 2px solid black;
-    color: black;
-    text-align: center;
-    font: 32px Arial, sans-serif;
-    display: inline-block;
-    font-size: 15px;
-    margin-bottom: 12px;
+.List-blocks {
+  padding-top: 104px;
 }
-.box {
-    background: #444;
+.List-blocks > li {
+  border-bottom: 1px solid #e5e5e5;
 }
-#sidebar h3 {
-    display: inline-block;
-    margin-top: 0;
-    position: relative;
-    top: 2px;
-    margin-left: 7px;
+.button--small > a {
+  padding: 10px;
+  min-width: 90px;
 }
-#sidebar {
-    padding-top: 15px;
-    overflow: scroll;
-    height: 100%;
+.button > a {
+  padding: 13px 26px;
+}
+.HeaderFixed--blue {
+  background: #0090D7
+}
+a:hover {
+  text-decoration: none;
+}
+.button--white a {
+  color: #0090D7;
+  background: #fff;
+}
+.desactive {
+  opacity: .3;
+}
+.Number-circle {
+  width: 20px;
+  border-radius: 50%;
+  line-height: 20px;
+  font-size: 10px;
+  font-family: 'Lato';
+  margin: 0 3px;
 }
 
+.glyphicon-unchecked, .glyphicon-check {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px 0 3px;
+}
+
+.glyphicon-check:after {
+  content: '\2713';
+  position: absolute;
+  color: #0090D7;
+  text-align: center;
+  line-height: 18px;
+  font-size: 14px;
+  left: 0;
+  right: 0;
+}
+.list-group {
+  font: 300 15px/22px Lato;
+}
+.list-group > li {
+  margin-bottom: 10px;
+}
+.shadow-top {
+  height: 40px;
+  position: absolute;
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%,rgba(255, 255, 255, 0) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.shadow-bottom {
+  height: 40px;
+  position: absolute;
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%,rgba(255, 255, 255, 1) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+.leaflet-control-container .leaflet-top {
+  top: 108px;
+  left: 14px;
+}
+.leaflet-draw {
+  right: 24px;
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .8);
+  z-index: 1000;
+}
+.modal-inner {
+  width: 45%;
+  background: #fff;
+  border-radius: 4px;
+}
+.text-info {
+  font-size: 13px;
+  position: absolute;
+  right: 12px;
+  bottom: 24px;
+}
+
+#sidebar {
+  min-height: 800px;
+}
 .icon-right {
   font-size: 17px;
   color: #7AB06B;
-  float: right;
-  margin-top: 2px;
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  background: url(images/icon-info.svg) no-repeat center center;
+  opacity: .3;
+  vertical-align: middle;
+  margin-top: -3px;
+  background-size: 13px;
+}
+.icon-right:hover {
+  opacity: .8;
 }
 
 #infoWindow {
   position: absolute;
-  top: 100px;
-  left: 100px;
-  width: 200px;
-  background: #54698C;
-  border-radius: 10px;
-  padding: 15px;
+  padding: 12px;
   color: #fff;
+  font-size: 12px;
+  line-height: 16px;
+  font-family: 'Lato';
+  color: #fff;
+  background: rgba(0, 0, 0, .8);
+  border-radius: 4px;
+  z-index: 1000;
+  width: 200px;
   display:none;
 }
-
-.state-icon {
-    left: -5px;
-}
-.list-group-item-primary {
-    color: rgb(255, 255, 255);
-    background-color: rgb(66, 139, 202);
-}
-
-.modal-header {
-  color:white;
+#infoWindow:before {
+  content:"";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right: 6px solid rgba(0, 0, 0, .8);
+  left: -12px;
+  top: 12px;
 }
 
-#twitter-widget-0 {
-  position: relative !important; 
-  top: 14px;
-  left: 13px;
+.sidebar-cell {
+  overflow: scroll;
 }
 
-/*Custom Navbar from http://twitterbootstrap3navbars.w3masters.nl/*/
-
-.navbar-custom {
-    background-color: #1f4b61;
-    border-color: #173848;
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#2b6988), to(#1f4b61));
-    background-image: -webkit-linear-gradient(top, #2b6988, 0%, #1f4b61, 100%);
-    background-image: -moz-linear-gradient(top, #2b6988 0%, #1f4b61 100%);
-    background-image: linear-gradient(to bottom, #2b6988 0%, #1f4b61 100%);
-    background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff2b6988', endColorstr='#ff1f4b61', GradientType=0);
-}
-.navbar-custom .navbar-brand {
-    color: #ffffff;
-}
-.navbar-custom .navbar-brand:hover,
-.navbar-custom .navbar-brand:focus {
-    color: #e6e6e6;
-    background-color: transparent;
-}
-.navbar-custom .navbar-text {
-    color: #ffffff;
-}
-.navbar-custom .navbar-nav > li:last-child > a {
-    border-right: 1px solid #173848;
-}
-.navbar-custom .navbar-nav > li > a {
-    color: #ffffff;
-    border-left: 1px solid #173848;
-}
-.navbar-custom .navbar-nav > li > a:hover,
-.navbar-custom .navbar-nav > li > a:focus {
-    color: #c0c0c0;
-    background-color: transparent;
-}
-.navbar-custom .navbar-nav > .active > a,
-.navbar-custom .navbar-nav > .active > a:hover,
-.navbar-custom .navbar-nav > .active > a:focus {
-    color: #c0c0c0;
-    background-color: #173848;
-    background-image: -webkit-gradient(linear, left 0%, left 100%, from(#173848), to(#23556f));
-    background-image: -webkit-linear-gradient(top, #173848, 0%, #23556f, 100%);
-    background-image: -moz-linear-gradient(top, #173848 0%, #23556f 100%);
-    background-image: linear-gradient(to bottom, #173848 0%, #23556f 100%);
-    background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ff173848', endColorstr='#ff23556f', GradientType=0);
-}
-.navbar-custom .navbar-nav > .disabled > a,
-.navbar-custom .navbar-nav > .disabled > a:hover,
-.navbar-custom .navbar-nav > .disabled > a:focus {
-    color: #cccccc;
-    background-color: transparent;
-}
-.navbar-custom .navbar-toggle {
-    border-color: #dddddd;
-}
-.navbar-custom .navbar-toggle:hover,
-.navbar-custom .navbar-toggle:focus {
-    background-color: #dddddd;
-}
-.navbar-custom .navbar-toggle .icon-bar {
-    background-color: #cccccc;
-}
-.navbar-custom .navbar-collapse,
-.navbar-custom .navbar-form {
-    border-color: #163646;
-}
-.navbar-custom .navbar-nav > .dropdown > a:hover .caret,
-.navbar-custom .navbar-nav > .dropdown > a:focus .caret {
-    border-top-color: #c0c0c0;
-    border-bottom-color: #c0c0c0;
-}
-.navbar-custom .navbar-nav > .open > a,
-.navbar-custom .navbar-nav > .open > a:hover,
-.navbar-custom .navbar-nav > .open > a:focus {
-    background-color: #173848;
-    color: #c0c0c0;
-}
-.navbar-custom .navbar-nav > .open > a .caret,
-.navbar-custom .navbar-nav > .open > a:hover .caret,
-.navbar-custom .navbar-nav > .open > a:focus .caret {
-    border-top-color: #c0c0c0;
-    border-bottom-color: #c0c0c0;
-}
-.navbar-custom .navbar-nav > .dropdown > a .caret {
-    border-top-color: #ffffff;
-    border-bottom-color: #ffffff;
-}
-@media (max-width: 767) {
-    .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
-        color: #ffffff;
-    }
-    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover,
-    .navbar-custom .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #c0c0c0;
-        background-color: transparent;
-    }
-    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a,
-    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:hover,
-    .navbar-custom .navbar-nav .open .dropdown-menu > .active > a:focus {
-        color: #c0c0c0;
-        background-color: #173848;
-    }
-    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a,
-    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:hover,
-    .navbar-custom .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-        color: #cccccc;
-        background-color: transparent;
-    }
-}
-.navbar-custom .navbar-link {
-    color: #ffffff;
-}
-.navbar-custom .navbar-link:hover {
-    color: #c0c0c0;
+.HeaderFixed {
+  background-image: linear-gradient(to bottom, #2b6988 0%, #1f4b61 100%);
 }
 
-.infoArrow {
-    display:none;
+.HeaderFixed strong {
+  font-size:28px;
 }
 
-/* Arrow buttons from http://jsfiddle.net/shpoont/3cA4x/ */
-.btn-arrow-right,
-.btn-arrow-left {
-  z-index: 100;
-  float: right;
-  position: relative;
-  top: 19px;
-  left: -43px;
-}
-.btn-arrow-right {
-    padding-left: 15px;
-    padding-right: 15px;
-}
-.btn-arrow-left {
-    padding-right: 36px;
+.fill-dark {
+  background: #2A6785;
 }
 
-.btn-arrow-right:after,
-.btn-arrow-left:after { /* make two squares (before and after), looking similar to the button */
-    content:"";
-    position: absolute;
-    top: 5px; /* move it down because of rounded corners */
-    width: 22px; /* same as height */
-    height: 22px; /* button_outer_height / sqrt(2) */
-    background: inherit; /* use parent background */
-    border: inherit; /* use parent border */
-    border-left-color: transparent; /* hide left border */
-    border-bottom-color: transparent; /* hide bottom border */
-    border-radius: 0px 4px 0px 0px; /* round arrow corner, the shorthand property doesn't accept "inherit" so it is set to 4px */
-    -webkit-border-radius: 0px 4px 0px 0px;
-    -moz-border-radius: 0px 4px 0px 0px;
-}
-.btn-arrow-right:after {
-    transform: rotate(45deg); /* rotate right arrow squares 45 deg to point right */
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-}
-.btn-arrow-left:after {
-    transform: rotate(225deg); /* rotate left arrow squares 225 deg to point left */
-    -webkit-transform: rotate(225deg);
-    -moz-transform: rotate(225deg);
-    -o-transform: rotate(225deg);
-    -ms-transform: rotate(225deg);
+.button {
+  padding-bottom: 6px;
 }
 
-.btn-arrow-right:after,
-.btn-arrow-left:after { /* align the "after" square to the right */
-    right: -11px;
-}
-.btn-arrow-right:after { /* bring arrow pointers to front */
-    z-index: 1;
-}
-.btn-arrow-left:after { /* hide arrow tails background */
-    background-color: white;
+.ListOptions>li {
+  margin-bottom: 5px;
 }
 
+.u-vspace-xxl {
+  margin-bottom: 20px;
+}
+
+.leaflet-container {
+  background: rgba(26, 36, 66, 1);
+}
 /* SVG Stuff */
 path {
-  stroke: #DBE600;
-  fill: #DBE600;
-  stroke-opacity: .9;
+  stroke: #8EB83F;
+  fill: #8EB83F;
+  stroke-opacity: 1;
   fill-opacity: 0.3;
 }
