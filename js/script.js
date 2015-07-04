@@ -8,10 +8,10 @@ var map = new L.Map('map', {
   zoom: 14
 });
 
-//add a basemap
-L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
-  attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
-}).addTo(map);
+// //add a basemap
+// L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
+//   attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
+// }).addTo(map);
 
 //leaflet draw stuff
 
@@ -199,10 +199,20 @@ $('.download').click(function(){
 
   //http://oneclick.cartodb.com/?file={{YOUR FILE URL}}&provider={{PROVIDER NAME}}&logo={{YOUR LOGO URL}}
   if(data.cartodb) {
+    //open in cartodb only works if you encodeURIcomponent() on the SQL, 
+    //then concatenate with the rest of the URL, then encodeURIcomponent() the whole thing
+
+    //first, get the SQL
+    var sql = url.split("q=");
+    sql = encodeURIComponent(sql[1]);
+
+
+    url = url.split("SELECT")[0];
+    url += sql;
+
     url = encodeURIComponent(url);
     console.log(url);
-    url = 'http://oneclick.cartodb.com/?file=' + url + '&provider=plutoplus';
-    console.log(url);
+    url = 'http://oneclick.cartodb.com/?file=' + url;
   } 
     
   window.open(url, 'My Download');
@@ -316,8 +326,8 @@ function listChecked() {
 
 
 $( document ).ready(function() {
-
     $('.js-about').click(function() {
+
       $('#modal').fadeIn();
     });
 
