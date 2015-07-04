@@ -142,6 +142,7 @@ a:hover {
   border-radius: 4px;
   z-index: 1000;
   width: 200px;
+  display:none;
 }
 #infoWindow:before {
   content:"";
@@ -154,6 +155,37 @@ a:hover {
   top: 12px;
 }
 
+.sidebar-cell {
+  overflow: scroll;
+}
+
+.HeaderFixed {
+  background-image: linear-gradient(to bottom, #2b6988 0%, #1f4b61 100%);
+}
+
+.HeaderFixed strong {
+  font-size:28px;
+}
+
+.fill-dark {
+  background: #2A6785;
+}
+
+.button {
+  padding-bottom: 6px;
+}
+
+.ListOptions>li {
+  margin-bottom: 5px;
+}
+
+.u-vspace-xxl {
+  margin-bottom: 20px;
+}
+
+.leaflet-container {
+  background: rgba(26, 36, 66, 1);
+}
 /* SVG Stuff */
 path {
   stroke: #8EB83F;

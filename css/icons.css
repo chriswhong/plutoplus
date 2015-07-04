@@ -1,0 +1,642 @@
+/* Icon font */
+@font-face {
+  font-family: "carto-icon-new";
+  src: url("../fonts/cartoIconNew.eot");
+  src: url("../fonts/cartoIconNew.eot?#iefix") format("embedded-opentype"),
+       url("../fonts/cartoIconNew.woff") format("woff"),
+       url("../fonts/cartoIconNew.ttf") format("truetype"),
+       url("../fonts/cartoIconNew.svg?ey3vsq#cartoIcon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.IconFont {
+  font-family: "carto-icon-new";
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  text-decoration: none !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* sizes */
+.IconFont--size50 {
+  font-size: 50px;
+}
+
+.IconFont--size40 {
+  font-size: 40px;
+}
+
+.IconFont--size34 {
+  font-size: 34px;
+}
+
+.IconFont--size32 {
+  font-size: 32px;
+}
+
+.IconFont--size28 {
+  font-size: 28px;
+}
+
+.IconFont--size32 {
+  font-size: 32px;
+}
+
+.IconFont--size30 {
+  font-size: 30px;
+}
+
+.IconFont--size26 {
+  font-size: 26px;
+}
+
+.IconFont--size24 {
+  font-size: 24px;
+}
+
+.IconFont--size22 {
+  font-size: 22px;
+}
+
+.IconFont--size20 {
+  font-size: 20px;
+}
+
+.IconFont--size18 {
+  font-size: 18px;
+}
+
+.IconFont--size16 {
+  font-size: 16px;
+}
+
+.IconFont--size14 {
+  font-size: 14px;
+}
+
+.IconFont--size12 {
+  font-size: 12px;
+}
+
+.IconFont--size10 {
+  font-size: 10px;
+}
+
+.IconFont--size8 {
+  font-size: 8px;
+}
+
+.IconFont--size6 {
+  font-size: 6px;
+}
+
+.IconFont--size4 {
+  font-size: 4px;
+}
+
+
+/* icons */
+.IconFont--map:before {
+  content: "\E001";
+}
+
+.IconFont--larrow:before {
+  content: "\E002";
+}
+
+.IconFont--rarrow:before {
+  content: "\E003";
+}
+
+.IconFont--mix:before {
+  content: "\E004";
+}
+
+.IconFont--puzzle:before {
+  content: "\E005";
+}
+
+.IconFont--sync:before {
+  content: "\E006";
+}
+
+.IconFont--twitter:before {
+  content: "\E007";
+}
+
+.IconFont--arrowMenu:before {
+  content: "\E008";
+}
+
+.IconFont--secure:before {
+  content: "\E009";
+}
+
+.IconFont--stamen:before {
+  content: "\E00A";
+}
+
+.IconFont--profile:before {
+  content: "\E00B";
+}
+
+.IconFont--frontend:before {
+  content: "\E00C";
+}
+
+.IconFont--backend:before {
+  content: "\E00D";
+}
+
+.IconFont--features:before {
+  content: "\E00E";
+}
+
+.IconFont--flag:before {
+  content: "\E00F";
+}
+
+.IconFont--connection:before {
+  content: "\E010";
+}
+
+.IconFont--arrows:before {
+  content: "\E011";
+}
+
+.IconFont--plane:before {
+  content: "\E012";
+}
+
+.IconFont--gift:before {
+  content: "\E013";
+}
+
+.IconFont--scale:before {
+  content: "\E014";
+}
+
+.IconFont--positions:before {
+  content: "\E015";
+}
+
+.IconFont--facebook:before {
+  content: "\E016";
+}
+
+.IconFont--fork:before {
+  content: "\E017";
+}
+
+.IconFont--call:before {
+  content: "\E018";
+}
+
+.IconFont--star:before {
+  content: "\E019";
+}
+
+.IconFont--offices:before {
+  content: "\E01A";
+}
+
+.IconFont--form:before {
+  content: "\E01B";
+}
+
+.IconFont--adduser:before {
+  content: "\E01C";
+}
+
+.IconFont--onpremises:before {
+  content: "\E01D";
+}
+
+.IconFont--money:before {
+  content: "\E01E";
+}
+
+.IconFont--database:before {
+  content: "\E01F";
+}
+
+.IconFont--hashtag:before {
+  content: "\E020";
+}
+
+.IconFont--lines:before {
+  content: "\E021";
+}
+
+.IconFont--points:before {
+  content: "\E022";
+}
+
+.IconFont--sunglasess:before {
+  content: "\E023";
+}
+
+.IconFont--verified:before {
+  content: "\E024";
+}
+
+.IconFont--infowindow:before {
+  content: "\E025";
+}
+
+.IconFont--shop:before {
+  content: "\E026";
+}
+
+.IconFont--github:before {
+  content: "\E027";
+}
+
+.IconFont--dribbble:before {
+  content: "\E028";
+}
+
+.IconFont--buttonMenu:before {
+  content: "\E029";
+}
+
+.IconFont--pdf:before {
+  content: "\E02A";
+}
+
+.IconFont--link:before {
+  content: "\E02B";
+}
+
+.IconFont--facebookSquare:before {
+  content: "\E02C";
+}
+
+.IconFont--linkedin:before {
+  content: "\E02D";
+}
+
+.IconFont--files:before {
+  content: "\E02E";
+}
+
+.IconFont--connect:before {
+  content: "\E02F";
+}
+
+.IconFont--telephone:before {
+  content: "\E030";
+}
+
+.IconFont--unlimited:before {
+  content: "\E031";
+}
+
+.IconFont--collaborative:before {
+  content: "\E032";
+}
+
+.IconFont--package:before {
+  content: "\E033";
+}
+
+.IconFont--locker:before {
+  content: "\E034";
+}
+
+.IconFont--private:before {
+  content: "\E035";
+}
+
+.IconFont--cloud:before {
+  content: "\E036";
+}
+
+.IconFont--lockOpen:before {
+  content: "\E037";
+}
+
+.IconFont--lockProtected:before {
+  content: "\E038";
+}
+
+.IconFont--lockClosed:before {
+  content: "\E039";
+}
+
+.IconFont--generate:before {
+  content: "\E03A";
+}
+
+.IconFont--plant:before {
+  content: "\E03B";
+}
+
+.IconFont--binoculars:before {
+  content: "\E03C";
+}
+
+.IconFont--power:before {
+  content: "\E03D";
+}
+
+.IconFont--pin:before {
+  content: "\E03E";
+}
+
+.IconFont--radio:before {
+  content: "\E03F";
+}
+
+.IconFont--terms:before {
+  content: "\E040";
+}
+
+.IconFont--queries:before {
+  content: "\E041";
+}
+
+.IconFont--clip:before {
+  content: "\E042";
+}
+
+.IconFont--retina:before {
+  content: "\E043";
+}
+
+.IconFont--search:before {
+  content: "\E044";
+}
+
+.IconFont--satellite:before {
+  content: "\E045";
+}
+
+.IconFont--draw:before {
+  content: "\E046";
+}
+
+.IconFont--picture:before {
+  content: "\E047";
+}
+
+.IconFont--user:before {
+  content: "\E048";
+}
+
+.IconFont--data:before {
+  content: "\E049";
+}
+
+.IconFont--design:before {
+  content: "\E04A";
+}
+
+.IconFont--share:before {
+  content: "\E04B";
+}
+
+.IconFont--source:before {
+  content: "\E04C";
+}
+
+.IconFont--check:before {
+  content: "\E04D";
+}
+
+.IconFont--present:before {
+  content: "\E04E";
+}
+
+.IconFont--book:before {
+  content: "\E04F";
+}
+
+.IconFont--publish:before {
+  content: "\E050";
+}
+
+.IconFont--interactive:before {
+  content: "\E051";
+}
+
+.IconFont--world:before {
+  content: "\E052";
+}
+
+.IconFont--time:before {
+  content: "\E053";
+}
+
+.IconFont--actionable:before {
+  content: "\E054";
+}
+
+.IconFont--device:before {
+  content: "\E055";
+}
+
+.IconFont--home:before {
+  content: "\E056";
+}
+
+.IconFont--ruler:before {
+  content: "\E057";
+}
+
+.IconFont--umbrella:before {
+  content: "\E058";
+}
+
+.IconFont--markup:before {
+  content: "\E059";
+}
+
+.IconFont--path:before {
+  content: "\E05A";
+}
+
+.IconFont-- :before {
+  content: "\E05B";
+}
+
+.IconFont--canvas:before {
+  content: "\E05C";
+}
+
+.IconFont--filters:before {
+  content: "\E05D";
+}
+
+.IconFont--limits:before {
+  content: "\E05E";
+}
+
+.IconFont--points:before {
+  content: "\E05F";
+}
+
+.IconFont--import:before {
+  content: "\E060";
+}
+
+.IconFont--screen:before {
+  content: "\E061";
+}
+
+.IconFont--tool:before {
+  content: "\E062";
+}
+
+.IconFont--compass:before {
+  content: "\E063";
+}
+
+.IconFont--docs:before {
+  content: "\E064";
+}
+
+.IconFont--buttonClose:before {
+  content: "\E065";
+}
+
+.IconFont--partners:before {
+  content: "\E066";
+}
+
+.IconFont--students:before {
+  content: "\E067";
+}
+
+.IconFont--percent:before {
+  content: "\E068";
+}
+
+.IconFont--directions:before {
+  content: "\E069";
+}
+
+.IconFont--space:before {
+  content: "\E06A";
+}
+
+.IconFont--community:before {
+  content: "\E06B";
+}
+
+.IconFont--gallery:before {
+  content: "\E06C";
+}
+
+.IconFont--learning:before {
+  content: "\E06D";
+}
+
+.IconFont--free:before {
+  content: "\E06E";
+}
+
+.IconFont--brush:before {
+  content: "\E06F";
+}
+
+.IconFont--license:before {
+  content: "\E070";
+}
+
+.IconFont--folder:before {
+  content: "\E071";
+}
+
+.IconFont--growth:before {
+  content: "\E072";
+}
+
+.IconFont--sales:before {
+  content: "\E073";
+}
+
+.IconFont--devs:before {
+  content: "\E074";
+}
+
+.IconFont--refresh:before {
+  content: "\E075";
+}
+
+.IconFont--laptop:before {
+  content: "\E076";
+}
+
+.IconFont--sofa:before {
+  content: "\E077";
+}
+
+.IconFont--wave:before {
+  content: "\E078";
+}
+
+.IconFont--van:before {
+  content: "\E079";
+}
+
+.IconFont--speech:before {
+  content: "\E07A";
+}
+
+.IconFont--band:before {
+  content: "\E07B";
+}
+
+.IconFont--ticket:before {
+  content: "\E07C";
+}
+
+.IconFont--present:before {
+  content: "\E07D";
+}
+
+.IconFont--microphone:before {
+  content: "\E07E";
+}
+
+.IconFont--calendar:before {
+  content: "\E07F";
+}
+
+.IconFont--heart:before {
+  content: "\E080";
+}
+
+.IconFont--news:before {
+  content: "\E081";
+}
+
+.IconFont--carto:before {
+  content: "\E082";
+}
+
+.IconFont--editor:before {
+  content: "\E083";
+}
+
+.IconFont--gear:before {
+  content: "\E084";
+}
+
+.IconFont--settings:before {
+  content: "\E085";
+}
+
+.IconFont--book:before {
+  content: "\E086";
+}
+
+.IconFont--mapbox:before {
+  content: "\E087";
+}
