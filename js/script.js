@@ -1,6 +1,7 @@
 var areaType='currentView';
 var drawnLayer;
-var mainLayer;
+var mainLayer,ntaLayer;
+var nPolygon;
 
 //initialize map
 var map = new L.Map('map', { 
@@ -8,10 +9,7 @@ var map = new L.Map('map', {
   zoom: 14
 });
 
-// //add a basemap
-// L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
-//   attribution: 'Mapbox <a href="http://mapbox.com/about/maps" target="_blank">Terms &amp; Feedback</a>'
-// }).addTo(map);
+var selectLayer = L.geoJson().addTo(map); //add empty geojson layer for selections
 
 //leaflet draw stuff
 
@@ -40,6 +38,8 @@ var options = {
 };
 
 var drawControl = new L.Control.Draw(options);
+map.addControl(drawControl);
+$('.leaflet-draw-toolbar').hide();
 
 var customPolygon;
 map.on('draw:created', function (e) {
@@ -74,9 +74,11 @@ cartodb.createLayer(map, layerUrl)
   .addTo(map)
   .on('done', function(layer) {
     mainLayer = layer.getSubLayer(0);
-    console.log(mainLayer);
-  }).on('error', function() {
-    //log the error
+    mainLayer.setInteraction(false);
+
+    ntaLayer = layer.getSubLayer(1); 
+    ntaLayer.hide();  //hide neighborhood polygons
+    ntaLayer.on('featureClick', processNeighborhood);
   });
 
 //populate fields list
@@ -126,22 +128,29 @@ $('#selectAll').click(function(){
   listChecked();
 }); 
 
+//radio buttons
 $('input[type=radio][name=area]').change(function() {
+  //reset all the things
+  ntaLayer.hide();
+  selectLayer.clearLayers();
+  $('.leaflet-draw-toolbar').hide();
+  if (drawnLayer) {
+    map.removeLayer(drawnLayer);
+  }
+
+  //turn on certain things
   if(this.value == 'polygon') {
     areaType='polygon';
-    map.addControl(drawControl);
-    $('.infoArrow').show();
-    mainLayer.setInteraction(false);
+    $('.leaflet-draw-toolbar').show();
     $('.download').attr('disabled','disabled');
   }
   if(this.value == 'currentView') {
     areaType='currentView';
-    mainLayer.setInteraction(true);
-    map.removeControl(drawControl);
-    $('.infoArrow').hide();
-    if (drawnLayer) {
-    map.removeLayer(drawnLayer);
   }
+  if(this.value == 'neighborhood') {
+    areaType='neighborhood';
+    ntaLayer.show();
+    $('.download').attr('disabled','disabled');
   }
 })
 
@@ -181,6 +190,10 @@ $('.download').click(function(){
 
   if(areaType == 'polygon') {
     data.intersects = customPolygon;
+  }
+
+  if(areaType == 'neighborhood') {
+    data.intersects = nPolygon;
   }
   
   if(data.type == 'cartodb') {
@@ -223,6 +236,30 @@ $('.download').click(function(){
 });
 
 //functions
+
+//when a polygon is clicked in Neighborhood View, download its geojson, etc
+function processNeighborhood(e, latlng, pos, data, layer) {
+
+  var nid = data.cartodb_id;
+  selectLayer.clearLayers();
+
+  var sql = new cartodb.SQL({ user: 'cwhong' });
+  sql.execute("SELECT the_geom FROM nynta WHERE cartodb_id = {{id}}", 
+    { 
+      id: data.cartodb_id 
+    },
+    {
+      format:'geoJSON'
+    }
+  )
+  .done(function(data) {
+    console.log(data);
+    selectLayer.addData(data);
+    //setup SQL statement for intersection
+    nPolygon = '(SELECT the_geom FROM nynta WHERE cartodb_id = ' + nid + ')';
+  })
+}
+
 //turns an array of latLngs into an ST_POLYGONFROMTEXT
 function makeSqlPolygon(coords) {
   var s = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
