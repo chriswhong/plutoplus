@@ -68,7 +68,7 @@ map.on('draw:drawstart', function (e) {
 });
 
 //add cartodb named map
-var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/2602ab80-0353-11e5-89a0-0e0c41326911/viz.json';
+var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
 
 cartodb.createLayer(map, layerUrl)
   .addTo(map)
@@ -168,9 +168,7 @@ $('.download').click(function(){
   //generate comma-separated list of fields
   data.fields = '';
   for(var i=0;i<checked.length;i++) {
-    if(checked[i]!='bbl') {
-      data.fields+= checked[i] + ',';
-    }
+    data.fields+= checked[i] + ',';
   }
 
   //only add leading comma if at least one field is selected
@@ -201,7 +199,7 @@ $('.download').click(function(){
     data.cartodb = true;
   }
 
-  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=sbbl,cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT * FROM plutoshapes a LEFT OUTER JOIN (SELECT bbl{{fields}} FROM pluto14v2) b ON a.sbbl = b.bbl WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
+  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto15v1 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
