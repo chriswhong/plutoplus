@@ -184,7 +184,7 @@ a:hover {
 }
 
 .leaflet-container {
-  background: rgba(26, 36, 66, 1);
+  background: rgba(0, 0, 0, 1);
 }
 /* SVG Stuff */
 path {

@@ -1,12 +1,13 @@
 var areaType='currentView';
 var drawnLayer;
-var mainLayer,ntaLayer;
+var backdrop,muniLayer;
 var nPolygon;
+var mPolygon;
 
 //initialize map
 var map = new L.Map('map', { 
-  center: [40.70663644882689,-73.97815704345703],
-  zoom: 14
+  center: [40.47,-79.9959],
+  zoom: 11
 });
 
 var selectLayer = L.geoJson().addTo(map); //add empty geojson layer for selections
@@ -43,6 +44,7 @@ $('.leaflet-draw-toolbar').hide();
 
 var customPolygon;
 map.on('draw:created', function (e) {
+    console.log('draw:created');
     //hide the arrow
     $('.infoArrow').hide();
 
@@ -68,17 +70,21 @@ map.on('draw:drawstart', function (e) {
 });
 
 //add cartodb named map
-var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
+var layerUrl = 'https://wprdc.cartodb.com/api/v2/viz/24843ea8-f778-11e5-a7c9-0e674067d321/viz.json';
 
 cartodb.createLayer(map, layerUrl)
   .addTo(map)
   .on('done', function(layer) {
-    mainLayer = layer.getSubLayer(0);
-    mainLayer.setInteraction(false);
+    backdrop = layer.getSubLayer(0);
+    backdrop.setInteraction(false);
+    //TODO: build array of selction layers based off JSON file
+    muniLayer = layer.getSubLayer(1);
+    hoodLayer = layer.getSubLayer(2);
 
-    ntaLayer = layer.getSubLayer(1); 
-    ntaLayer.hide();  //hide neighborhood polygons
-    ntaLayer.on('featureClick', processNeighborhood);
+    muniLayer.hide();  //hide municipality polygons
+    hoodLayer.hide();
+    muniLayer.on('featureClick', processMuni);
+    hoodLayer.on('featureClick', processNeighborhood);
   });
 
 //populate fields list
@@ -131,7 +137,8 @@ $('#selectAll').click(function(){
 //radio buttons
 $('input[type=radio][name=area]').change(function() {
   //reset all the things
-  ntaLayer.hide();
+  muniLayer.hide();
+  hoodLayer.hide();
   selectLayer.clearLayers();
   $('.leaflet-draw-toolbar').hide();
   if (drawnLayer) {
@@ -147,12 +154,17 @@ $('input[type=radio][name=area]').change(function() {
   if(this.value == 'currentView') {
     areaType='currentView';
   }
-  if(this.value == 'neighborhood') {
-    areaType='neighborhood';
-    ntaLayer.show();
+  if(this.value == 'municipality') {
+    areaType='municipality';
+    muniLayer.show();
     $('.download').attr('disabled','disabled');
   }
-})
+  if(this.value == 'neighborhood') {
+    areaType='neighborhood';
+    hoodLayer.show();
+    $('.download').attr('disabled','disabled');
+  }
+});
 
 //runs when any of the download buttons is clicked
 $('.download').click(function(){
@@ -190,20 +202,24 @@ $('.download').click(function(){
     data.intersects = customPolygon;
   }
 
+  if(areaType == 'municipality') {
+    data.intersects = mPolygon;
+  }
+
   if(areaType == 'neighborhood') {
     data.intersects = nPolygon;
   }
-  
+
   if(data.type == 'cartodb') {
     data.type = 'geojson';
     data.cartodb = true;
   }
 
-  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto15v1 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
+  var queryTemplate = 'https://wprdc.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM parcels_geog_ids a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
-
+  console.log(buildquery);
   var url = buildquery(data);
 
   console.log("Downloading " + url);
@@ -236,15 +252,38 @@ $('.download').click(function(){
 //functions
 
 //when a polygon is clicked in Neighborhood View, download its geojson, etc
-function processNeighborhood(e, latlng, pos, data, layer) {
-
+function processMuni(e, latlng, pos, data, layer) {
+  console.log('Muni data', data);
   var nid = data.cartodb_id;
   selectLayer.clearLayers();
+  console.log(nid);
+  var sql = new cartodb.SQL({ user: 'wprdc' });
+  sql.execute("SELECT the_geom FROM allegheny_county_municipal_boundaries WHERE cartodb_id = {{id}}",
+    {
+      id: data.cartodb_id
+    },
+    {
+      format:'geoJSON'
+    }
+    )
+    .done(function(data) {
+      console.log(data);
+      selectLayer.addData(data);
+      //setup SQL statement for intersection
+      mPolygon = '(SELECT the_geom FROM allegheny_county_municipal_boundaries WHERE cartodb_id = ' + nid + ')';
+    })
+}
 
-  var sql = new cartodb.SQL({ user: 'cwhong' });
-  sql.execute("SELECT the_geom FROM nynta WHERE cartodb_id = {{id}}", 
-    { 
-      id: data.cartodb_id 
+
+function processNeighborhood(e, latlng, pos, data, layer) {
+  console.log('Hood data', data);
+  var nid = data.cartodb_id;
+  selectLayer.clearLayers();
+  console.log(nid);
+  var sql = new cartodb.SQL({ user: 'wprdc' });
+  sql.execute("SELECT the_geom FROM pittsburgh_neighborhoods WHERE cartodb_id = {{id}}",
+    {
+      id: data.cartodb_id
     },
     {
       format:'geoJSON'
@@ -254,7 +293,7 @@ function processNeighborhood(e, latlng, pos, data, layer) {
     console.log(data);
     selectLayer.addData(data);
     //setup SQL statement for intersection
-    nPolygon = '(SELECT the_geom FROM nynta WHERE cartodb_id = ' + nid + ')';
+    nPolygon = '(SELECT the_geom FROM pittsburgh_neighborhoods WHERE cartodb_id = ' + nid + ')';
   })
 }
 
@@ -264,7 +303,7 @@ function makeSqlPolygon(coords) {
   var firstCoord;
   coords.forEach(function(coord,i){
     console.log(coord);
-    s+=coord.lng + " " + coord.lat + ","
+    s+=coord.lng + " " + coord.lat + ",";
 
     //remember the first coord
     if(i==0) {
@@ -348,7 +387,7 @@ function initCheckboxes() {
       }
       init();
   });
-};
+}
 
 function listChecked() { 
   var checkedItems = [];

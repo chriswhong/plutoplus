@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="./favicon.ico">
 
-    <title>PLUTO Data Downloader powered by CartoDB</title>
+    <title>WPRDC Parcel Data Downloader</title>
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
@@ -28,7 +28,7 @@
         <div class="Grid">
           <div class="Grid-inner Grid-inner--vcenter">
             <div class="Grid-cell Grid-cell--col6">
-              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Now with Pluto15v1!</h1>
+              <h1 class="u-iblock u-malign"><strong>WPRDC Parcel Data Downloader</strong></h1>
             </div>
             <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
               <nav class="">
@@ -66,6 +66,7 @@
               </div>
 
               <ul class="ListOptions u-vspace-xxl">
+                <!--TODO: build list based on regions JSON -->
                 <li>
                   <label>
                     <input class="u-iblock u-malign" type="radio" for="option1" name="area" value="currentView" checked>
@@ -74,8 +75,14 @@
                 </li>
                 <li>
                   <label>
-                    <input class="u-iblock u-malign" type="radio" for="option2" name="area" value="neighborhood" >
-                    <p class="u-iblock u-malign" id="option2"> Neighborhood </p>
+                    <input class="u-iblock u-malign" type="radio" for="option2" name="area" value="municipality" >
+                    <p class="u-iblock u-malign" id="option2"> Municipality </p>
+                  </label>
+                </li>
+                <li>
+                  <label>
+                    <input class="u-iblock u-malign" type="radio" for="option4" name="area" value="neighborhood" >
+                    <p class="u-iblock u-malign" id="option4"> Neighborhood </p>
                   </label>
                 </li>
                 <li>
@@ -164,15 +171,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="js/script.js"></script>
 
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-63804901-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
   </body>
 </html>
