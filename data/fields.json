@@ -1,78 +1,346 @@
 [
   {
-    "name": "PIN",
-    "description": "Preferred Parcel ID Consistent with County GIS and assessment"
+    "name": "PARID",
+    "description": "Parcel Identification Number"
   },
   {
-    "name": "OBJECTID_12",
-    "description": "GIS ID"
+    "name": "PROPERTYHOUSENUM",
+    "description": "Property Location House Number"
   },
   {
-    "name": "MAPBLOCKLO",
-    "description": "Short parcel id format"
+    "name": "PROPERTYFRACTION",
+    "description": "Property Location House Number Fraction"
   },
   {
-    "name": "STATEFP10",
-    "description": "STATE FIPS"
+    "name": "PROPERTYADDRESS",
+    "description": "Property Location Street Name"
   },
   {
-    "name": "COUNTYFP10",
-    "description": "County FIPS"
+    "name": "PROPERTYCITY",
+    "description": "Property Location City Name"
   },
   {
-    "name": "TRACTCE10",
-    "description": "Tract FIPS 2010 Census"
+    "name": "PROPERTYSTATE",
+    "description": "Property Location State Name"
   },
   {
-    "name": "BLOCKCE10",
-    "description": "Block FIPS 2010 Census"
+    "name": "PROPERTYUNIT",
+    "description": "Property Location Unit Number"
   },
   {
-    "name": "GEOID10",
-    "description": "State, County, Tract, Block FIPS 2010 Census"
+    "name": "PROPERTYZIP",
+    "description": "Property Location Zip code, first 5 digits"
   },
   {
-    "name": "NAME10",
-    "description": "Block Name"
+    "name": "MUNICODE",
+    "description": "Municipality Code (Tax District)"
   },
   {
-    "name": "geo_id_county",
-    "description": "County FIPS (State+County)"
+    "name": "MUNIDESC",
+    "description": "Municipality Name"
   },
   {
-    "name": "geo_id_nhood",
-    "description": "City of Pittsburgh Neighborhood ID"
+    "name": "SCHOOLCODE",
+    "description": "School District Code"
   },
   {
-    "name": "geo_id_tract",
-    "description": "Tract FIPS (2010) (State+County+Tract)"
+    "name": "SCHOOLDESC",
+    "description": "School District Name"
   },
   {
-    "name": "geo_id_blockgp",
-    "description": "Blockgroup FIPS (2010) (State+County+Tract+Blockgroup)"
+    "name": "LEGAL1",
+    "description": "Legal Description 1"
   },
   {
-    "name": "geo_id_cousub",
-    "description": "County Subarea (Municipality) ID FIPS"
+    "name": "LEGAL2",
+    "description": "Legal Description 2"
   },
   {
-    "name": "geo_id_zipcode",
-    "description": "Zip Code ID (Same as Name)"
+    "name": "LEGAL3",
+    "description": "Legal Description 3"
   },
   {
-    "name": "geo_id_schooldist",
-    "description": "School District  ID (AUN - State ID)"
+    "name": "NEIGHCODE",
+    "description": "Neighborhood Number"
   },
   {
-    "name": "geo_id_HousePA",
-    "description": "State House District (2013) ID"
+    "name": "NEIGHDESC",
+    "description": "Neighborhood Name"
   },
   {
-    "name": "geo_id_SenatePA",
-    "description": "State Senate District (2013) ID"
+    "name": "TAXCODE",
+    "description": "Tax Status"
   },
   {
-    "name": "geo_id_countycouncil",
-    "description": "Allegheny County Council District (2012) ID"
+    "name": "TAXDESC",
+    "description": "Tax Status Description"
+  },
+  {
+    "name": "TAXSUBCODE",
+    "description": "Tax Sub Code  (applies to PURTA only)"
+  },
+  {
+    "name": "TAXSUBCODE_DESC",
+    "description": "Tax Sub Code Description"
+  },
+  {
+    "name": "OWNERCODE",
+    "description": "Owner Type Code 1"
+  },
+  {
+    "name": "OWNERDESC",
+    "description": "Owner Description"
+  },
+  {
+    "name": "CLASS",
+    "description": "Class"
+  },
+  {
+    "name": "CLASSDESC",
+    "description": "Class Description"
+  },
+  {
+    "name": "USECODE",
+    "description": "Land Use Code"
+  },
+  {
+    "name": "USEDESC",
+    "description": "Land Use Code Description"
+  },
+  {
+    "name": "LOTAREA",
+    "description": "Sum of Area of Land"
+  },
+  {
+    "name": "HOMESTEADFLAG",
+    "description": "Homestead Flag"
+  },
+  {
+    "name": "CLEANGREEN",
+    "description": "Clean and Green Flag"
+  },
+  {
+    "name": "FARMSTEADFLAG",
+    "description": "Farmstead Flag"
+  },
+  {
+    "name": "ABATEMENTFLAG",
+    "description": "Abatement Flag"
+  },
+  {
+    "name": "RECORDDATE",
+    "description": "Record Date"
+  },
+  {
+    "name": "SALEDATE",
+    "description": "Sale Date"
+  },
+  {
+    "name": "SALEPRICE",
+    "description": "Sale Price"
+  },
+  {
+    "name": "SALECODE",
+    "description": "Sale Validity Code"
+  },
+  {
+    "name": "SALEDESC",
+    "description": "Sale Validity Code Description"
+  },
+  {
+    "name": "DEEDBOOK",
+    "description": "Book Number"
+  },
+  {
+    "name": "DEEDPAGE",
+    "description": "Page Number"
+  },
+  {
+    "name": "PREVSALEDATE",
+    "description": "Previous Sale Date"
+  },
+  {
+    "name": "PREVSALEPRICE",
+    "description": "Previous Sale Price"
+  },
+  {
+    "name": "PREVSALEDATE2",
+    "description": "Previous Sale Date 2"
+  },
+  {
+    "name": "PREVSALEPRICE2",
+    "description": "Previous Sale Price 2"
+  },
+  {
+    "name": "CHANGENOTICEADDRESS1",
+    "description": "Change Notice Full Address 1"
+  },
+  {
+    "name": "CHANGENOTICEADDRESS2",
+    "description": "Change Notice Full Address 2"
+  },
+  {
+    "name": "CHANGENOTICEADDRESS3",
+    "description": "Change Notice Full Address 3"
+  },
+  {
+    "name": "CHANGENOTICEADDRESS4",
+    "description": "Change Notice Full Address 4"
+  },
+  {
+    "name": "COUNTYBUILDING",
+    "description": "County Assessed Value for Building"
+  },
+  {
+    "name": "COUNTYLAND",
+    "description": "County Assessed Value for Land"
+  },
+  {
+    "name": "COUNTYTOTAL",
+    "description": "County Assessed Value Total"
+  },
+  {
+    "name": "COUNTYEXEMPTBLDG",
+    "description": "County Exempt Building Amount"
+  },
+  {
+    "name": "LOCALBUILDING",
+    "description": "Local  Assessed Value for Building"
+  },
+  {
+    "name": "LOCALLAND",
+    "description": "Local Assessed Value for Land"
+  },
+  {
+    "name": "LOCALTOTAL",
+    "description": "Local Assessed Value Total"
+  },
+  {
+    "name": "FAIRMARKETBUILDING",
+    "description": "Fair Market Building Value"
+  },
+  {
+    "name": "FAIRMARKETLAND",
+    "description": "Fair Market Land Value"
+  },
+  {
+    "name": "FAIRMARKETTOTAL",
+    "description": "Fair Market Total Value"
+  },
+  {
+    "name": "STYLE",
+    "description": "Dwelling - Architectural Style"
+  },
+  {
+    "name": "STYLEDESC",
+    "description": "Dwelling - Architectural Style Description"
+  },
+  {
+    "name": "STORIES",
+    "description": "Dwelling - Number of Stories"
+  },
+  {
+    "name": "YEARBLT",
+    "description": "Dwelling - Year Built"
+  },
+  {
+    "name": "EXTERIORFINISH",
+    "description": "Dwelling - Exterior Wall code"
+  },
+  {
+    "name": "EXTFINISH_DESC",
+    "description": "Dwelling - Exterior Wall Description"
+  },
+  {
+    "name": "ROOF",
+    "description": "Dwelling - Roof"
+  },
+  {
+    "name": "ROOFDESC",
+    "description": "Dwelling - Roof Description"
+  },
+  {
+    "name": "BASEMENT",
+    "description": "Dwelling - Basement"
+  },
+  {
+    "name": "BASEMENTDESC",
+    "description": "Dwelling - Basement Description"
+  },
+  {
+    "name": "GRADE",
+    "description": "Dwelling - Grade"
+  },
+  {
+    "name": "GRADEDESC",
+    "description": "Dwelling - Grade Description"
+  },
+  {
+    "name": "CONDITION",
+    "description": "Dwelling - Condition"
+  },
+  {
+    "name": "CONDITIONDESC",
+    "description": "Dwelling - Condition Description"
+  },
+  {
+    "name": "CDU",
+    "description": "Dwelling - CDU"
+  },
+  {
+    "name": "CDUDESC",
+    "description": "Dwelling - CDU Description"
+  },
+  {
+    "name": "TOTALROOMS",
+    "description": "Dwelling - Total Rooms"
+  },
+  {
+    "name": "BEDROOMS",
+    "description": "Dwelling - Bedrooms"
+  },
+  {
+    "name": "FULLBATHS",
+    "description": "Dwelling - Full Baths"
+  },
+  {
+    "name": "HALFBATHS",
+    "description": "Dwelling - Half Baths"
+  },
+  {
+    "name": "HEATINGCOOLING",
+    "description": "Dwelling - Heating Cooling"
+  },
+  {
+    "name": "HEATINGCOOLINGDESC",
+    "description": "Dwelling - Heating Cooling Description"
+  },
+  {
+    "name": "FIREPLACES",
+    "description": "Dwelling - Number of Wood burning Fireplaces Stacks"
+  },
+  {
+    "name": "BSMTGARAGE",
+    "description": "Dwelling - Integral Basement Garage (Number of Cars)"
+  },
+  {
+    "name": "FINISHEDLIVINGAREA",
+    "description": "Dwelling - Total Square Feet of Living Area"
+  },
+  {
+    "name": "CARDNUMBER",
+    "description": "Dwelling - Building (card) Number"
+  },
+  {
+    "name": "ALT_ID",
+    "description": "Alternate Parcel Identification Number"
+  },
+  {
+    "name": "TAXYEAR",
+    "description": "The current certified tax year"
+  },
+  {
+    "name": "ASOFDATE",
+    "description": "The run date of this file"
   }
 ]

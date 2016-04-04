@@ -103,6 +103,11 @@ a:hover {
   background: #fff;
   border-radius: 4px;
 }
+
+.modal-inner p {
+  font-weight: 500;
+}
+
 .text-info {
   font-size: 13px;
   position: absolute;
@@ -184,12 +189,12 @@ a:hover {
 }
 
 .leaflet-container {
-  background: rgba(0, 0, 0, 1);
+  background: #2A313D;
 }
 /* SVG Stuff */
 path {
-  stroke: #8EB83F;
-  fill: #8EB83F;
+  stroke: #FFC622;
+  fill: #FFC622;
   stroke-opacity: 1;
-  fill-opacity: 0.3;
+  fill-opacity: 0.6;
 }

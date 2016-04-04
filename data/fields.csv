@@ -1,41 +1,87 @@
-name,description
-OBJECTID_12 *,GIS ID
-Shape *,Shape
-PIN,Preferred Parcel ID Consistent with County GIS and assessment
-MAPBLOCKLO,Short parcel id format 
-STATEFP10,STATE FIPS
-COUNTYFP10,County FIPS
-TRACTCE10,Tract FIPS 2010 Census
-BLOCKCE10,Block FIPS 2010 Census
-GEOID10,"State, County, Tract, Block FIPS 2010 Census"
-NAME10,Block Name
-geo_name_county,County Name
-geo_id_county,County FIPS (State+County)
-level_county,County Geographic Level Name
-geo_name_nhood,City of Pittsburgh Neighborhood Name
-geo_id_nhood,City of Pittsburgh Neighborhood ID
-level_nhood,City of Pittsburgh Neighborhood Geographic Level Name
-geo_name_tract,Tract 2010 Census Number
-geo_id_tract,Tract FIPS (2010) (State+County+Tract)
-level_tract,Census Tract Geographic Level Name
-geo_name_blockgp,Blockgroup 2010 Census Name
-geo_id_blockgp,Blockgroup FIPS (2010) (State+County+Tract+Blockgroup)
-level_blockgp,Census Blockgroup Geographic Level Name
-geo_name_cousub,County Subarea (Municipality) Name
-geo_id_cousub,County Subarea (Municipality) ID FIPS
-level_cousub,County Subarea (Municipality)  Geographic Level Name
-geo_name_zipcode,Zip Code Name
-geo_id_zipcode,Zip Code ID (Same as Name)
-level_zipcode,Zip Code Geographic Level Name
-geo_name_schooldist,School District Name
-geo_id_schooldist,School District  ID (AUN - State ID)
-level_schooldist,School District Geographic Level Name
-geo_name_HousePA,State House District (2013) Name
-geo_id_HousePA,State House District (2013) ID
-level_HousePA,State House District (2013) Geographic Level Name
-geo_name_SenatePA,State Senate District (2013) Name
-geo_id_SenatePA,State Senate District (2013) ID
-level_SenatePA,State Senate District (2013) Geographic Level Name
-geo_name_countycouncil,Allegheny County Council District (2012) Name
-geo_id_countycouncil,Allegheny County Council District (2012) ID
-level_countycouncil,Allegheny County Council District (2012) Geographic Level Name
+Field Name,Field Description
+PARID,Parcel Identification Number
+PROPERTYHOUSENUM,Property Location House Number
+PROPERTYFRACTION,Property Location House Number Fraction
+PROPERTYADDRESS,Property Location Street Name
+PROPERTYCITY,Property Location City Name
+PROPERTYSTATE,Property Location State Name
+PROPERTYUNIT,Property Location Unit Number
+PROPERTYZIP,"Property Location Zip code, first 5 digits"
+MUNICODE,Municipality Code (Tax District)
+MUNIDESC,Municipality Name
+SCHOOLCODE,School District Code
+SCHOOLDESC,School District Name
+LEGAL1,Legal Description 1
+LEGAL2,Legal Description 2
+LEGAL3,Legal Description 3
+NEIGHCODE,Neighborhood Number
+NEIGHDESC,Neighborhood Name
+TAXCODE,Tax Status
+TAXDESC,Tax Status Description
+TAXSUBCODE,Tax Sub Code  (applies to PURTA only)
+TAXSUBCODE_DESC,Tax Sub Code Description
+OWNERCODE,Owner Type Code 1
+OWNERDESC,Owner Description
+CLASS,Class
+CLASSDESC,Class Description
+USECODE,Land Use Code
+USEDESC,Land Use Code Description
+LOTAREA,Sum of Area of Land
+HOMESTEADFLAG,Homestead Flag
+CLEANGREEN,Clean and Green Flag
+FARMSTEADFLAG,Farmstead Flag
+ABATEMENTFLAG,Abatement Flag
+RECORDDATE,Record Date
+SALEDATE,Sale Date
+SALEPRICE,Sale Price
+SALECODE,Sale Validity Code
+SALEDESC,Sale Validity Code Description
+DEEDBOOK,Book Number
+DEEDPAGE,Page Number
+PREVSALEDATE,Previous Sale Date
+PREVSALEPRICE,Previous Sale Price
+PREVSALEDATE2,Previous Sale Date 2
+PREVSALEPRICE2,Previous Sale Price 2
+CHANGENOTICEADDRESS1,Change Notice Full Address 1
+CHANGENOTICEADDRESS2,Change Notice Full Address 2
+CHANGENOTICEADDRESS3,Change Notice Full Address 3
+CHANGENOTICEADDRESS4,Change Notice Full Address 4
+COUNTYBUILDING,County Assessed Value for Building
+COUNTYLAND,County Assessed Value for Land
+COUNTYTOTAL,County Assessed Value Total
+COUNTYEXEMPTBLDG,County Exempt Building Amount
+LOCALBUILDING,Local  Assessed Value for Building
+LOCALLAND,Local Assessed Value for Land
+LOCALTOTAL,Local Assessed Value Total
+FAIRMARKETBUILDING,Fair Market Building Value
+FAIRMARKETLAND,Fair Market Land Value
+FAIRMARKETTOTAL,Fair Market Total Value
+STYLE,Dwelling - Architectural Style
+STYLEDESC,Dwelling - Architectural Style Description
+STORIES,Dwelling - Number of Stories
+YEARBLT,Dwelling - Year Built
+EXTERIORFINISH,Dwelling - Exterior Wall code
+EXTFINISH_DESC,Dwelling - Exterior Wall Description
+ROOF,Dwelling - Roof
+ROOFDESC,Dwelling - Roof Description
+BASEMENT,Dwelling - Basement
+BASEMENTDESC,Dwelling - Basement Description
+GRADE,Dwelling - Grade
+GRADEDESC,Dwelling - Grade Description
+CONDITION,Dwelling - Condition
+CONDITIONDESC,Dwelling - Condition Description
+CDU,Dwelling - CDU
+CDUDESC,Dwelling - CDU Description
+TOTALROOMS,Dwelling - Total Rooms
+BEDROOMS,Dwelling - Bedrooms
+FULLBATHS,Dwelling - Full Baths
+HALFBATHS,Dwelling - Half Baths
+HEATINGCOOLING,Dwelling - Heating Cooling
+HEATINGCOOLINGDESC,Dwelling - Heating Cooling Description
+FIREPLACES,Dwelling - Number of Wood burning Fireplaces Stacks
+BSMTGARAGE,Dwelling - Integral Basement Garage (Number of Cars)
+FINISHEDLIVINGAREA,Dwelling - Total Square Feet of Living Area
+CARDNUMBER,Dwelling - Building (card) Number
+ALT_ID,Alternate Parcel Identification Number
+TAXYEAR,The current certified tax year
+ASOFDATE,The run date of this file
