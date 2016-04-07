@@ -1,346 +1,432 @@
 [
   {
     "name": "PARID",
-    "description": "Parcel Identification Number"
+    "title": "Parcel Identification Number",
+    "description": "A 16 character unique identifier for the parcel."
   },
   {
     "name": "PROPERTYHOUSENUM",
-    "description": "Property Location House Number"
+    "title": "House Number",
+    "description": "House Number for the  physical location of property; may be zero or blank."
   },
   {
     "name": "PROPERTYFRACTION",
-    "description": "Property Location House Number Fraction"
+    "title": "House Number Fraction",
+    "description": "Continued House Number information for the  physical location of property; such as 1/2, the house number ending range, or a letter."
   },
   {
     "name": "PROPERTYADDRESS",
-    "description": "Property Location Street Name"
+    "title": "Street",
+    "description": "Street name for the  physical location of the property, including directional indicators and suffixes."
   },
   {
     "name": "PROPERTYCITY",
-    "description": "Property Location City Name"
+    "title": "City",
+    "description": "City where the property is physically located."
   },
   {
     "name": "PROPERTYSTATE",
-    "description": "Property Location State Name"
+    "title": "State",
+    "description": "State where the property is physically located."
   },
   {
     "name": "PROPERTYUNIT",
-    "description": "Property Location Unit Number"
+    "title": "Unit Number",
+    "description": "Unit numbers for the property, such as condo units (e.g. 1, 3C,  115A, B13, etc�.)."
   },
   {
     "name": "PROPERTYZIP",
-    "description": "Property Location Zip code, first 5 digits"
+    "title": "Zip code",
+    "description": "Zip Code where the property is physically located."
   },
   {
     "name": "MUNICODE",
-    "description": "Municipality Code (Tax District)"
+    "title": "Municipality Code",
+    "description": "Municipality number associated with specified parcel."
   },
   {
     "name": "MUNIDESC",
-    "description": "Municipality Name"
+    "title": "Municipality Name",
+    "description": "Municipality name associated with specified parcel."
   },
   {
     "name": "SCHOOLCODE",
-    "description": "School District Code"
+    "title": "School District Code",
+    "description": "School district number associated with specified parcel."
   },
   {
     "name": "SCHOOLDESC",
-    "description": "School District Name"
+    "title": "School District Name",
+    "description": "School district name associated with specified parcel."
   },
   {
     "name": "LEGAL1",
-    "description": "Legal Description 1"
+    "title": "Legal Description 1",
+    "description": "Line 1 of parcel legal description from the Deed."
   },
   {
     "name": "LEGAL2",
-    "description": "Legal Description 2"
+    "title": "Legal Description 2",
+    "description": "Line 2 continuation of parcel legal description from the Deed."
   },
   {
     "name": "LEGAL3",
-    "description": "Legal Description 3"
+    "title": "Legal Description 3",
+    "description": "Line 3 continuation of parcel legal description from the Deed."
   },
   {
     "name": "NEIGHCODE",
-    "description": "Neighborhood Number"
+    "title": "Neighborhood Number",
+    "description": "The ID number for the valuation neighborhood containing this parcel.   Valuation neighborhoods were delineated as part of the 2013 reassessment.  A valuation neighborhood is a geographic area exhibiting a high degree of homogeneity in economic amenities, land use, economic trends, and property characteristics such as quality, age, and condition."
   },
   {
     "name": "NEIGHDESC",
-    "description": "Neighborhood Name"
+    "title": "Neighborhood Name",
+    "description": "The name associated with the valuation neighborhood number, if a name exists."
   },
   {
     "name": "TAXCODE",
-    "description": "Tax Status"
+    "title": "Tax Status",
+    "description": "Tax Status indicates whether or not real estate taxes apply to a parcel's assessment.   Parcels may be Taxable (must pay local taxes), Exempt (pay no taxes), or PURTA [Public Utility Realty Tax Act (if taxes are paid, they are paid into a state fund rather than to local taxing bodies)].\nValues:  'E' , 'T' or 'P' ."
   },
   {
     "name": "TAXDESC",
-    "description": "Tax Status Description"
+    "title": "Tax Status Description",
+    "description": "Description for Tax Status codes:  '10 - Exempt', '20 - Taxable' or '12 - Public Utility Realty Tax - PURTA'."
   },
   {
     "name": "TAXSUBCODE",
-    "description": "Tax Sub Code  (applies to PURTA only)"
+    "title": "Tax Sub Code",
+    "description": "Tax Sub Code applies only to parcels having the PURTA tax status.  Public Utilities may not have to pay taxes (E-Exempt) or they may have to pay taxes into a state fund (T-Taxable)."
   },
   {
     "name": "TAXSUBCODE_DESC",
-    "description": "Tax Sub Code Description"
+    "title": "Tax Sub Code Description",
+    "description": "Values:  E - 'PURTA - Exempt',  T - 'PURTA -Taxable' or null."
   },
   {
     "name": "OWNERCODE",
-    "description": "Owner Type Code 1"
+    "title": "Owner Type Code 1",
+    "description": "Numeric code categorizes owner as individuals ('REGULAR' ) vs corporations ('CORPORATION')."
   },
   {
     "name": "OWNERDESC",
-    "description": "Owner Description"
+    "title": "Owner Description",
+    "description": "Descriptions for numeric owner codes.  [e.g. individuals ('REGULAR' ) vs corporations ('CORPORATION')]"
   },
   {
     "name": "CLASS",
-    "description": "Class"
+    "title": "Class",
+    "description": "Broad self-explanatory categories for describing the  general use of a parcel.\nCategories:  R - RESIDENTIAL, U - UTILITIES, I - INDUSTRIAL, \nC - COMMERCIAL, O - OTHER, G - GOVERNMENT, F - AGRICULTURAL."
   },
   {
     "name": "CLASSDESC",
-    "description": "Class Description"
+    "title": "Class Description",
+    "description": "Broad self-explanatory categories for describing the  general use of a parcel.\nCategories:  R - RESIDENTIAL, U - UTILITIES, I - INDUSTRIAL, \nC - COMMERCIAL, O - OTHER, G - GOVERNMENT, F - AGRICULTURAL."
   },
   {
     "name": "USECODE",
-    "description": "Land Use Code"
+    "title": "Land Use Code",
+    "description": "More detailed than class, these categories further describe the primary use of the parcel.  There are about 200 self-explanatory categories."
   },
   {
     "name": "USEDESC",
-    "description": "Land Use Code Description"
+    "title": "Land Use Code Description",
+    "description": "More detailed than class, these categories further describe the primary use of the parcel.  There are about 200 self-explanatory categories."
   },
   {
     "name": "LOTAREA",
-    "description": "Sum of Area of Land"
+    "title": "Sum of Area of Land",
+    "description": "Total square footage of land."
   },
   {
     "name": "HOMESTEADFLAG",
-    "description": "Homestead Flag"
+    "title": "Homestead Flag",
+    "description": "A property owner may apply for a homestead reduction on their primary residence.  If granted (indicated by 'HOM') the owner will receive a standard reduction on their assessment for County taxes under Act 50.  They may also receive a variable reduction on their School taxes under Act 1."
   },
   {
     "name": "CLEANGREEN",
-    "description": "Clean and Green Flag"
+    "title": "Clean and Green Flag",
+    "description": "This field indicates that a parcel is receiving a reduction in their assessment due to the state�s Clean and Green preferential assessment program."
   },
   {
     "name": "FARMSTEADFLAG",
-    "description": "Farmstead Flag"
+    "title": "Farmstead Flag",
+    "description": "A property owner may apply for a farmstead reduction if their primary residence is a farm with at least 10 contiguous acres.  If granted (indicated by 'FRM') the owner will receive a standard reduction on their assessment for County taxes under Act 50."
   },
   {
     "name": "ABATEMENTFLAG",
-    "description": "Abatement Flag"
+    "title": "Abatement Flag",
+    "description": "This field indicates that a parcel is receiving a reduction in their County assessment due to a County-approved incentive program.   Specific programs and amounts vary according to the County resolutions and ordinances in effect at the time.  Consult the Office of Property Assessments web page to see the current types of Abatements.\n\nAbatements have been available to residential property owners as incentives for new construction and for building improvements.  Abatements for commercial properties have been available for local economic revitalization programs.\n\nValues:  'Y' or null."
   },
   {
     "name": "RECORDDATE",
-    "description": "Record Date"
+    "title": "Record Date",
+    "description": "Date the sale was recorded \nin the Department of Real Estate (mm/dd/yyyy)."
   },
   {
     "name": "SALEDATE",
-    "description": "Sale Date"
+    "title": "Sale Date",
+    "description": "Date the sale occurred  (mm/dd/yyyy)."
   },
   {
     "name": "SALEPRICE",
-    "description": "Sale Price"
+    "title": "Sale Price",
+    "description": "Amount paid for the sale \n(also called the consideration)."
   },
   {
     "name": "SALECODE",
-    "description": "Sale Validity Code"
+    "title": "Sale Validity Code",
+    "description": "A subjective categorization (code) as to whether or not the sale price was representative of current market value. These categorizations are subject to change as sales are reviewed by the Office of Property Assessments or during a reassessment. See further details in the Sale Validation Codes Details tab of the \"Property Sale Transaction Data Dictionary\"."
   },
   {
     "name": "SALEDESC",
-    "description": "Sale Validity Code Description"
+    "title": "Sale Validity Code Description",
+    "description": "A subjective categorization (description) as to whether or not the sale price was representative of current market value. These categorizations are subject to change as sales are reviewed by the Office of Property Assessments or during a reassessment. See further details in the Sale Validation Codes Details tab of the \"Property Sale Transaction Data Dictionary\"."
   },
   {
     "name": "DEEDBOOK",
-    "description": "Book Number"
+    "title": "Book Number",
+    "description": "Cross-reference to the physical book number \nwhere the deed is on file\nin the Department of Real Estate."
   },
   {
     "name": "DEEDPAGE",
-    "description": "Page Number"
+    "title": "Page Number",
+    "description": "Page within the specified deed book \ncorresponding to the first page of \nthis physical deed."
   },
   {
     "name": "PREVSALEDATE",
-    "description": "Previous Sale Date"
+    "title": "Previous Sale Date",
+    "description": "Date the previous sale occurred  (mm/dd/yyyy)."
   },
   {
     "name": "PREVSALEPRICE",
-    "description": "Previous Sale Price"
+    "title": "Previous Sale Price",
+    "description": "Amount paid for the previous sale."
   },
   {
     "name": "PREVSALEDATE2",
-    "description": "Previous Sale Date 2"
+    "title": "Previous Sale Date 2",
+    "description": "Date the 2nd previous sale occurred  (mm/dd/yyyy)."
   },
   {
     "name": "PREVSALEPRICE2",
-    "description": "Previous Sale Price 2"
+    "title": "Previous Sale Price 2",
+    "description": "Amount paid for the 2nd previous sale."
   },
   {
     "name": "CHANGENOTICEADDRESS1",
-    "description": "Change Notice Full Address 1"
+    "title": "Change Notice Full Address 1",
+    "description": "Address of owner of the property."
   },
   {
     "name": "CHANGENOTICEADDRESS2",
-    "description": "Change Notice Full Address 2"
+    "title": "Change Notice Full Address 2",
+    "description": "Address of owner of the property."
   },
   {
     "name": "CHANGENOTICEADDRESS3",
-    "description": "Change Notice Full Address 3"
+    "title": "Change Notice Full Address 3",
+    "description": "Address of owner of the property."
   },
   {
     "name": "CHANGENOTICEADDRESS4",
-    "description": "Change Notice Full Address 4"
+    "title": "Change Notice Full Address 4",
+    "description": "Address of owner of the property."
   },
   {
     "name": "COUNTYBUILDING",
-    "description": "County Assessed Value for Building"
+    "title": "County Assessed Value for Building",
+    "description": "The assessed property value of the building for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
     "name": "COUNTYLAND",
-    "description": "County Assessed Value for Land"
+    "title": "County Assessed Value for Land",
+    "description": "The assessed property value of the land for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
     "name": "COUNTYTOTAL",
-    "description": "County Assessed Value Total"
+    "title": "County Assessed Value Total",
+    "description": "The assessed property value (land and building together) for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
     "name": "COUNTYEXEMPTBLDG",
-    "description": "County Exempt Building Amount"
+    "title": "County Exempt Building Amount",
+    "description": "The amount of assessment reduction granted on a building by the County (for county taxes only) under incentive programs for new construction, building improvements or local economic revitalization."
   },
   {
     "name": "LOCALBUILDING",
-    "description": "Local  Assessed Value for Building"
+    "title": "Local  Assessed Value for Building",
+    "description": "The assessed property value of the building for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
     "name": "LOCALLAND",
-    "description": "Local Assessed Value for Land"
+    "title": "Local Assessed Value for Land",
+    "description": "The assessed property value of the land for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
     "name": "LOCALTOTAL",
-    "description": "Local Assessed Value Total"
+    "title": "Local Assessed Value Total",
+    "description": "The assessed property value (land and building together) for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
     "name": "FAIRMARKETBUILDING",
-    "description": "Fair Market Building Value"
+    "title": "Fair Market Building Value",
+    "description": "The base year appraised fair market value of the building.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
     "name": "FAIRMARKETLAND",
-    "description": "Fair Market Land Value"
+    "title": "Fair Market Land Value",
+    "description": "The base year appraised fair market value of the land.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
     "name": "FAIRMARKETTOTAL",
-    "description": "Fair Market Total Value"
+    "title": "Fair Market Total Value",
+    "description": "The base year appraised fair market value of land and building together.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
     "name": "STYLE",
-    "description": "Dwelling - Architectural Style"
+    "title": "Architectural Style",
+    "description": "The building style."
   },
   {
     "name": "STYLEDESC",
-    "description": "Dwelling - Architectural Style Description"
+    "title": "Architectural Style Description",
+    "description": "Description for building style."
   },
   {
     "name": "STORIES",
-    "description": "Dwelling - Number of Stories"
+    "title": "Number of Stories",
+    "description": "Refers to the story height of the main dwelling.  Attics are not included.  A fractional story height (e.g. 1.5) denotes an upper story where part of the living space is less than full height due to a sloped roof or dormers."
   },
   {
     "name": "YEARBLT",
-    "description": "Dwelling - Year Built"
+    "title": "Year Built",
+    "description": "The original date of construction."
   },
   {
     "name": "EXTERIORFINISH",
-    "description": "Dwelling - Exterior Wall code"
+    "title": "Exterior Wall code",
+    "description": "The exterior wall type."
   },
   {
     "name": "EXTFINISH_DESC",
-    "description": "Dwelling - Exterior Wall Description"
+    "title": "Exterior Wall Description",
+    "description": "Description of building material used for exterior walls."
   },
   {
     "name": "ROOF",
-    "description": "Dwelling - Roof"
+    "title": "Roof",
+    "description": "The roofing material type."
   },
   {
     "name": "ROOFDESC",
-    "description": "Dwelling - Roof Description"
+    "title": "Roof Description",
+    "description": "Description of roofing material."
   },
   {
     "name": "BASEMENT",
-    "description": "Dwelling - Basement"
+    "title": "Basement",
+    "description": "This code describes the basement under the main part of the dwelling, and categorizes its size in relation to the main dwelling. \n1. NONE  - there is no basement.\n2. SLAB/PIERS -indicates slab or pier construction.\n3. CRAWL - indicates crawl space to 1/4 basement area.\n4. PART - indicates basement is between 1/4 and 3/4 of the main dwelling area.\n5. FULL - indicates 3/4 to full basement area."
   },
   {
     "name": "BASEMENTDESC",
-    "description": "Dwelling - Basement Description"
+    "title": "Basement Description",
+    "description": "Description of basement type, if one exists."
   },
   {
     "name": "GRADE",
-    "description": "Dwelling - Grade"
+    "title": "Grade",
+    "description": "Grade refers to quality of construction:\n\nA, X, XX  - have superior materials and workmanship and are typically custom designed or historic homes.\nB - construction has above average construction and may exceed code.\nC - is the standard, construction meets code, and is typical of current materials and methods.\nD - construction is adequate, but below average with minimal features.\nE - construction lacks some basics and may be a \"camp\" or seasonal structure.\n\nPluses and minuses may be used."
   },
   {
     "name": "GRADEDESC",
-    "description": "Dwelling - Grade Description"
+    "title": "Grade Description",
+    "description": "Grade refers to quality of construction:\n\nA, X, XX  - Very Good and Excellent - have superior materials and workmanship and are typically custom designed or historic homes.\nB - Good - construction has above average construction and may exceed code.\nC - Average - is the standard, construction meets code, and is typical of current materials and methods.\nD - Below Average - construction is adequate, but below average with minimal features.\nE - Poor - construction lacks some basics and may be a \"camp\" or seasonal structure.\n\nPluses and minuses may be used."
   },
   {
     "name": "CONDITION",
-    "description": "Dwelling - Condition"
+    "title": "Condition",
+    "description": "Code for the overall physical condition or state of repair of a structure, relative to its age. Indicated by number and description:\n\n1- Excellent - outstanding maintenance.\n7- Very good - high degree of upkeep.\n2- Good - above ordinary maintenance.\n3- Average - ordinary maintenance, shows normal wear and tear.\n4- Fair - sound but with noticeable deferred maintenance.\n5- Poor - structural deterioration caused by significant and chronic deferred maintenance.\n8- Very poor - barely livable.\n6- Unsound - not suitable for habitation."
   },
   {
     "name": "CONDITIONDESC",
-    "description": "Dwelling - Condition Description"
+    "title": "Condition Description",
+    "description": "Description for the overall physical condition or state of repair of a structure, relative to its age. Indicated by number and description:\n\n1- Excellent - outstanding maintenance.\n7- Very good - high degree of upkeep.\n2- Good - above ordinary maintenance.\n3- Average - ordinary maintenance, shows normal wear and tear.\n4- Fair - sound but with noticeable deferred maintenance.\n5- Poor - structural deterioration caused by significant and chronic deferred maintenance.\n8- Very poor - barely livable.\n6- Unsound - not suitable for habitation."
   },
   {
     "name": "CDU",
-    "description": "Dwelling - CDU"
+    "title": "CDU",
+    "description": "CDU is a composite rating for structures measuring: \nCondition (physical condition relative to age), \nDesirability (location, style), and \nUtility (functional obsolescence of layout or design).  \nProper neighborhood delineation compensates for most Desirability and Utility issues, leaving Physical Condition the most influential factor in CDU.  CDU will be null for vacant land.\n \nExcellent - Perfect condition, very attractive and highly desirable.\nVery good - Slight deterioration, but still quite attractive and desirable.\nGood - Minor visible deterioration, slightly less attractive and desirable, but still useful.\nAverage - Normal wear and tear, average utility and desirability.\nFair - Usable but marked deterioration.  Somewhat unattractive and undesirable.\nPoor - Obvious deterioration, definitely undesirable.\nVery poor - Extremely undesirable and barely usable.\nUnsound - Unfit for use."
   },
   {
     "name": "CDUDESC",
-    "description": "Dwelling - CDU Description"
+    "title": "CDU Description",
+    "description": "CDU is a composite rating for structures measuring: \nCondition (physical condition relative to age), \nDesirability (location, style), and \nUtility (functional obsolescence of layout or design).  \nProper neighborhood delineation compensates for most Desirability and Utility issues, leaving Physical Condition the most influential factor in CDU.  CDU will be null for vacant land.\n \nExcellent - Perfect condition, very attractive and highly desirable.\nVery good - Slight deterioration, but still quite attractive and desirable.\nGood - Minor visible deterioration, slightly less attractive and desirable, but still useful.\nAverage - Normal wear and tear, average utility and desirability.\nFair - Usable but marked deterioration.  Somewhat unattractive and undesirable.\nPoor - Obvious deterioration, definitely undesirable.\nVery poor - Extremely undesirable and barely usable.\nUnsound - Unfit for use."
   },
   {
     "name": "TOTALROOMS",
-    "description": "Dwelling - Total Rooms"
+    "title": "Total Rooms",
+    "description": "Total number of rooms in the main dwelling.� This includes Rec-rooms and FBLA (Finished Basement Living Area).� This count is for descriptive purposes only and does not affect assessed value."
   },
   {
     "name": "BEDROOMS",
-    "description": "Dwelling - Bedrooms"
+    "title": "Bedrooms",
+    "description": "The total number of separate rooms designed to be used as bedrooms.  If a room was designed to be a bedroom, but is being utilized for some other purpose - such as a den, it is to be included in this count.  This is for descriptive purposes only and does not affect value."
   },
   {
     "name": "FULLBATHS",
-    "description": "Dwelling - Full Baths"
+    "title": "Full Baths",
+    "description": "A full bath has a toilet, sink and bathing facility (shower or tub)."
   },
   {
     "name": "HALFBATHS",
-    "description": "Dwelling - Half Baths"
+    "title": "Half Baths",
+    "description": "A half bath has a toilet and sink only."
   },
   {
     "name": "HEATINGCOOLING",
-    "description": "Dwelling - Heating Cooling"
+    "title": "Heating Cooling",
+    "description": "Code for the type of Heating / Cooling system."
   },
   {
     "name": "HEATINGCOOLINGDESC",
-    "description": "Dwelling - Heating Cooling Description"
+    "title": "Heating Cooling Description",
+    "description": "Description for the type Heating / Cooling system."
   },
   {
     "name": "FIREPLACES",
-    "description": "Dwelling - Number of Wood burning Fireplaces Stacks"
+    "title": "Number of Wood burning Fireplaces Stacks",
+    "description": "The number of wood-burning fireplace chimneys/vents.  This need not equal the number of working fireplaces in the dwelling.  This number excludes roof stacks built for bathroom venting, natural gas outlets, etc."
   },
   {
     "name": "BSMTGARAGE",
-    "description": "Dwelling - Integral Basement Garage (Number of Cars)"
+    "title": "Integral Basement Garage (Number of Cars)",
+    "description": "The number of vehicle spaces available in a garage that is basement level and comprises a portion of the main dwelling�s basement.� This does not include detached or attached above-grade garages."
   },
   {
     "name": "FINISHEDLIVINGAREA",
-    "description": "Dwelling - Total Square Feet of Living Area"
+    "title": "Total Square Feet of Living Area",
+    "description": "Finished living area, as measured from the outside of the structure."
   },
   {
     "name": "CARDNUMBER",
-    "description": "Dwelling - Building (card) Number"
+    "title": "Building (card) Number",
+    "description": "For parcels having more than one building only one building is shown. This field contains the number of the building being shown (which is usually the main dwelling)."
   },
   {
     "name": "ALT_ID",
-    "description": "Alternate Parcel Identification Number"
+    "title": "Alternate Parcel Identification Number",
+    "description": "In tax year 2007, parcel ID numbers within certain municipalities were converted to conform to  Allegheny County's standard naming convention for parcel ID's.   For affected parcels, this field shows the old parcel ID that was in use for tax years 2006 and prior."
   },
   {
     "name": "TAXYEAR",
-    "description": "The current certified tax year"
+    "title": "The current certified tax year",
+    "description": "The  applicable year for which real estate taxes would apply for the parcel.  Allegheny County currently assesses value based on how the parcel stood as of Jan 1 of that year.   \n\nThis need not correspond to a calendar year."
   },
   {
     "name": "ASOFDATE",
-    "description": "The run date of this file"
+    "title": "The run date of this file",
+    "description": "The run date of this file."
   }
 ]
