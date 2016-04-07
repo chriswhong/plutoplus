@@ -1,330 +1,432 @@
 [
   {
-    "name":"address",
-    "description":"An address for the tax lot."
+    "name": "PARID",
+    "title": "Parcel Identification Number",
+    "description": "A 16 character unique identifier for the parcel."
   },
   {
-    "name":"allzoning1",
-    "description":"ZONING, ALL COMPONENTS 1 consists of the zoning classification occupying the greatest percentage of the tax lot's area and a commercial overlay and special purpose district and limited height district assigned to the tax lot"
+    "name": "PROPERTYHOUSENUM",
+    "title": "House Number",
+    "description": "House Number for the  physical location of property; may be zero or blank."
   },
   {
-    "name":"allzoning2",
-    "description":"If the tax lot is divided by zoning boundary lines, AllZoning2 consists of the primary zoning classification occupying the second greatest percentage of the tax lot's area and a commercial overlay and special purpose or limited height district assigned to the tax lot."
+    "name": "PROPERTYFRACTION",
+    "title": "House Number Fraction",
+    "description": "Continued House Number information for the  physical location of property; such as 1/2, the house number ending range, or a letter."
   },
   {
-    "name":"appbbl",
-    "description":"The originating Borough, Tax Block and Tax Lot from the apportionment prior to the merge, split or property's conversion to a condominium. The Apportionment BBL is only available for mergers, splits and conversions since 1984."
+    "name": "PROPERTYADDRESS",
+    "title": "Street",
+    "description": "Street name for the  physical location of the property, including directional indicators and suffixes."
   },
   {
-    "name":"appdate",
-    "description":"The date of the Apportionment in the format MM/DD/YYYY."
+    "name": "PROPERTYCITY",
+    "title": "City",
+    "description": "City where the property is physically located."
   },
   {
-    "name":"areasource",
-    "description":"A code indicating the source file that was used to determine the tax lot's total building floor area."
+    "name": "PROPERTYSTATE",
+    "title": "State",
+    "description": "State where the property is physically located."
   },
   {
-    "name":"assessland",
-    "description":"The actual assessed land value for Fiscal Year 2014"
+    "name": "PROPERTYUNIT",
+    "title": "Unit Number",
+    "description": "Unit numbers for the property, such as condo units (e.g. 1, 3C,  115A, B13, etc�.)."
   },
   {
-    "name":"assesstot",
-    "description":"The actual assessed total value for Fiscal Year 2014."
+    "name": "PROPERTYZIP",
+    "title": "Zip code",
+    "description": "Zip Code where the property is physically located."
   },
   {
-    "name":"bbl",
-    "description":"A concatenation of the BoroCode, TaxBlock and the corresponding TaxLot. This name consists of the tax block followed by the tax lot. The tax block is one to five numeric digits, preceded with leading zeros when the block is less than five digits. The tax lot is one to four digits and is preceded with leading zeros when the lot is less than four digits."
+    "name": "MUNICODE",
+    "title": "Municipality Code",
+    "description": "Municipality number associated with specified parcel."
   },
   {
-    "name":"bldgarea",
-    "description":"The total gross area in square feet."
+    "name": "MUNIDESC",
+    "title": "Municipality Name",
+    "description": "Municipality name associated with specified parcel."
   },
   {
-    "name":"bldgclass",
-    "description":"A code describing the major use of structures on the tax lot."
+    "name": "SCHOOLCODE",
+    "title": "School District Code",
+    "description": "School district number associated with specified parcel."
   },
   {
-    "name":"bldgdepth",
-    "description":"The building's depth, which is the effective perpendicular distance, measured in feet."
+    "name": "SCHOOLDESC",
+    "title": "School District Name",
+    "description": "School district name associated with specified parcel."
   },
   {
-    "name":"bldgfront",
-    "description":"The building's frontage along the street measured in feet."
+    "name": "LEGAL1",
+    "title": "Legal Description 1",
+    "description": "Line 1 of parcel legal description from the Deed."
   },
   {
-    "name":"block",
-    "description":"The tax block in which the tax lot is located. Each tax block is unique within a borough (see BOROUGH)."
+    "name": "LEGAL2",
+    "title": "Legal Description 2",
+    "description": "Line 2 continuation of parcel legal description from the Deed."
   },
   {
-    "name":"borocode",
-    "description":"The borough the tax lot is located in."
+    "name": "LEGAL3",
+    "title": "Legal Description 3",
+    "description": "Line 3 continuation of parcel legal description from the Deed."
   },
   {
-    "name":"bsmtcode",
-    "description":"A code describing the basement type/grade"
+    "name": "NEIGHCODE",
+    "title": "Neighborhood Number",
+    "description": "The ID number for the valuation neighborhood containing this parcel.   Valuation neighborhoods were delineated as part of the 2013 reassessment.  A valuation neighborhood is a geographic area exhibiting a high degree of homogeneity in economic amenities, land use, economic trends, and property characteristics such as quality, age, and condition."
   },
   {
-    "name":"builtcode",
-    "description":"A code indicating whether the year the building was built (YearBuilt) was an estimate."
+    "name": "NEIGHDESC",
+    "title": "Neighborhood Name",
+    "description": "The name associated with the valuation neighborhood number, if a name exists."
   },
   {
-    "name":"builtfar",
-    "description":"The Built Floor Area Ratio (FAR) is the total building floor area divided by the area of the tax lot."
+    "name": "TAXCODE",
+    "title": "Tax Status",
+    "description": "Tax Status indicates whether or not real estate taxes apply to a parcel's assessment.   Parcels may be Taxable (must pay local taxes), Exempt (pay no taxes), or PURTA [Public Utility Realty Tax Act (if taxes are paid, they are paid into a state fund rather than to local taxing bodies)].\nValues:  'E' , 'T' or 'P' ."
   },
   {
-    "name":"cb2010",
-    "description":"The 2010 census block in which the tax lot is located. Each census block is unique within a census tract (see CT2010)."
+    "name": "TAXDESC",
+    "title": "Tax Status Description",
+    "description": "Description for Tax Status codes:  '10 - Exempt', '20 - Taxable' or '12 - Public Utility Realty Tax - PURTA'."
   },
   {
-    "name":"cd",
-    "description":"The community district (CD) or joint interest area (JIA) the tax lot is located in, or partially located."
+    "name": "TAXSUBCODE",
+    "title": "Tax Sub Code",
+    "description": "Tax Sub Code applies only to parcels having the PURTA tax status.  Public Utilities may not have to pay taxes (E-Exempt) or they may have to pay taxes into a state fund (T-Taxable)."
   },
   {
-    "name":"comarea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for commercial use."
+    "name": "TAXSUBCODE_DESC",
+    "title": "Tax Sub Code Description",
+    "description": "Values:  E - 'PURTA - Exempt',  T - 'PURTA -Taxable' or null."
   },
   {
-    "name":"commfar",
-    "description":"The Maximum Allowable Commercial Floor Area Ratio (FAR) . This name contains from one to four numeric digits with an imbedded decimal after the second digit."
+    "name": "OWNERCODE",
+    "title": "Owner Type Code 1",
+    "description": "Numeric code categorizes owner as individuals ('REGULAR' ) vs corporations ('CORPORATION')."
   },
   {
-    "name":"condono",
-    "description":"The condominium number assigned to the complex."
+    "name": "OWNERDESC",
+    "title": "Owner Description",
+    "description": "Descriptions for numeric owner codes.  [e.g. individuals ('REGULAR' ) vs corporations ('CORPORATION')]"
   },
   {
-    "name":"council",
-    "description":"The city council district in which the tax lot is located."
+    "name": "CLASS",
+    "title": "Class",
+    "description": "Broad self-explanatory categories for describing the  general use of a parcel.\nCategories:  R - RESIDENTIAL, U - UTILITIES, I - INDUSTRIAL, \nC - COMMERCIAL, O - OTHER, G - GOVERNMENT, F - AGRICULTURAL."
   },
   {
-    "name":"ct2010",
-    "description":"The 2010 US census tract in which the tax lot is located. Each census tract is unique within a borough."
+    "name": "CLASSDESC",
+    "title": "Class Description",
+    "description": "Broad self-explanatory categories for describing the  general use of a parcel.\nCategories:  R - RESIDENTIAL, U - UTILITIES, I - INDUSTRIAL, \nC - COMMERCIAL, O - OTHER, G - GOVERNMENT, F - AGRICULTURAL."
   },
   {
-    "name":"easements",
-    "description":"The number of easements on the tax lot. If the number is zero, the tax lot has no easement."
+    "name": "USECODE",
+    "title": "Land Use Code",
+    "description": "More detailed than class, these categories further describe the primary use of the parcel.  There are about 200 self-explanatory categories."
   },
   {
-    "name":"edesignum",
-    "description":"The E-Designation number assigned to the tax lot."
+    "name": "USEDESC",
+    "title": "Land Use Code Description",
+    "description": "More detailed than class, these categories further describe the primary use of the parcel.  There are about 200 self-explanatory categories."
   },
   {
-    "name":"exemptland",
-    "description":"The actual exempt land value, which is determined differently for each exemption program, is the dollar amount related to that portion of the tax lot that has received an exemption or abatement for Fiscal Year 2014."
+    "name": "LOTAREA",
+    "title": "Sum of Area of Land",
+    "description": "Total square footage of land."
   },
   {
-    "name":"exempttot",
-    "description":"The actual exempt total value, which is determined differently for each exemption program, is the dollar amount related to that portion of the tax lot that has received an exemption or abatement for Fiscal Year 2014."
+    "name": "HOMESTEADFLAG",
+    "title": "Homestead Flag",
+    "description": "A property owner may apply for a homestead reduction on their primary residence.  If granted (indicated by 'HOM') the owner will receive a standard reduction on their assessment for County taxes under Act 50.  They may also receive a variable reduction on their School taxes under Act 1."
   },
   {
-    "name":"ext",
-    "description":"A code identifying whether there is an extension or free standing structure on the lot which is not the primary structure"
+    "name": "CLEANGREEN",
+    "title": "Clean and Green Flag",
+    "description": "This field indicates that a parcel is receiving a reduction in their assessment due to the state�s Clean and Green preferential assessment program."
   },
   {
-    "name":"facilfar",
-    "description":"The Maximum Allowable Facility Floor Area Ratio (FAR). This name contains from one to four numeric digits with an imbedded decimal after the second digit."
+    "name": "FARMSTEADFLAG",
+    "title": "Farmstead Flag",
+    "description": "A property owner may apply for a farmstead reduction if their primary residence is a farm with at least 10 contiguous acres.  If granted (indicated by 'FRM') the owner will receive a standard reduction on their assessment for County taxes under Act 50."
   },
   {
-    "name":"factryarea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for factory, warehouse or loft use."
+    "name": "ABATEMENTFLAG",
+    "title": "Abatement Flag",
+    "description": "This field indicates that a parcel is receiving a reduction in their County assessment due to a County-approved incentive program.   Specific programs and amounts vary according to the County resolutions and ordinances in effect at the time.  Consult the Office of Property Assessments web page to see the current types of Abatements.\n\nAbatements have been available to residential property owners as incentives for new construction and for building improvements.  Abatements for commercial properties have been available for local economic revitalization programs.\n\nValues:  'Y' or null."
   },
   {
-    "name":"firecomp",
-    "description":"The fire company that services the tax lot. This name consists of four characters, the first of which is an alphabetic code identifying the type of fire company, where E stands for Engine and L stands for Ladder. The type code is followed by a one to three digit fire company number which is preceded with leading zeros if the company number is less than three digits."
+    "name": "RECORDDATE",
+    "title": "Record Date",
+    "description": "Date the sale was recorded \nin the Department of Real Estate (mm/dd/yyyy)."
   },
   {
-    "name":"garagearea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for garage use."
+    "name": "SALEDATE",
+    "title": "Sale Date",
+    "description": "Date the sale occurred  (mm/dd/yyyy)."
   },
   {
-    "name":"healtharea",
-    "description":"The health area that the tax lot is located in."
+    "name": "SALEPRICE",
+    "title": "Sale Price",
+    "description": "Amount paid for the sale \n(also called the consideration)."
   },
   {
-    "name":"histdist",
-    "description":"The name of the Historic District as designated by the New York City Landmarks Preservation Commission."
+    "name": "SALECODE",
+    "title": "Sale Validity Code",
+    "description": "A subjective categorization (code) as to whether or not the sale price was representative of current market value. These categorizations are subject to change as sales are reviewed by the Office of Property Assessments or during a reassessment. See further details in the Sale Validation Codes Details tab of the \"Property Sale Transaction Data Dictionary\"."
   },
   {
-    "name":"irrlotcode",
-    "description":"A code indicating whether the tax lot is irregularly shaped."
+    "name": "SALEDESC",
+    "title": "Sale Validity Code Description",
+    "description": "A subjective categorization (description) as to whether or not the sale price was representative of current market value. These categorizations are subject to change as sales are reviewed by the Office of Property Assessments or during a reassessment. See further details in the Sale Validation Codes Details tab of the \"Property Sale Transaction Data Dictionary\"."
   },
   {
-    "name":"landmark",
-    "description":"The name of an individual landmark, landmark site (e.g. Richmondtown Restoration), or an interior landmark, as designated by the New York City Landmarks Preservation Commission."
+    "name": "DEEDBOOK",
+    "title": "Book Number",
+    "description": "Cross-reference to the physical book number \nwhere the deed is on file\nin the Department of Real Estate."
   },
   {
-    "name":"landuse",
-    "description":"A code for the tax lot's land use category, modified for display of parks, New York City Department of Parks and Recreation properties and New York State Office of Parks, Recreation and Historic Preservation properties in the appropriate category on land use maps."
+    "name": "DEEDPAGE",
+    "title": "Page Number",
+    "description": "Page within the specified deed book \ncorresponding to the first page of \nthis physical deed."
   },
   {
-    "name":"lot",
-    "description":"The number of the tax lot. Each tax lot is unique within a tax block (see BLOCK)."
+    "name": "PREVSALEDATE",
+    "title": "Previous Sale Date",
+    "description": "Date the previous sale occurred  (mm/dd/yyyy)."
   },
   {
-    "name":"lotarea",
-    "description":"Total area of the tax lot, expressed in square feet rounded to the nearest"
+    "name": "PREVSALEPRICE",
+    "title": "Previous Sale Price",
+    "description": "Amount paid for the previous sale."
   },
   {
-    "name":"lotdepth",
-    "description":"The tax lot's depth measured in feet."
+    "name": "PREVSALEDATE2",
+    "title": "Previous Sale Date 2",
+    "description": "Date the 2nd previous sale occurred  (mm/dd/yyyy)."
   },
   {
-    "name":"lotfront",
-    "description":"The tax lot's frontage measured in feet."
+    "name": "PREVSALEPRICE2",
+    "title": "Previous Sale Price 2",
+    "description": "Amount paid for the 2nd previous sale."
   },
   {
-    "name":"lottype",
-    "description":"A code indicating the location of the tax lot to another tax lot and/or the water"
+    "name": "CHANGENOTICEADDRESS1",
+    "title": "Change Notice Full Address 1",
+    "description": "Address of owner of the property."
   },
   {
-    "name":"ltdheight",
-    "description":"The limited height district assigned to the tax lot."
+    "name": "CHANGENOTICEADDRESS2",
+    "title": "Change Notice Full Address 2",
+    "description": "Address of owner of the property."
   },
   {
-    "name":"numbldgs",
-    "description":"The number of buildings on the tax lot."
+    "name": "CHANGENOTICEADDRESS3",
+    "title": "Change Notice Full Address 3",
+    "description": "Address of owner of the property."
   },
   {
-    "name":"numfloors",
-    "description":"In the primary building on the tax lot, the number of full and partial stories starting from the ground floor."
+    "name": "CHANGENOTICEADDRESS4",
+    "title": "Change Notice Full Address 4",
+    "description": "Address of owner of the property."
   },
   {
-    "name":"officearea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for office use."
+    "name": "COUNTYBUILDING",
+    "title": "County Assessed Value for Building",
+    "description": "The assessed property value of the building for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
-    "name":"otherarea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for other than Residential, Office, Retail, Garage, Storage, Loft or Factory use."
+    "name": "COUNTYLAND",
+    "title": "County Assessed Value for Land",
+    "description": "The assessed property value of the land for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
-    "name":"overlay1",
-    "description":"The commercial overlay assigned to the tax lot."
+    "name": "COUNTYTOTAL",
+    "title": "County Assessed Value Total",
+    "description": "The assessed property value (land and building together) for county tax purposes.   This amount reflects the remaining assessment after any preferential assessments (such as clean & green) or county reductions (such as homesteads or other abatements) have been deducted from the base year market values."
   },
   {
-    "name":"overlay2",
-    "description":"A commercial overlay associated with the tax lot"
+    "name": "COUNTYEXEMPTBLDG",
+    "title": "County Exempt Building Amount",
+    "description": "The amount of assessment reduction granted on a building by the County (for county taxes only) under incentive programs for new construction, building improvements or local economic revitalization."
   },
   {
-    "name":"ownername",
-    "description":"The name of the owner of the tax lot."
+    "name": "LOCALBUILDING",
+    "title": "Local  Assessed Value for Building",
+    "description": "The assessed property value of the building for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
-    "name":"ownertype",
-    "description":"A code indicating type of ownership for the tax lot."
+    "name": "LOCALLAND",
+    "title": "Local Assessed Value for Land",
+    "description": "The assessed property value of the land for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
-    "name":"plutomapid",
-    "description":"A code indicating whether the tax lot is in the PLUTO file and/or the modified DTM and/or the modified DTM Clipped to the Shoreline File."
+    "name": "LOCALTOTAL",
+    "title": "Local Assessed Value Total",
+    "description": "The assessed property value (land and building together) for local tax purposes (for schools and municipalities).   This amount reflects the remaining assessment after preferential assessments (such as clean & green) have been deducted from the base year market values.   This value is often higher than the county assessed value since county-only incentives (such as homesteads) have not been deducted."
   },
   {
-    "name":"policeprct",
-    "description":"The police precinct in which the tax lot is located."
+    "name": "FAIRMARKETBUILDING",
+    "title": "Fair Market Building Value",
+    "description": "The base year appraised fair market value of the building.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
-    "name":"proxcode",
-    "description":"The physical relationship of the building to neighboring buildings."
+    "name": "FAIRMARKETLAND",
+    "title": "Fair Market Land Value",
+    "description": "The base year appraised fair market value of the land.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
-    "name":"resarea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for residential use."
+    "name": "FAIRMARKETTOTAL",
+    "title": "Fair Market Total Value",
+    "description": "The base year appraised fair market value of land and building together.  This value has had no reductions, not even Clean and Green preferential assessment reduction.  Allegheny County currently uses a base year of 2012."
   },
   {
-    "name":"residfar",
-    "description":"The Maximum Allowable Residential Floor Area Ratio (FAR). This name contains from one to four numeric digits with an imbedded decimal after the second digit."
+    "name": "STYLE",
+    "title": "Architectural Style",
+    "description": "The building style."
   },
   {
-    "name":"retailarea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for retail use."
+    "name": "STYLEDESC",
+    "title": "Architectural Style Description",
+    "description": "Description for building style."
   },
   {
-    "name":"sanborn",
-    "description":"The Sanborn Map Company map number associated with the tax block and lot. Sanborn map number format is Borough Code / Volume Number / Page Number."
+    "name": "STORIES",
+    "title": "Number of Stories",
+    "description": "Refers to the story height of the main dwelling.  Attics are not included.  A fractional story height (e.g. 1.5) denotes an upper story where part of the living space is less than full height due to a sloped roof or dormers."
   },
   {
-    "name":"schooldist",
-    "description":"The community school district in which the tax lot is located."
+    "name": "YEARBLT",
+    "title": "Year Built",
+    "description": "The original date of construction."
   },
   {
-    "name":"spdist1",
-    "description":"The special purpose district assigned to the tax lot."
+    "name": "EXTERIORFINISH",
+    "title": "Exterior Wall code",
+    "description": "The exterior wall type."
   },
   {
-    "name":"spdist2",
-    "description":"The special purpose district assigned to the tax lot."
+    "name": "EXTFINISH_DESC",
+    "title": "Exterior Wall Description",
+    "description": "Description of building material used for exterior walls."
   },
   {
-    "name":"splitzone",
-    "description":"A code indicating whether the tax lot is split by one or more zoning boundary lines."
+    "name": "ROOF",
+    "title": "Roof",
+    "description": "The roofing material type."
   },
   {
-    "name":"strgearea",
-    "description":"An estimate of the exterior dimensions of the portion of the structure(s) allocated for storage or loft purposes."
+    "name": "ROOFDESC",
+    "title": "Roof Description",
+    "description": "Description of roofing material."
   },
   {
-    "name":"taxmap",
-    "description":"The Department of Finance paper tax map Volume Number associated with the tax block and lot. Tax map number format is Borough Code / Volume Number / Page Number. The Department of Finance no longer updates their paper tax maps."
+    "name": "BASEMENT",
+    "title": "Basement",
+    "description": "This code describes the basement under the main part of the dwelling, and categorizes its size in relation to the main dwelling. \n1. NONE  - there is no basement.\n2. SLAB/PIERS -indicates slab or pier construction.\n3. CRAWL - indicates crawl space to 1/4 basement area.\n4. PART - indicates basement is between 1/4 and 3/4 of the main dwelling area.\n5. FULL - indicates 3/4 to full basement area."
   },
   {
-    "name":"tract2010",
-    "description":"The 2010 census tract that the tax lot is located in."
+    "name": "BASEMENTDESC",
+    "title": "Basement Description",
+    "description": "Description of basement type, if one exists."
   },
   {
-    "name":"unitsres",
-    "description":"The sum of residential units in all buildings on the tax lot."
+    "name": "GRADE",
+    "title": "Grade",
+    "description": "Grade refers to quality of construction:\n\nA, X, XX  - have superior materials and workmanship and are typically custom designed or historic homes.\nB - construction has above average construction and may exceed code.\nC - is the standard, construction meets code, and is typical of current materials and methods.\nD - construction is adequate, but below average with minimal features.\nE - construction lacks some basics and may be a \"camp\" or seasonal structure.\n\nPluses and minuses may be used."
   },
   {
-    "name":"unitstotal",
-    "description":"The sum of residential and non-residential (offices, retail stores, etc.) units in all buildings on the tax lot."
+    "name": "GRADEDESC",
+    "title": "Grade Description",
+    "description": "Grade refers to quality of construction:\n\nA, X, XX  - Very Good and Excellent - have superior materials and workmanship and are typically custom designed or historic homes.\nB - Good - construction has above average construction and may exceed code.\nC - Average - is the standard, construction meets code, and is typical of current materials and methods.\nD - Below Average - construction is adequate, but below average with minimal features.\nE - Poor - construction lacks some basics and may be a \"camp\" or seasonal structure.\n\nPluses and minuses may be used."
   },
   {
-    "name":"version",
-    "description":"The version of MapPLUTO."
+    "name": "CONDITION",
+    "title": "Condition",
+    "description": "Code for the overall physical condition or state of repair of a structure, relative to its age. Indicated by number and description:\n\n1- Excellent - outstanding maintenance.\n7- Very good - high degree of upkeep.\n2- Good - above ordinary maintenance.\n3- Average - ordinary maintenance, shows normal wear and tear.\n4- Fair - sound but with noticeable deferred maintenance.\n5- Poor - structural deterioration caused by significant and chronic deferred maintenance.\n8- Very poor - barely livable.\n6- Unsound - not suitable for habitation."
   },
   {
-    "name":"xcoord",
-    "description":"The X coordinate of the XY coordinate pair which depicts the approximate location of the address."
+    "name": "CONDITIONDESC",
+    "title": "Condition Description",
+    "description": "Description for the overall physical condition or state of repair of a structure, relative to its age. Indicated by number and description:\n\n1- Excellent - outstanding maintenance.\n7- Very good - high degree of upkeep.\n2- Good - above ordinary maintenance.\n3- Average - ordinary maintenance, shows normal wear and tear.\n4- Fair - sound but with noticeable deferred maintenance.\n5- Poor - structural deterioration caused by significant and chronic deferred maintenance.\n8- Very poor - barely livable.\n6- Unsound - not suitable for habitation."
   },
   {
-    "name":"ycoord",
-    "description":"The Y coordinate of the XY coordinate pair which depicts the approximate location of the address."
+    "name": "CDU",
+    "title": "CDU",
+    "description": "CDU is a composite rating for structures measuring: \nCondition (physical condition relative to age), \nDesirability (location, style), and \nUtility (functional obsolescence of layout or design).  \nProper neighborhood delineation compensates for most Desirability and Utility issues, leaving Physical Condition the most influential factor in CDU.  CDU will be null for vacant land.\n \nExcellent - Perfect condition, very attractive and highly desirable.\nVery good - Slight deterioration, but still quite attractive and desirable.\nGood - Minor visible deterioration, slightly less attractive and desirable, but still useful.\nAverage - Normal wear and tear, average utility and desirability.\nFair - Usable but marked deterioration.  Somewhat unattractive and undesirable.\nPoor - Obvious deterioration, definitely undesirable.\nVery poor - Extremely undesirable and barely usable.\nUnsound - Unfit for use."
   },
   {
-    "name":"yearalter1",
-    "description":"The year of the most recent alteration."
+    "name": "CDUDESC",
+    "title": "CDU Description",
+    "description": "CDU is a composite rating for structures measuring: \nCondition (physical condition relative to age), \nDesirability (location, style), and \nUtility (functional obsolescence of layout or design).  \nProper neighborhood delineation compensates for most Desirability and Utility issues, leaving Physical Condition the most influential factor in CDU.  CDU will be null for vacant land.\n \nExcellent - Perfect condition, very attractive and highly desirable.\nVery good - Slight deterioration, but still quite attractive and desirable.\nGood - Minor visible deterioration, slightly less attractive and desirable, but still useful.\nAverage - Normal wear and tear, average utility and desirability.\nFair - Usable but marked deterioration.  Somewhat unattractive and undesirable.\nPoor - Obvious deterioration, definitely undesirable.\nVery poor - Extremely undesirable and barely usable.\nUnsound - Unfit for use."
   },
   {
-    "name":"yearalter2",
-    "description":"The year of the second most recent alteration."
+    "name": "TOTALROOMS",
+    "title": "Total Rooms",
+    "description": "Total number of rooms in the main dwelling.� This includes Rec-rooms and FBLA (Finished Basement Living Area).� This count is for descriptive purposes only and does not affect assessed value."
   },
   {
-    "name":"yearbuilt",
-    "description":"The year construction of the building was completed."
+    "name": "BEDROOMS",
+    "title": "Bedrooms",
+    "description": "The total number of separate rooms designed to be used as bedrooms.  If a room was designed to be a bedroom, but is being utilized for some other purpose - such as a den, it is to be included in this count.  This is for descriptive purposes only and does not affect value."
   },
   {
-    "name":"zipcode",
-    "description":"The zip code that the tax lot is located in."
+    "name": "FULLBATHS",
+    "title": "Full Baths",
+    "description": "A full bath has a toilet, sink and bathing facility (shower or tub)."
   },
   {
-    "name":"zmcode",
-    "description":"A code(Y) identifies a border Tax Lot, i.e., a Tax Lot on the border of two or more Zoning Maps."
+    "name": "HALFBATHS",
+    "title": "Half Baths",
+    "description": "A half bath has a toilet and sink only."
   },
   {
-    "name":"zonedist1",
-    "description":"The zoning district classification of the tax lot. If the tax lot is divided by a zoning boundary line, ZoneDist1 represents the primary zoning district classification occupying the greatest percentage of the tax lot's area. Properties under the jurisdiction of NYC Department of Parks and Recreation are coded PARK. Properties under the jurisdiction of NYS Office of Parks, Recreation, and Historic Preservation are coded PARKNY. DROP LOT is a designation that City Planning devised to identify tax lots that no longer exist in the DCP version of the Digital Tax Map but have not yet been removed from the Department of Finance RPAD File. RPAD retains tax lots that have been dropped, due to merger, reapportionment or conversion to condominium, until the end of the City's Fiscal Year. To avoid confusion DROP LOT was created to identify these lots."
+    "name": "HEATINGCOOLING",
+    "title": "Heating Cooling",
+    "description": "Code for the type of Heating / Cooling system."
   },
   {
-    "name":"zonedist2",
-    "description":"If the tax lot is divided by zoning boundary lines, ZoneDist2 represents the primary zoning classification occupying the second greatest percentage of the tax lot's area. If the tax lot is not divided by a zoning boundary line, the name is blank."
+    "name": "HEATINGCOOLINGDESC",
+    "title": "Heating Cooling Description",
+    "description": "Description for the type Heating / Cooling system."
   },
   {
-    "name":"zonedist3",
-    "description":"If the tax lot is divided by zoning boundary lines, ZoneDist3 represents the primary zoning classification occupying the third greatest percentage of the tax lot's area. If the tax lot is not divided by a zoning boundary line, the name is blank."
+    "name": "FIREPLACES",
+    "title": "Number of Wood burning Fireplaces Stacks",
+    "description": "The number of wood-burning fireplace chimneys/vents.  This need not equal the number of working fireplaces in the dwelling.  This number excludes roof stacks built for bathroom venting, natural gas outlets, etc."
   },
   {
-    "name":"zonedist4",
-    "description":"If the tax lot is divided by zoning boundary lines, ZoneDist4 represents the primary zoning classification occupying the fourth greatest percentage of the tax lot's area. If the tax lot is not divided by a zoning boundary line, the name is blank."
+    "name": "BSMTGARAGE",
+    "title": "Integral Basement Garage (Number of Cars)",
+    "description": "The number of vehicle spaces available in a garage that is basement level and comprises a portion of the main dwelling�s basement.� This does not include detached or attached above-grade garages."
   },
   {
-    "name":"zonemap",
-    "description":"The Department of City Planning Zoning Map Number associated with the tax lot's X and Y coordinates."
+    "name": "FINISHEDLIVINGAREA",
+    "title": "Total Square Feet of Living Area",
+    "description": "Finished living area, as measured from the outside of the structure."
+  },
+  {
+    "name": "CARDNUMBER",
+    "title": "Building (card) Number",
+    "description": "For parcels having more than one building only one building is shown. This field contains the number of the building being shown (which is usually the main dwelling)."
+  },
+  {
+    "name": "ALT_ID",
+    "title": "Alternate Parcel Identification Number",
+    "description": "In tax year 2007, parcel ID numbers within certain municipalities were converted to conform to  Allegheny County's standard naming convention for parcel ID's.   For affected parcels, this field shows the old parcel ID that was in use for tax years 2006 and prior."
+  },
+  {
+    "name": "TAXYEAR",
+    "title": "The current certified tax year",
+    "description": "The  applicable year for which real estate taxes would apply for the parcel.  Allegheny County currently assesses value based on how the parcel stood as of Jan 1 of that year.   \n\nThis need not correspond to a calendar year."
+  },
+  {
+    "name": "ASOFDATE",
+    "title": "The run date of this file",
+    "description": "The run date of this file."
   }
 ]
