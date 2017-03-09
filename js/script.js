@@ -4,7 +4,7 @@ var mainLayer,ntaLayer;
 var nPolygon;
 
 //initialize map
-var map = new L.Map('map', { 
+var map = new L.Map('map', {
   center: [40.70663644882689,-73.97815704345703],
   zoom: 14
 });
@@ -68,7 +68,7 @@ map.on('draw:drawstart', function (e) {
 });
 
 //add cartodb named map
-var layerUrl = 'https://cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
+var layerUrl = '//cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
 
 cartodb.createLayer(map, layerUrl)
   .addTo(map)
@@ -76,7 +76,7 @@ cartodb.createLayer(map, layerUrl)
     mainLayer = layer.getSubLayer(0);
     mainLayer.setInteraction(false);
 
-    ntaLayer = layer.getSubLayer(1); 
+    ntaLayer = layer.getSubLayer(1);
     ntaLayer.hide();  //hide neighborhood polygons
     ntaLayer.on('featureClick', processNeighborhood);
   });
@@ -86,13 +86,13 @@ $.getJSON('data/fields.json',function(data){
 
   console.log(data.length);
   data.forEach(function(field) {
-    var listItem = '<li id = "' + field.name + '" class="list-group-item">' 
-      + field.name 
+    var listItem = '<li id = "' + field.name + '" class="list-group-item">'
+      + field.name
       + '<span class="glyphicon glyphicon-info-sign icon-right" aria-hidden="true"></span></li>'
-    
+
     $('.fieldList').append(listItem);
     $('#' + field.name).data("description",field.description);
-    
+
   });
 
   //listener for hovers
@@ -124,9 +124,9 @@ $.getJSON('data/fields.json',function(data){
 
 //listeners
 $('#selectAll').click(function(){
-  $(".fieldList li").click(); 
+  $(".fieldList li").click();
   listChecked();
-}); 
+});
 
 //radio buttons
 $('input[type=radio][name=area]').change(function() {
@@ -175,10 +175,10 @@ $('.download').click(function(){
   if(data.fields.length>0) {
     data.fields=',' + data.fields.slice(0,-1);
   }
-  
+
 
   if(areaType == 'currentView') {
-    var bboxString = bbox._southWest.lng + ',' 
+    var bboxString = bbox._southWest.lng + ','
     + bbox._southWest.lat + ','
     + bbox._northEast.lng + ','
     + bbox._northEast.lat;
@@ -193,13 +193,13 @@ $('.download').click(function(){
   if(areaType == 'neighborhood') {
     data.intersects = nPolygon;
   }
-  
+
   if(data.type == 'cartodb') {
     data.type = 'geojson';
     data.cartodb = true;
   }
 
-  var queryTemplate = 'https://cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto15v1 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
+  var queryTemplate = '//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto15v1 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
@@ -210,7 +210,7 @@ $('.download').click(function(){
 
   //http://oneclick.cartodb.com/?file={{YOUR FILE URL}}&provider={{PROVIDER NAME}}&logo={{YOUR LOGO URL}}
   if(data.cartodb) {
-    //open in cartodb only works if you encodeURIcomponent() on the SQL, 
+    //open in cartodb only works if you encodeURIcomponent() on the SQL,
     //then concatenate with the rest of the URL, then encodeURIcomponent() the whole thing
 
     //first, get the SQL
@@ -223,13 +223,13 @@ $('.download').click(function(){
 
     url = encodeURIComponent(url);
     console.log(url);
-    url = 'http://oneclick.cartodb.com/?file=' + url;
-  } 
-    
-  window.open(url, 'My Download');
-  
+    url = '//oneclick.cartodb.com/?file=' + url;
+  }
 
-   
+  window.open(url, 'My Download');
+
+
+
 
 });
 
@@ -242,9 +242,9 @@ function processNeighborhood(e, latlng, pos, data, layer) {
   selectLayer.clearLayers();
 
   var sql = new cartodb.SQL({ user: 'cwhong' });
-  sql.execute("SELECT the_geom FROM nynta WHERE cartodb_id = {{id}}", 
-    { 
-      id: data.cartodb_id 
+  sql.execute("SELECT the_geom FROM nynta WHERE cartodb_id = {{id}}",
+    {
+      id: data.cartodb_id
     },
     {
       format:'geoJSON'
@@ -283,7 +283,7 @@ function makeSqlPolygon(coords) {
 function initCheckboxes() {
   //sweet checkbox list from http://bootsnipp.com/snippets/featured/checked-list-group
   $('.list-group.checked-list-box .list-group-item').each(function () {
-      
+
       // Settings
       var $widget = $(this),
           $checkbox = $('<input type="checkbox" class="hidden" />'),
@@ -297,7 +297,7 @@ function initCheckboxes() {
                   icon: 'glyphicon glyphicon-unchecked'
               }
           };
-          
+
       $widget.css('cursor', 'pointer')
       $widget.append($checkbox);
 
@@ -310,7 +310,7 @@ function initCheckboxes() {
       $checkbox.on('change', function () {
           updateDisplay();
       });
-        
+
 
       // Actions
       function updateDisplay() {
@@ -334,11 +334,11 @@ function initCheckboxes() {
 
       // Initialization
       function init() {
-          
+
           if ($widget.data('checked') == true) {
               $checkbox.prop('checked', !$checkbox.is(':checked'));
           }
-          
+
           updateDisplay();
 
           // Inject the icon if applicable
@@ -350,7 +350,7 @@ function initCheckboxes() {
   });
 };
 
-function listChecked() { 
+function listChecked() {
   var checkedItems = [];
   $(".fieldList li.active").each(function(idx, li) {
       checkedItems.push($(li).text());
@@ -386,7 +386,7 @@ $( document ).ready(function() {
     var elem, width, height, offset,
         shadowTop, shadowBottom,
         timeout;
-    
+
     function initShadows() {
       shadowTop = $("<div>")
         .addClass("shadow-top")
@@ -396,13 +396,13 @@ $( document ).ready(function() {
         .insertAfter(elem)
         .css('display', 'block');
     }
-    
+
     function calcPosition() {
       width = elem.outerWidth();
       height = elem.outerHeight();
-      offset = elem.position();  
+      offset = elem.position();
 
-      // update 
+      // update
       shadowTop.css({
         width: width + "px",
         top: offset.top + "px",
@@ -430,7 +430,7 @@ $( document ).ready(function() {
       });
     }
     function addResizeListener() {
-      $(window).on("resize.shadow", function(){ 
+      $(window).on("resize.shadow", function(){
         clearTimeout(timeout);
         timeout = setTimeout(function() {
           calcPosition();
@@ -449,7 +449,7 @@ $( document ).ready(function() {
       },
       update: calcPosition
     };
-    
+
   }());
   // start
   scrollShadow.init(".well-inner");
