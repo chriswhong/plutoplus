@@ -4,14 +4,6 @@
     "description":"An address for the tax lot."
   },
   {
-    "name":"allzoning1",
-    "description":"ZONING, ALL COMPONENTS 1 consists of the zoning classification occupying the greatest percentage of the tax lot's area and a commercial overlay and special purpose district and limited height district assigned to the tax lot"
-  },
-  {
-    "name":"allzoning2",
-    "description":"If the tax lot is divided by zoning boundary lines, AllZoning2 consists of the primary zoning classification occupying the second greatest percentage of the tax lot's area and a commercial overlay and special purpose or limited height district assigned to the tax lot."
-  },
-  {
     "name":"appbbl",
     "description":"The originating Borough, Tax Block and Tax Lot from the apportionment prior to the merge, split or property's conversion to a condominium. The Apportionment BBL is only available for mergers, splits and conversions since 1984."
   },
@@ -56,16 +48,12 @@
     "description":"The tax block in which the tax lot is located. Each tax block is unique within a borough (see BOROUGH)."
   },
   {
-    "name":"borocode",
+    "name":"borough",
     "description":"The borough the tax lot is located in."
   },
   {
     "name":"bsmtcode",
     "description":"A code describing the basement type/grade"
-  },
-  {
-    "name":"builtcode",
-    "description":"A code indicating whether the year the building was built (YearBuilt) was an estimate."
   },
   {
     "name":"builtfar",

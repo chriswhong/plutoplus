@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="./favicon.ico">
 
-    <title>PLUTO Data Downloader powered by CartoDB</title>
+    <title>PLUTO Data Downloader powered by Carto</title>
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
 
@@ -28,12 +28,12 @@
         <div class="Grid">
           <div class="Grid-inner Grid-inner--vcenter">
             <div class="Grid-cell Grid-cell--col6">
-              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Now with Pluto15v1!</h1>
+              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 16v2!</h1>
             </div>
             <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
               <nav class="">
                 <ul class="u-ilist">
-                  <li class="u-malign"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://chriswhong.github.io/plutoplus" data-text="Custom download tool for NYC's PLUTO #opendata built on @cartoDB" data-via="chris_whong">Tweet</a>
+                  <li class="u-malign"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://chriswhong.github.io/plutoplus" data-text="Custom download tool for NYC's PLUTO #opendata built with @carto" data-via="chris_whong">Tweet</a>
                   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></li>
                    <li class="u-malign u-lspace-xl">
                     <p class="button button--white">
@@ -122,11 +122,6 @@
                     <a href="#" id="shp" class="btn btn-sm btn-success download">Shapefile</a>
                   </p>
                 </li>
-                <li>
-                  <p class="button button--small button--blue">
-                    <a href="#" id="cartodb" class="btn btn-sm btn-success download">Open in CartoDB</a>
-                  </p>
-                </li>
               </ul>
             </li>
           </ul>
@@ -148,7 +143,7 @@
                <p class="u-vspace-l"><a href = 'http://www.nyc.gov/html/dcp/pdf/bytes/meta_mappluto.pdf'>Get the PLUTO Metadata (PDF)</a></p>
 
               <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
-              <p class="u-vspace-l">All data is version 2015v1 and can be exported as geoJSON, zipped shapefile, and CSV, or can be imported directly to your cartoDB account. Geometries are exported in WGS84 (Latitude and Longitude).</p>
+              <p class="u-vspace-l">All data is version 2016v2 and can be exported as geoJSON, zipped shapefile, and CSV, or can be imported directly to your cartoDB account. Geometries are exported in WGS84 (Latitude and Longitude).</p>
               <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to @chris_whong.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform.  <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
               Support open Data!</p>
             </div>
@@ -156,9 +151,10 @@
     </div>
 
     <div id="infoWindow">ZONING, ALL COMPONENTS 1 consists of the zoning classification occupying the greatest percentage of the tax lot's area and a commercial overlay and special purpose district and limited height district assigned to the tax lot</div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>    <script src="js/leaflet.draw.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="js/leaflet.draw.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="js/script.js"></script>

@@ -49,11 +49,9 @@ map.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
 
-    console.log(e.layer);
     drawnLayer=e.layer;
 
     var coords = e.layer._latlngs;
-    console.log(coords);
     customPolygon = makeSqlPolygon(coords);
     // Do whatever else you need to. (save to db, add to map etc)
     map.addLayer(layer);
@@ -61,7 +59,6 @@ map.on('draw:created', function (e) {
 });
 
 map.on('draw:drawstart', function (e) {
-  console.log('start');
   if (drawnLayer) {
     map.removeLayer(drawnLayer);
   }
@@ -84,7 +81,6 @@ cartodb.createLayer(map, layerUrl)
 //populate fields list
 $.getJSON('data/fields.json',function(data){
 
-  console.log(data.length);
   data.forEach(function(field) {
     var listItem = '<li id = "' + field.name + '" class="list-group-item">'
       + field.name
@@ -199,7 +195,7 @@ $('.download').click(function(){
     data.cartodb = true;
   }
 
-  var queryTemplate = '//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto15v1 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
+  var queryTemplate = '//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format={{type}}&filename=pluto&q=SELECT the_geom{{fields}} FROM pluto16v2 a WHERE ST_INTERSECTS({{{intersects}}}, a.the_geom)';
 
 
   var buildquery = Handlebars.compile(queryTemplate);
@@ -222,7 +218,6 @@ $('.download').click(function(){
     url += sql;
 
     url = encodeURIComponent(url);
-    console.log(url);
     url = '//oneclick.cartodb.com/?file=' + url;
   }
 
@@ -251,7 +246,6 @@ function processNeighborhood(e, latlng, pos, data, layer) {
     }
   )
   .done(function(data) {
-    console.log(data);
     selectLayer.addData(data);
     //setup SQL statement for intersection
     nPolygon = '(SELECT the_geom FROM nynta WHERE cartodb_id = ' + nid + ')';
@@ -263,7 +257,6 @@ function makeSqlPolygon(coords) {
   var s = "ST_SETSRID(ST_PolygonFromText(\'POLYGON((";
   var firstCoord;
   coords.forEach(function(coord,i){
-    console.log(coord);
     s+=coord.lng + " " + coord.lat + ","
 
     //remember the first coord
@@ -276,7 +269,6 @@ function makeSqlPolygon(coords) {
     }
   });
   s+="))\'),4326)"
-  console.log(s);
   return s;
 }
 
@@ -355,7 +347,6 @@ function listChecked() {
   $(".fieldList li.active").each(function(idx, li) {
       checkedItems.push($(li).text());
   });
-  console.log(checkedItems);
   return checkedItems;
 }
 
