@@ -82,9 +82,9 @@ cartodb.createLayer(map, layerUrl)
 $.getJSON('data/fields.json',function(data){
 
   data.forEach(function(field) {
-    var listItem = '<li id = "' + field.name + '" class="list-group-item">'
+    var listItem = '<li id = "' + field.name + '" className="list-group-item">'
       + field.name
-      + '<span class="glyphicon glyphicon-info-sign icon-right" aria-hidden="true"></span></li>'
+      + '<span className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true"></span></li>'
 
     $('.fieldList').append(listItem);
     $('#' + field.name).data("description",field.description);
@@ -278,7 +278,7 @@ function initCheckboxes() {
 
       // Settings
       var $widget = $(this),
-          $checkbox = $('<input type="checkbox" class="hidden" />'),
+          $checkbox = $('<input type="checkbox" className="hidden" />'),
           color = ($widget.data('color') ? $widget.data('color') : "primary"),
           style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
           settings = {
@@ -335,7 +335,7 @@ function initCheckboxes() {
 
           // Inject the icon if applicable
           if ($widget.find('.state-icon').length == 0) {
-            $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+            $widget.prepend('<span className="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
           }
       }
       init();

@@ -1,12 +1,31 @@
+#main {
+  position: absolute;
+  height: calc( 100% - 88px);
+  width: 100%;
+  margin-top: 88px;
+}
+
 #map {
+  top: 0;
+  right: 320px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+
+#sidebar {
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
+  width: 320px;
+  padding: 16px;
 }
-.List-blocks {
-  padding-top: 104px;
+
+.checkbox {
+  display: inline-block;
 }
+
 .List-blocks > li {
   border-bottom: 1px solid #e5e5e5;
 }
@@ -14,9 +33,7 @@
   padding: 10px;
   min-width: 90px;
 }
-.button > a {
-  padding: 13px 26px;
-}
+
 .HeaderFixed--blue {
   background: #0090D7
 }
@@ -81,10 +98,7 @@ a:hover {
   z-index: 2;
   pointer-events: none;
 }
-.leaflet-control-container .leaflet-top {
-  top: 108px;
-  left: 14px;
-}
+
 .leaflet-draw {
   right: 24px;
 }
@@ -110,9 +124,6 @@ a:hover {
   bottom: 24px;
 }
 
-#sidebar {
-  min-height: 800px;
-}
 .icon-right {
   font-size: 17px;
   color: #7AB06B;
@@ -172,7 +183,8 @@ a:hover {
 }
 
 .button {
-  padding-bottom: 6px;
+    padding-right: 6px;
+    padding-bottom: 6px;
 }
 
 .ListOptions>li {
