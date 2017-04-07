@@ -7,7 +7,7 @@
 
 #map {
   top: 0;
-  right: 320px;
+  right: 355px;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -18,7 +18,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 320px;
+  width: 355px;
   padding: 16px;
 }
 
@@ -143,6 +143,8 @@ a:hover {
 
 #infoWindow {
   position: absolute;
+  top:0;
+  right:0;
   padding: 12px;
   color: #fff;
   font-size: 12px;
@@ -153,7 +155,7 @@ a:hover {
   border-radius: 4px;
   z-index: 1000;
   width: 200px;
-  display:none;
+  /*display:none;*/
 }
 #infoWindow:before {
   content:"";
@@ -164,6 +166,10 @@ a:hover {
   border-right: 6px solid rgba(0, 0, 0, .8);
   left: -12px;
   top: 12px;
+}
+
+.tooltip {
+  max-width: 200px;
 }
 
 .sidebar-cell {

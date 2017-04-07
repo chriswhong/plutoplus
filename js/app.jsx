@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/href-no-hash */
 const App = React.createClass({
@@ -77,6 +78,22 @@ const App = React.createClass({
     this.setState({ fields });
   },
 
+  handleSelectAll() {
+    const { fields } = this.state;
+    fields.forEach((field) => {
+      field.checked = true;
+    });
+    this.setState({ fields });
+  },
+
+  handleSelectNone() {
+    const { fields } = this.state;
+    fields.forEach((field) => {
+      field.checked = false;
+    });
+    this.setState({ fields });
+  },
+
   render() {
     const { mode, fields } = this.state;
 
@@ -92,6 +109,8 @@ const App = React.createClass({
           onModeChange={this.handleModeChange}
           onDownload={this.handleDownload}
           onFieldChange={this.handleFieldChange}
+          onSelectAll={this.handleSelectAll}
+          onSelectNone={this.handleSelectNone}
         />
       </div>
     );
@@ -149,10 +168,13 @@ const Sidebar = React.createClass({
     onModeChange: React.PropTypes.func.isRequired,
     onDownload: React.PropTypes.func.isRequired,
     onFieldChange: React.PropTypes.func.isRequired,
+    onSelectAll: React.PropTypes.func.isRequired,
+    onSelectNone: React.PropTypes.func.isRequired,
   },
 
+
   render() {
-    const { mode, fields, onModeChange, onDownload, onFieldChange } = this.props;
+    const { mode, fields, onModeChange, onDownload, onFieldChange, onSelectAll, onSelectNone } = this.props;
 
     const fieldListItems = fields.map(field => (
       <li className="list-group-item" key={field.value}>
@@ -161,7 +183,9 @@ const Sidebar = React.createClass({
           value={field.value}
           onChange={onFieldChange}
         />
-        {field.value} <span className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true" />
+        {field.value}
+        <span data-tip={field.description} className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true" />
+        <ReactTooltip className="tooltip" place="right" type="dark" effect="solid" />
       </li>
     ));
 
@@ -219,7 +243,7 @@ const Sidebar = React.createClass({
               <div className="u-left">
                 <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">2</span> <h2 className="u-iblock u-malign"><strong>Choose Columns</strong></h2>
               </div>
-              <p className="u-right"><a href="#" id="selectAll">Select All</a></p>
+              <p className="u-right"><a href="#" onClick={onSelectAll}>All</a> | <a href="#" onClick={onSelectNone}>None</a></p>
             </div>
             <div className="u-vspace-xxl">
               <div className="well u-pr" style={{ height: '215px' }}>
