@@ -41,7 +41,14 @@ window.Sidebar = React.createClass({
     return (
       <div id="sidebar">
         <ul className="List-blocks">
-          <li className="u-vspace-xxl">
+          <li
+            className="u-vspace-xxl"
+            style={{
+              position: 'absolute',
+              top: '16px',
+              zIndex: 100,
+            }}
+          >
             <div className="u-vspace-l">
               <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">1</span>
               <h2 className="u-iblock u-malign"><strong>Choose Area</strong></h2>
