@@ -3,6 +3,7 @@
   height: calc( 100% - 88px);
   width: 100%;
   margin-top: 88px;
+  font-family: 'Lato';
 }
 
 #map {
@@ -27,11 +28,35 @@
 }
 
 .List-blocks > li {
-  border-bottom: 1px solid #e5e5e5;
+  /*border-bottom: 1px solid #e5e5e5;*/
 }
 .button--small > a {
   padding: 10px;
   min-width: 90px;
+}
+
+.btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.columns-pane {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding-top: 164px;
+  padding-bottom: 104px;
+}
+
+.download-pane {
+  position: absolute;
+  bottom: 0;
+}
+
+.download-pane p {
+  display: inline-block;
+  position: relative;
+  top: 2px;
 }
 
 .HeaderFixed--blue {

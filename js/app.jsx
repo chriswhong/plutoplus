@@ -22,24 +22,6 @@ const App = React.createClass({
     });
   },
 
-  // returns a PostGIS geometry for intersection based on the current mode
-  getDataIntersect() {
-    const { mode, bounds } = this.state;
-
-    if (mode === 'currentView') {
-      return `
-        ST_MakeEnvelope(
-          ${bounds._southWest.lng},
-          ${bounds._southWest.lat},
-          ${bounds._northEast.lng},
-          ${bounds._northEast.lat},
-        4326)
-      `;
-    }
-
-    return null;
-  },
-
   // returns
   getFields() {
     const { fields } = this.state;
@@ -50,21 +32,41 @@ const App = React.createClass({
     return fieldsValues.join(',');
   },
 
+  setCurrentViewIntersect() {
+    const { bounds } = this.state;
+    const intersect = `
+      ST_MakeEnvelope(
+        ${bounds._southWest.lng},
+        ${bounds._southWest.lat},
+        ${bounds._northEast.lng},
+        ${bounds._northEast.lat},
+      4326)
+    `;
+    this.setState({ intersect });
+  },
+
   handleModeChange(e) {
-    this.setState({ mode: e.target.value });
+    const mode = e.target.value;
+    this.setState({
+      mode,
+      intersect: null,
+    });
+    if (mode === 'currentView') this.setCurrentViewIntersect();
   },
 
   handleDownload(type) {
-    const dataIntersect = this.getDataIntersect();
+    const { intersect } = this.state;
     const fields = this.getFields();
-    const apiCall = `//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format=${type}&filename=pluto&q=SELECT ${fields} FROM pluto16v2 a WHERE ST_INTERSECTS(${dataIntersect}, a.the_geom)`;
+    const apiCall = `//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format=${type}&filename=pluto&q=SELECT ${fields} FROM pluto16v2 a WHERE ST_INTERSECTS(${intersect}, a.the_geom)`;
 
     console.log(`Calling SQL API: ${apiCall}`); // eslint-disable-line
     window.open(apiCall, 'Download');
   },
 
   handleBoundsChange(bounds) {
-    this.setState({ bounds });
+    this.setState({ bounds }, () => {
+      if (this.state.mode === 'currentView') this.setCurrentViewIntersect();
+    });
   },
 
   handleFieldChange(e) {
@@ -94,6 +96,10 @@ const App = React.createClass({
     this.setState({ fields });
   },
 
+  handleUpdateIntersect(intersect) {
+    this.setState({ intersect });
+  },
+
   render() {
     const { mode, fields } = this.state;
 
@@ -102,10 +108,12 @@ const App = React.createClass({
         <Map
           mode={mode}
           onBoundsChange={this.handleBoundsChange}
+          onUpdateIntersect={this.handleUpdateIntersect}
         />
         <Sidebar
           fields={fields}
           mode={mode}
+          intersect={this.state.intersect}
           onModeChange={this.handleModeChange}
           onDownload={this.handleDownload}
           onFieldChange={this.handleFieldChange}
@@ -117,195 +125,5 @@ const App = React.createClass({
   },
 });
 
-const Map = React.createClass({
-
-  propTypes: {
-    onBoundsChange: React.PropTypes.func.isRequired,
-  },
-
-  componentDidMount() {
-    this.map = new L.Map('map', {
-      center: [40.70663644882689, -73.97815704345703],
-      zoom: 14,
-    });
-
-    const { map } = this;
-
-    this.handleMoveEnd();
-    map.on('moveend', this.handleMoveEnd);
-
-    this.selectLayer = L.geoJson().addTo(map); // add empty geojson layer for selections
-
-    // add cartodb named map
-    const layerUrl = '//cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
-
-    cartodb.createLayer(map, layerUrl)
-      .addTo(map)
-      .on('done', (layer) => {
-        this.mainLayer = layer.getSubLayer(0);
-        this.mainLayer.setInteraction(false);
-
-        this.ntaLayer = layer.getSubLayer(1);
-        this.ntaLayer.hide();  // hide neighborhood polygons
-        this.ntaLayer.on('featureClick', () => {});
-      });
-  },
-
-  handleMoveEnd() {
-    this.props.onBoundsChange(this.map.getBounds());
-  },
-
-  render() {
-    return (<div id="map" />);
-  },
-});
-
-const Sidebar = React.createClass({
-
-  propTypes: {
-    mode: React.PropTypes.string.isRequired,
-    fields: React.PropTypes.array.isRequired,
-    onModeChange: React.PropTypes.func.isRequired,
-    onDownload: React.PropTypes.func.isRequired,
-    onFieldChange: React.PropTypes.func.isRequired,
-    onSelectAll: React.PropTypes.func.isRequired,
-    onSelectNone: React.PropTypes.func.isRequired,
-  },
-
-
-  render() {
-    const { mode, fields, onModeChange, onDownload, onFieldChange, onSelectAll, onSelectNone } = this.props;
-
-    const fieldListItems = fields.map(field => (
-      <li className="list-group-item" key={field.value}>
-        <Checkbox
-          checked={field.checked}
-          value={field.value}
-          onChange={onFieldChange}
-        />
-        {field.value}
-        <span data-tip={field.description} className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true" />
-        <ReactTooltip className="tooltip" place="right" type="dark" effect="solid" />
-      </li>
-    ));
-
-    return (
-      <div id="sidebar">
-        <ul className="List-blocks">
-          <li className="u-vspace-xxl">
-            <div className="u-vspace-l">
-              <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">1</span>
-              <h2 className="u-iblock u-malign"><strong>Choose Area</strong></h2>
-            </div>
-
-            <ul className="ListOptions u-vspace-xxl">
-              <li>
-                <label>
-                  <input
-                    className="u-iblock u-malign"
-                    type="radio"
-                    value="currentView"
-                    checked={mode === 'currentView'}
-                    onChange={onModeChange}
-                  />
-                  <p className="u-iblock u-malign"> Current Map View</p>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input
-                    className="u-iblock u-malign"
-                    type="radio"
-                    value="neighborhood"
-                    checked={mode === 'neighborhood'}
-                    onChange={onModeChange}
-                  />
-                  <p className="u-iblock u-malign"> Neighborhood </p>
-                </label>
-              </li>
-              <li>
-                <label>
-                  <input
-                    className="u-iblock u-malign"
-                    type="radio"
-                    value="polygon"
-                    checked={mode === 'polygon'}
-                    onChange={onModeChange}
-                  />
-                  <p className="u-iblock u-malign"> Draw a polygon</p>
-                </label>
-              </li>
-            </ul>
-          </li>
-
-          <li className="u-vspace-xxl">
-            <div className="u-vspace-l clearfix">
-              <div className="u-left">
-                <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">2</span> <h2 className="u-iblock u-malign"><strong>Choose Columns</strong></h2>
-              </div>
-              <p className="u-right"><a href="#" onClick={onSelectAll}>All</a> | <a href="#" onClick={onSelectNone}>None</a></p>
-            </div>
-            <div className="u-vspace-xxl">
-              <div className="well u-pr" style={{ height: '215px' }}>
-                <div
-                  className="well-inner"
-                  style={{
-                    height: '215px',
-                    overflow: 'auto',
-                  }}
-                >
-                  <ul className="list-group checked-list-box fieldList u-pr" >
-                    {fieldListItems}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <div className="u-vspace-l">
-              <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">3</span> <h2 className="u-iblock u-malign"><strong>Download!</strong></h2>
-            </div>
-            <ul className="u-ilist u-vspace-xxl">
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className="btn btn-sm btn-success" onClick={onDownload.bind(this, 'geojson')}>geoJson</a>
-                </p>
-              </li>
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className="btn btn-sm btn-success" onClick={onDownload.bind(this, 'csv')}>CSV</a>
-                </p>
-              </li>
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className="btn btn-sm btn-success" onClick={onDownload.bind(this, 'shp')}>Shapefile</a>
-                </p>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    );
-  },
-});
-
-const Checkbox = props => (
-  <div className="checkbox">
-    <input
-      type="checkbox"
-      className={`glyphicon ${props.checked ? 'glyphicon-check' : 'glyphicon-unchecked'}`}
-      value={props.value}
-      checked={props.checked}
-      onChange={props.onChange}
-    />
-  </div>
-);
-
-Checkbox.propTypes = {
-  value: React.PropTypes.string.isRequired,
-  checked: React.PropTypes.bool.isRequired,
-  onChange: React.PropTypes.func.isRequired,
-};
 
 ReactDOM.render(<App />, document.getElementById('main'));
