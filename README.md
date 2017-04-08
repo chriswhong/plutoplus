@@ -12,6 +12,9 @@ PLUTO is an amazing NYC Open Data Resource that contains a wealth of information
 
 MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that [the Department of City Planning publishes it by borough as shapefiles](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page). I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.
 
+## How it Works
+This app is essentially a SQL Builder, it compiles the user's settings into a PostGIS query that is sent to Carto's SQL API.  The SQL looks like `SELECT {selected PLUTO columns} FROM mappluto16v2 a WHERE ST_INTERSECTS({some clipping geometry}, a.the_geom)`.  The placeholders are generated and filled in by the app when the user clicks Download.
+
 ## Geography Options
 The geography filter works by adding an `ST_Intersects()` statement to the WHERE clause of the SQL applied at download.
 - _Current Map View_ - Checks the current boundaries of the map by using leflet's `getBounds()`
