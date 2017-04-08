@@ -18,6 +18,9 @@ The geography filter works by adding an `ST_Intersects()` statement to the WHERE
 - _Neighborhood_ - Does a spatial join with `the_geom` for a specific neighborhood tabulation area hosted on the same carto server as the PLUTO table
 - _Draw a Polygon_ - Uses Leaflet Draw to allow the user to draw a custom polygon or rectangle on the map.
 
+When a download button is clicked the resulting SQL query is logged in the console, so you can clearly see exactly how the app is grabbing the requested data.
+![developer_tools_-_http___chriswhong_github_io_plutoplus__and_pluto_data_downloader_powered_by_carto](https://cloud.githubusercontent.com/assets/1833820/24829573/6eb86676-1c42-11e7-8dbc-1d551bf264e3.png)
+
 ## Architecture
 The app was originally built using jQuery to manage updates to the DOM, but was refactored to use React.js in early 2017.  To continue to host the site on github pages, there is no build/bundle process, and the JSX files are transpiled in the browser with babel.
 
