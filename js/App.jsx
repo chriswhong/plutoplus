@@ -8,6 +8,7 @@ const App = React.createClass({
     return {
       mode: 'currentView',
       fields: [],
+      showAbout: false,
     };
   },
 
@@ -101,7 +102,7 @@ const App = React.createClass({
   },
 
   render() {
-    const { mode, fields } = this.state;
+    const { mode, fields, showAbout } = this.state;
 
     return (
       <div>

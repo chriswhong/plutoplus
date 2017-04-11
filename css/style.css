@@ -137,6 +137,11 @@ a:hover {
   background: rgba(0, 0, 0, .8);
   z-index: 1000;
 }
+
+#modal.hidden {
+  opacity:0;
+}
+
 .modal-inner {
   width: 45%;
   background: #fff;

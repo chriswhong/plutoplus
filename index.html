@@ -51,6 +51,23 @@
         </div>
     </div>
     <div id="main"></div>
+    <div id="modal" class="u-valign u-txt-center" style="display:none">
+      <div class="modal-inner u-iblock u-malign u-padding-xxl">
+        <div class="modal-header navbar-custom u-vspace-xxl">
+          <h2><strong>ABOUT</strong></h2>
+        </div>
+        <div class="modal-body u-txt-left">
+          <p class="u-vspace-l">PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city&apos;s tax lots, including zoning, # of units, tax assessments, and more.  It contains information for the city&apos;s 870,000+ properties, and includes over 80 attributes for each lot! That&apos;s a lot of open data!</p>
+
+          <p class="u-vspace-l"><a href="http://www.nyc.gov/html/dcp/pdf/bytes/meta_mappluto.pdf">Get the PLUTO Metadata (PDF)</a></p>
+
+          <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
+          <p class="u-vspace-l">All data is version 2016v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
+          <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to <a href="https://twitter.com/chris_whong?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@chris_whong</a>.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform. <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
+          Support open Data!</p>
+        </div>
+      </div>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
@@ -63,6 +80,30 @@
     <script type="text/babel" src="js/Sidebar.jsx"></script>
     <script type="text/babel" src="js/Map.jsx"></script>
     <script type="text/babel" src="js/App.jsx"></script>
+    <script>
+      $( document ).ready(function() {
+        $('.js-about').click(function() {
+
+          $('#modal').fadeIn();
+        });
+
+        $('#modal').click(function() {
+          $(this).fadeOut();
+        });
+
+        $('.modal-inner').click(function(event) {
+          event.stopPropagation();
+        });
+
+        $(document).on('keyup',function(evt) {
+            if (evt.keyCode == 27) {
+              if ($('#modal').css('display')=='block') {
+               $('#modal').fadeOut();
+              }
+            }
+        });
+      });
+    </script>
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
