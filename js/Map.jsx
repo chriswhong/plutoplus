@@ -5,6 +5,10 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable jsx-a11y/href-no-hash */
 
+
+const popup = $("<div class='tooltip' id='infoWindow'></div>");
+popup.hide();
+
 window.Map = React.createClass({
 
   propTypes: {
@@ -17,17 +21,28 @@ window.Map = React.createClass({
     this.initializeMap();
   },
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { mode } = this.props;
 
-    if (this.ntaLayer) {
-      if (mode === 'neighborhood') {
-        this.ntaLayer.show();
-      } else {
-        if (this.ntaLayer.isVisible) this.ntaLayer.hide();
-        this.selectLayer.clearLayers();
+    if (mode !== prevProps.mode) {
+      this.selectLayer.clearLayers();
+      if (this.drawnLayer) {
+        this.map.removeLayer(this.drawnLayer);
       }
     }
+
+    const area = config.areas[0];
+
+    this.layers.forEach((layer, i) => {
+      const area = config.areas[i];
+      if (mode === area.id) {
+        this.layers[i].show();
+      } else {
+        if (this.layers[i].isVisible) {
+          this.layers[i].hide();
+        }
+      }
+    })
 
     if (mode === 'polygon') {
       this.showDrawControls();
@@ -37,10 +52,7 @@ window.Map = React.createClass({
   },
 
   initializeMap() {
-    this.map = new L.Map('map', {
-      center: [40.70663644882689, -73.97815704345703],
-      zoom: 14,
-    });
+    this.map = new L.Map('map', config.map);
 
     const { map } = this;
 
@@ -49,18 +61,66 @@ window.Map = React.createClass({
 
     this.selectLayer = L.geoJson().addTo(map); // add empty geojson layer for selections
 
-    // add cartodb named map
-    const layerUrl = '//cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
+    this.layers = [];
 
-    cartodb.createLayer(map, layerUrl)
+    cartodb.createLayer(map, config.dataset.vis)
       .addTo(map)
       .on('done', (layer) => {
+        const that = this;
         this.mainLayer = layer.getSubLayer(0);
         this.mainLayer.setInteraction(false);
+        // Clear sublayers other than the base
+        layer.getSubLayers().forEach((sublayer, i) => { if(i > 0) { sublayer.remove() }});
 
-        this.ntaLayer = layer.getSubLayer(1);
-        this.ntaLayer.hide();  // hide neighborhood polygons
-        this.ntaLayer.on('featureClick', this.highlightNta);
+        popup.appendTo("#map");
+        for (let i = 0; i < config.areas.length; i++) {
+          let area = config.areas[i];
+          let sublayer = layer.createSubLayer({ username: config.username, ...area.sublayer });
+          sublayer.hide(); // Initially hide
+
+          sublayer.setInteraction(true);
+
+          sublayer.on('featureClick', function(e, latlng, pos, data) {
+            that.highlightLayer(e, latlng, pos, data, i);
+          })
+          .on('error', function() {
+            //log the error
+            console.log("Failed creating sublayer");
+          })
+
+          // Tooltip
+          if (area.tooltip) {
+            const tooltip = area.tooltip;
+            const offset = tooltip.offset || { x: 0, y: 0};
+            sublayer.on("mouseover", function (e, latlng, pos, data) {
+              popup.html(tooltip.template(data));
+              let xPos = pos.x + offset.x;
+              let yPos = pos.y + offset.y;
+
+              // Tweaks to handle tooltip overflowing the screen
+              // There's probably a better way to do this
+              popup.removeClass('no-carot');
+              if (xPos < 100) {
+                xPos = 100;
+                popup.addClass('no-carot');
+              }
+              if (yPos < 10) {
+                yPos = 50;
+                popup.addClass('no-carot');
+              }
+              ////////
+
+              popup.css({ left: xPos, top: yPos })
+              popup.show();
+            })
+
+            sublayer.on("mouseout", function (e, latlng, pos, data) {
+              popup.hide();
+            })
+          }
+
+          this.layers.push(sublayer);
+        }
       });
 
     const drawOptions = {
@@ -123,18 +183,19 @@ window.Map = React.createClass({
     this.props.onBoundsChange(this.map.getBounds());
   },
 
-  highlightNta(e, latlng, pos, data) {
+  highlightLayer(e, latlng, pos, data, i) {
     const { onUpdateIntersect } = this.props;
+    const area = config.areas[i];
 
     this.selectLayer.clearLayers();
 
-    const sql = new cartodb.SQL({ user: 'cwhong' });
-    const query = `SELECT the_geom FROM nynta WHERE cartodb_id = ${data.cartodb_id}`;
+    const sql = new cartodb.SQL({ user: config.username });
+    const query = `SELECT the_geom FROM ${area.table} WHERE cartodb_id = ${data.cartodb_id}`;
     sql.execute(query, {}, { format: 'GeoJSON' })
       .done((d) => {
         this.selectLayer.addData(d);
         // setup SQL statement for intersection
-        const intersect = `(SELECT the_geom FROM nynta WHERE cartodb_id = ${data.cartodb_id})`;
+        const intersect = `(SELECT the_geom FROM ${area.table} WHERE cartodb_id = ${data.cartodb_id})`;
         onUpdateIntersect(intersect);
       });
   },

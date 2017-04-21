@@ -22,7 +22,12 @@ window.Sidebar = React.createClass({
     const disabled = intersect === null ? 'disabled' : '';
 
     let downloadMessage = '';
-    if (mode === 'neighborhood' && intersect === null) downloadMessage = 'Select a neighborhood';
+
+    config.areas.map((area) => {
+      if (mode == area.id && intersect === null) {
+        downloadMessage = `Select a ${area.text.default}`;
+      }
+    })
     if (mode === 'polygon' && intersect === null) downloadMessage = 'Draw a polygon';
 
     const fieldListItems = fields.map(field => (
@@ -33,21 +38,20 @@ window.Sidebar = React.createClass({
           onChange={onFieldChange}
         />
         {field.value}
-        <span data-tip={field.description} className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true" />
-        <ReactTooltip className="tooltip" place="right" type="dark" effect="solid" />
+        {field.description &&
+          <span>
+            <span data-tip={field.description} className="glyphicon glyphicon-info-sign icon-right" aria-hidden="true" />
+            <ReactTooltip className="tooltip" place="right" type="dark" effect="solid" />
+          </span>
+        }
       </li>
     ));
 
     return (
       <div id="sidebar">
-        <ul className="List-blocks">
-          <li
+        <div className="List-blocks">
+          <div
             className="u-vspace-xxl"
-            style={{
-              position: 'absolute',
-              top: '16px',
-              zIndex: 100,
-            }}
           >
             <div className="u-vspace-l">
               <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">1</span>
@@ -67,18 +71,22 @@ window.Sidebar = React.createClass({
                   <p className="u-iblock u-malign"> Current Map View</p>
                 </label>
               </li>
-              <li>
-                <label>
-                  <input
-                    className="u-iblock u-malign"
-                    type="radio"
-                    value="neighborhood"
-                    checked={mode === 'neighborhood'}
-                    onChange={onModeChange}
-                  />
-                  <p className="u-iblock u-malign"> Neighborhood </p>
-                </label>
-              </li>
+              {
+                config.areas.map(area =>(
+                  <li>
+                    <label>
+                      <input
+                        className="u-iblock u-malign"
+                        type="radio"
+                        value={area.id}
+                        checked={mode === area.id}
+                        onChange={onModeChange}
+                      />
+                      <p className="u-iblock u-malign">{area.text.default}</p>
+                    </label>
+                  </li>)
+                )
+              }
               <li>
                 <label>
                   <input
@@ -92,9 +100,9 @@ window.Sidebar = React.createClass({
                 </label>
               </li>
             </ul>
-          </li>
+          </div>
 
-          <li className="u-vspace-xxl columns-pane" style={{ width: 'calc(100% - 32px)' }}>
+          <div className="u-vspace-xxl columns-pane" style={{ width: 'calc(100% - 32px)' }}>
             <div className="u-vspace-l clearfix">
               <div className="u-left">
                 <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">2</span> <h2 className="u-iblock u-malign"><strong>Choose Columns</strong></h2>
@@ -103,12 +111,6 @@ window.Sidebar = React.createClass({
             </div>
             <div
               className="u-vspace-xxl"
-              style={{
-                position: 'absolute',
-                top: '200px',
-                bottom: '87px',
-                overflow: 'scroll',
-              }}
             >
               <div className="well u-pr">
                 <div className="well-inner">
@@ -118,32 +120,26 @@ window.Sidebar = React.createClass({
                 </div>
               </div>
             </div>
-          </li>
+          </div>
 
-          <li className="download-pane">
+          <div className="download-pane">
             <div className="u-vspace-l">
               <span className="Number-circle u-txt-center fill fill-dark color-white u-iblock u-malign">3</span>
               <h2 className="u-iblock u-malign"><strong>Download!</strong></h2> <p>{downloadMessage}</p>
             </div>
             <ul className="u-ilist u-vspace-xxl">
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className={`btn btn-sm btn-success ${disabled}`} onClick={onDownload.bind(this, 'geojson')}>geoJson</a>
-                </p>
-              </li>
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className={`btn btn-sm btn-success ${disabled}`} onClick={onDownload.bind(this, 'csv')}>CSV</a>
-                </p>
-              </li>
-              <li>
-                <p className="button button--small button--blue">
-                  <a href="#" className={`btn btn-sm btn-success ${disabled}`} onClick={onDownload.bind(this, 'shp')}>Shapefile</a>
-                </p>
-              </li>
+              {
+                config.export.map(type =>
+                  <li>
+                    <p className="button button--small button--blue">
+                      <a href="#" className={`btn btn-sm btn-success ${disabled}`} onClick={onDownload.bind(this, type)}>{type}</a>
+                    </p>
+                  </li>
+                )
+              }
             </ul>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
     );
   },

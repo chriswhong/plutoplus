@@ -40,17 +40,13 @@
   pointer-events: none;
 }
 
-.columns-pane {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  padding-top: 164px;
-  padding-bottom: 104px;
+.columns-pane .list-group {
+  min-height: 100px;
+  max-height: calc(100vh - 500px);
+  overflow: auto;
 }
 
 .download-pane {
-  position: absolute;
-  bottom: 0;
 }
 
 .download-pane p {
@@ -173,8 +169,8 @@ a:hover {
 
 #infoWindow {
   position: absolute;
-  top:0;
-  right:0;
+  top: 0;
+  right: 0;
   padding: 12px;
   color: #fff;
   font-size: 12px;
@@ -184,7 +180,9 @@ a:hover {
   background: rgba(0, 0, 0, .8);
   border-radius: 4px;
   z-index: 1000;
-  width: 200px;
+  margin-top: -48px;
+  margin-left: -90px;
+  pointer-events: none;
   /*display:none;*/
 }
 #infoWindow:before {
@@ -193,9 +191,13 @@ a:hover {
   width: 0;
   height: 0;
   border: 6px solid transparent;
-  border-right: 6px solid rgba(0, 0, 0, .8);
-  left: -12px;
-  top: 12px;
+  border-top: 6px solid rgba(0, 0, 0, .8);
+  left: 85px;
+  top: 40px;
+}
+
+#infoWindow.no-carot:before {
+  display: none;
 }
 
 .tooltip {
