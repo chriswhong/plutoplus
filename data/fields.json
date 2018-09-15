@@ -1,7 +1,8 @@
 [
   {
     "value":"address",
-    "description":"An address for the tax lot."
+    "description":"An address for the tax lot.",
+    "checked": true
   },
   {
     "value":"appbbl",
@@ -25,7 +26,8 @@
   },
   {
     "value":"bbl",
-    "description":"A concatenation of the BoroCode, TaxBlock and the corresponding TaxLot. This name consists of the tax block followed by the tax lot. The tax block is one to five numeric digits, preceded with leading zeros when the block is less than five digits. The tax lot is one to four digits and is preceded with leading zeros when the lot is less than four digits."
+    "description":"A concatenation of the BoroCode, TaxBlock and the corresponding TaxLot. This name consists of the tax block followed by the tax lot. The tax block is one to five numeric digits, preceded with leading zeros when the block is less than five digits. The tax lot is one to four digits and is preceded with leading zeros when the lot is less than four digits.",
+    "checked": true
   },
   {
     "value":"bldgarea",

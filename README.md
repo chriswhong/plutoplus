@@ -2,18 +2,18 @@
 A "clip & ship" download tool for NYC PLUTO tax lot data, allowing the user to download only the desired columns and geographic area.
 Hosted on github pages at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)
 
-## Data 
-Current PLUTO dataset is 16v2, this app's data was last updated on 6 April 2017.
+## Data
+Current PLUTO dataset is 18v1, this app's data was last updated on 15 September 2018.
 
 ![cursor_and_pluto_data_downloader_powered_by_cartodb_and_plutoplus_ _bash_ _102x35](https://cloud.githubusercontent.com/assets/1833820/8522377/7719b904-23bb-11e5-936c-0fe760ed3621.png)
 
 ## Why
 PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more. It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot! That's a lot of open data!
 
-MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that [the Department of City Planning publishes it by borough as shapefiles](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page). I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.
+MapPLUTO (PLUTO data plus a polygon for each lot) is so large, that [the Department of City Planning publishes it by borough as shapefiles](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page). I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.
 
 ## How it Works
-This app is essentially a SQL Builder, it compiles the user's settings into a PostGIS query that is sent to Carto's SQL API.  The SQL looks like `SELECT {selected PLUTO columns} FROM mappluto16v2 a WHERE ST_INTERSECTS({some clipping geometry}, a.the_geom)`.  The placeholders are generated and filled in by the app when the user clicks Download.
+This app is essentially a SQL Builder, it compiles the user's settings into a PostGIS query that is sent to Carto's SQL API.  The SQL looks like `SELECT {selected PLUTO columns} FROM mapplutotable a WHERE ST_INTERSECTS({some clipping geometry}, a.the_geom)`.  The placeholders are generated and filled in by the app when the user clicks Download.
 
 ## Geography Options
 The geography filter works by adding an `ST_Intersects()` statement to the WHERE clause of the SQL applied at download.
@@ -43,6 +43,23 @@ _Sidebar.jsx_ - Displays options UI to let the user specify Geography, Columns, 
 ## Help
 I need help writing tests.  If you're good at that, I would love to learn how you would test this code.
 
-## Contact Me
+## Local Development
+You will need the following on your dev machine:
+- nodejs
+- [live-server](https://github.com/tapio/live-server) (a simple node development server) installed globally
 
-If you like this project, or if you hate it, let me know by tweeting to @chris_whong. Pull requests are welcomed! This project was built with the [Carto web mapping platform](https://carto.com/). [Write-up at chriswhong.com](http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/) Support open Data! 
+#### Clone this repository
+
+`git clone https://github.com/chriswhong/plutoplus.git`
+
+#### Install dependencies
+
+`yarn install`
+
+#### Start the development server
+
+`yarn start`
+
+
+## Contact Me
+If you like this project, or if you hate it, let me know by tweeting to @chris_whong. Pull requests are welcomed! This project was built with the [Carto web mapping platform](https://carto.com/). [Write-up at chriswhong.com](http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/) Support open Data!

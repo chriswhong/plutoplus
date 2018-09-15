@@ -4,7 +4,8 @@
   "description": "A custom download tool for NYC PLUTO tax lot data, built with CartoDB.  View it live at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "live-server",
+    "lint": "node node_modules/eslint/bin/eslint **/*.jsx"
   },
   "repository": {
     "type": "git",
@@ -23,9 +24,5 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3"
-  },
-  "dependencies": {
-    "leaflet-draw": "^0.4.9",
-    "react-tooltip": "^3.2.10"
   }
 }

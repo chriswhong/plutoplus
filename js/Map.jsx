@@ -50,17 +50,20 @@ window.Map = React.createClass({
     this.selectLayer = L.geoJson().addTo(map); // add empty geojson layer for selections
 
     // add cartodb named map
-    const layerUrl = '//cwhong.cartodb.com/api/v2/viz/dacf834a-2fa8-11e5-886f-0e4fddd5de28/viz.json';
+    const layerUrl = './data/viz.json';
+    fetch('./data/viz.json')
+      .then(d => d.json())
+      .then((vizJson) => {
+        cartodb.createLayer(map, vizJson)
+          .addTo(map)
+          .on('done', (layer) => {
+            this.mainLayer = layer.getSubLayer(0);
+            this.mainLayer.setInteraction(false);
 
-    cartodb.createLayer(map, layerUrl)
-      .addTo(map)
-      .on('done', (layer) => {
-        this.mainLayer = layer.getSubLayer(0);
-        this.mainLayer.setInteraction(false);
-
-        this.ntaLayer = layer.getSubLayer(1);
-        this.ntaLayer.hide();  // hide neighborhood polygons
-        this.ntaLayer.on('featureClick', this.highlightNta);
+            this.ntaLayer = layer.getSubLayer(1);
+            this.ntaLayer.hide(); // hide neighborhood polygons
+            this.ntaLayer.on('featureClick', this.highlightNta);
+          });
       });
 
     const drawOptions = {
@@ -78,6 +81,7 @@ window.Map = React.createClass({
           },
         },
         circle: false, // Turns off this drawing tool
+        circlemarker: false,
         rectangle: {
           shapeOptions: {
             clickable: false,
@@ -128,13 +132,13 @@ window.Map = React.createClass({
 
     this.selectLayer.clearLayers();
 
-    const sql = new cartodb.SQL({ user: 'cwhong' });
-    const query = `SELECT the_geom FROM nynta WHERE cartodb_id = ${data.cartodb_id}`;
+    const sql = new cartodb.SQL({ user: 'planninglabs' });
+    const query = `SELECT the_geom FROM nta_boundaries_v0 WHERE cartodb_id = ${data.cartodb_id}`;
     sql.execute(query, {}, { format: 'GeoJSON' })
       .done((d) => {
         this.selectLayer.addData(d);
         // setup SQL statement for intersection
-        const intersect = `(SELECT the_geom FROM nynta WHERE cartodb_id = ${data.cartodb_id})`;
+        const intersect = `(SELECT the_geom FROM nta_boundaries_v0 WHERE cartodb_id = ${data.cartodb_id})`;
         onUpdateIntersect(intersect);
       });
   },

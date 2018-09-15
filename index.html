@@ -14,7 +14,7 @@
 
 
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-    <link rel="stylesheet" href="node_modules/leaflet-draw/dist/leaflet.draw.css">
+    <link rel="stylesheet" href="css/vendor/leaflet.draw.css">
     <link rel="stylesheet" href="css/styleguide.min.css">
     <link rel="stylesheet" type="text/css" href="css/icons.css">
     <link rel="stylesheet" href="css/style.css">
@@ -27,7 +27,7 @@
         <div class="Grid">
           <div class="Grid-inner Grid-inner--vcenter">
             <div class="Grid-cell Grid-cell--col6">
-              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 16v2!</h1>
+              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 18v1</h1>
             </div>
             <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
               <nav class="">
@@ -41,7 +41,7 @@
                   </li>
                   <li class="u-malign u-lspace-xl">
                     <p class="button button--white">
-                      <a href="http://github.com/chriswhong/plutoplus">Fork Me on Github</a>
+                      <a href="http://github.com/chriswhong/plutoplus" target="_blank">Fork Me on Github</a>
                     </p>
                   </li>
                 </ul>
@@ -62,7 +62,7 @@
           <p class="u-vspace-l"><a href="http://www.nyc.gov/html/dcp/pdf/bytes/meta_mappluto.pdf">Get the PLUTO Metadata (PDF)</a></p>
 
           <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
-          <p class="u-vspace-l">All data is version 2016v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
+          <p class="u-vspace-l">All data is version 2018v1 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
           <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to <a href="https://twitter.com/chris_whong?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@chris_whong</a>.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform. <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
           Support open Data!</p>
         </div>
@@ -72,10 +72,10 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
-    <script src="node_modules/react-tooltip/standalone/react-tooltip.min.js"></script>
+    <script src="js/vendor/react-tooltip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-    <script src="node_modules/leaflet-draw/dist/leaflet.draw.js"></script>
+    <script src="js/vendor/leaflet.draw.js"></script>
 
     <script type="text/babel" src="js/Sidebar.jsx"></script>
     <script type="text/babel" src="js/Map.jsx"></script>

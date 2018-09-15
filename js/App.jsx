@@ -16,7 +16,7 @@ const App = React.createClass({
     const self = this;
     $.getJSON('data/fields.json', (fields) => {
       fields.forEach((field) => {
-        field.checked = false;
+        if (!field.checked) field.checked = false;
       });
 
       self.setState({ fields });
@@ -58,7 +58,10 @@ const App = React.createClass({
   handleDownload(type) {
     const { intersect } = this.state;
     const fields = this.getFields();
-    const apiCall = `//cwhong.cartodb.com/api/v2/sql?skipfields=cartodb_id,created_at,updated_at,name,description&format=${type}&filename=pluto&q=SELECT ${fields} FROM pluto16v2 a WHERE ST_INTERSECTS(${intersect}, a.the_geom)`;
+    let skipfields = 'cartodb_id,name,description';
+    if (type === 'csv') skipfields += ',the_geom';
+
+    const apiCall = `//planninglabs.cartodb.com/api/v2/sql?skipfields=${skipfields}&format=${type}&filename=pluto&q=SELECT ${fields} FROM mappluto_v18_1 a WHERE ST_INTERSECTS(${intersect}, a.the_geom)`;
 
     console.log(`Calling SQL API: ${apiCall}`); // eslint-disable-line
     window.open(apiCall, 'Download');
@@ -102,7 +105,7 @@ const App = React.createClass({
   },
 
   render() {
-    const { mode, fields, showAbout } = this.state;
+    const { mode, fields } = this.state;
 
     return (
       <div>
