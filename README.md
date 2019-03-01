@@ -3,7 +3,7 @@ A "clip & ship" download tool for NYC PLUTO tax lot data, allowing the user to d
 Hosted on github pages at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)
 
 ## Data
-Current PLUTO dataset is 18v1, this app's data was last updated on 15 September 2018.
+Current PLUTO dataset is 18v2, this app's data was last updated on 15 September 2018.
 
 ![cursor_and_pluto_data_downloader_powered_by_cartodb_and_plutoplus_ _bash_ _102x35](https://cloud.githubusercontent.com/assets/1833820/8522377/7719b904-23bb-11e5-936c-0fe760ed3621.png)
 
