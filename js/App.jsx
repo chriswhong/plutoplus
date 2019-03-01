@@ -61,7 +61,7 @@ const App = React.createClass({
     let skipfields = 'cartodb_id,name,description';
     if (type === 'csv') skipfields += ',the_geom';
 
-    const apiCall = `//planninglabs.cartodb.com/api/v2/sql?skipfields=${skipfields}&format=${type}&filename=pluto&q=SELECT ${fields} FROM mappluto_v18_1 a WHERE ST_INTERSECTS(${intersect}, a.the_geom)`;
+    const apiCall = `//planninglabs.cartodb.com/api/v2/sql?skipfields=${skipfields}&format=${type}&filename=pluto&q=SELECT ${fields} FROM mappluto a WHERE ST_INTERSECTS(${intersect}, a.the_geom)`;
 
     console.log(`Calling SQL API: ${apiCall}`); // eslint-disable-line
     window.open(apiCall, 'Download');

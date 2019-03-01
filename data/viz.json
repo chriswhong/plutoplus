@@ -127,7 +127,7 @@
                         "cartocss":"/** category visualization */\n\n#pluto18v1 {\n   polygon-opacity: 0.8;\n   line-color: #FFF;\n   line-width: 0;\n   line-opacity: 1;\n}\n\n#pluto18v1[cat=0] {\n   polygon-fill: #14adf2;\n}\n#pluto18v1[cat=1] {\n   polygon-fill: #52C7FF;\n}\n#pluto18v1[cat=2] {\n   polygon-fill: #2167AB;\n}\n#pluto18v1[cat=3] {\n   polygon-fill: #429FCC;\n}\n",
                         "cartocss_version":"2.1.1",
                         "interactivity":"cartodb_id",
-                        "sql":"SELECT *, mod(cartodb_id,4) as cat FROM mappluto_v18_1",
+                        "sql":"SELECT *, mod(cartodb_id,4) as cat FROM mappluto",
                         "table_name":"\"\"."
                      }
                   },
