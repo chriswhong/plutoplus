@@ -56,9 +56,13 @@ You will need the following on your dev machine:
 
 `yarn install`
 
-#### Start the development server
+#### Compile and watch jsx
 
-`yarn start`
+`yarn dev`
+
+#### Load web server
+
+You need to run a local webserver to try out the app in development.  I've been using a plugin called `atom-live-server` for atom, but you can also use `python.http` or any other local server.
 
 
 ## Contact Me

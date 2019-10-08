@@ -50,6 +50,10 @@
     "description":"The tax block in which the tax lot is located. Each tax block is unique within a borough (see BOROUGH)."
   },
   {
+    "value":"borocode",
+    "description":"The borough code for the borough the tax lot is located in."
+  },
+  {
     "value":"borough",
     "description":"The borough the tax lot is located in."
   },
@@ -98,10 +102,6 @@
     "description":"The E-Designation number assigned to the tax lot."
   },
   {
-    "value":"exemptland",
-    "description":"The actual exempt land value, which is determined differently for each exemption program, is the dollar amount related to that portion of the tax lot that has received an exemption or abatement for Fiscal Year 2014."
-  },
-  {
     "value":"exempttot",
     "description":"The actual exempt total value, which is determined differently for each exemption program, is the dollar amount related to that portion of the tax lot that has received an exemption or abatement for Fiscal Year 2014."
   },
@@ -120,6 +120,10 @@
   {
     "value":"firecomp",
     "description":"The fire company that services the tax lot. This name consists of four characters, the first of which is an alphabetic code identifying the type of fire company, where E stands for Engine and L stands for Ladder. The type code is followed by a one to three digit fire company number which is preceded with leading zeros if the company number is less than three digits."
+  },
+  {
+    "value":"firm07_fla",
+    "description":"A value of 1 means that some portion of the tax lot falls within the 1% annual chance floodplain as determined by FEMA’s 2007 Flood Insurance Rate Map."
   },
   {
     "value":"garagearea",
@@ -202,6 +206,10 @@
     "description":"A code indicating type of ownership for the tax lot."
   },
   {
+    "value":"pfirm15_fl",
+    "description": "A value of 1 means that some portion of the tax lot falls within the 1% annual chance floodplain as determined by FEMA’s 2015 Preliminary Flood Insurance Rate Map."
+  },
+  {
     "value":"plutomapid",
     "description":"A code indicating whether the tax lot is in the PLUTO file and/or the modified DTM and/or the modified DTM Clipped to the Shoreline File."
   },
@@ -228,6 +236,18 @@
   {
     "value":"sanborn",
     "description":"The Sanborn Map Company map number associated with the tax block and lot. Sanborn map number format is Borough Code / Volume Number / Page Number."
+  },
+  {
+    "value":"sanitboro",
+    "description":"The borough of the sanitation district that services the tax lot."
+  },
+  {
+    "value":"sanitdistr",
+    "description":"The sanitation district that services the tax lot."
+  },
+  {
+    "value":"sanitsub",
+    "description":"The subsection of the sanitation district that services the tax lot."
   },
   {
     "value":"schooldist",

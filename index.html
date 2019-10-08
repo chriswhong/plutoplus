@@ -32,7 +32,7 @@
         <div class="Grid">
           <div class="Grid-inner Grid-inner--vcenter">
             <div class="Grid-cell Grid-cell--col6">
-              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 18v2</h1>
+              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 19v1</h1>
             </div>
             <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
               <nav class="">
@@ -46,7 +46,7 @@
                   </li>
                   <li class="u-malign u-lspace-xl">
                     <p class="button button--white">
-                      <a href="http://github.com/chriswhong/plutoplus" target="_blank">Fork Me on Github</a>
+                      <a href="https://github.com/chriswhong/plutoplus" target="_blank">Fork Me on Github</a>
                     </p>
                   </li>
                 </ul>
@@ -73,34 +73,34 @@
         </div>
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.min.js"></script>
     <script src="js/vendor/react-tooltip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
-    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
     <script src="js/vendor/leaflet.draw.js"></script>
 
-    <script type="text/babel" src="js/Sidebar.jsx"></script>
-    <script type="text/babel" src="js/Map.jsx"></script>
-    <script type="text/babel" src="js/App.jsx"></script>
+    <script type="text/javascript" src="js/Sidebar.js"></script>
+    <script type="text/javascript" src="js/Map.js"></script>
+    <script type="text/javascript" src="js/App.js"></script>
     <script>
-      $( document ).ready(function() {
-        $('.js-about').click(function() {
-
+      $( document ).ready(() => {
+        $('.js-about').click(() => {
           $('#modal').fadeIn();
         });
 
-        $('#modal').click(function() {
+        $('#modal').click(() => {
           $(this).fadeOut();
         });
 
-        $('.modal-inner').click(function(event) {
+        $('.modal-inner').click((event) => {
           event.stopPropagation();
         });
 
-        $(document).on('keyup',function(evt) {
+        $(document).on('keyup', (evt) => {
             if (evt.keyCode == 27) {
               if ($('#modal').css('display')=='block') {
                $('#modal').fadeOut();
