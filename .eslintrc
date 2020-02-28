@@ -10,7 +10,7 @@
     "L": true,
     "fetch": true,
     "cartodb": true,
-    "Map": true,
+    "MapComponent": true,
     "Sidebar": true
   },
   "rules": {

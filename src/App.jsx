@@ -113,7 +113,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <Map
+        <MapComponent
           mode={mode}
           onBoundsChange={this.handleBoundsChange}
           onUpdateIntersect={this.handleUpdateIntersect}

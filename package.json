@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A custom download tool for NYC PLUTO tax lot data, built with CartoDB.  View it live at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)",
   "scripts": {
-    "dev": "npx babel --watch src --out-dir js --presets react-app/prod",
+    "dev": "npx babel --watch src --out-dir js",
     "lint": "node node_modules/eslint/bin/eslint **/*.jsx"
   },
   "repository": {
@@ -17,9 +17,8 @@
   },
   "homepage": "https://github.com/chriswhong/plutoplus#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^10.0.3",
-    "babel-preset-react-app": "^3.1.2",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
     "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
     "eslint-config-standard-react": "^9.2.0",
@@ -28,5 +27,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-standard": "^4.0.1"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-react-jsx": "^7.8.3"
   }
 }

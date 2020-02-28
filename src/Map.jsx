@@ -1,4 +1,4 @@
-class Map extends React.Component {
+class MapComponent extends React.Component {
   constructor (props) {
     super(props)
 
@@ -153,10 +153,10 @@ class Map extends React.Component {
   }
 };
 
-Map.propTypes = {
+MapComponent.propTypes = {
   onBoundsChange: PropTypes.func.isRequired,
   onUpdateIntersect: PropTypes.func.isRequired,
   mode: PropTypes.string.isRequired
 }
 
-window.Map = Map
+window.MapComponent = MapComponent
