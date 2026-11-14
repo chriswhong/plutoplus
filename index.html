@@ -1,124 +1,95 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head profile="http://www.w3.org/2005/10/profile">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="./favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PLUTO+ · Download NYC MapPLUTO tax lot data by area</title>
+    <meta name="description" content="Free tool to download NYC MapPLUTO tax lot data for just the area and columns you need. Pick a neighborhood or draw a shape; export GeoJSON, CSV or Shapefile." />
+    <link rel="canonical" href="%VITE_SITE_URL%" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="color-scheme" content="dark" />
 
-    <title>PLUTO Data Downloader powered by Carto</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="./favicon.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="./sitemap.xml" />
 
-    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PLUTO+" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="PLUTO+ · NYC tax lot data, clipped to your area" />
+    <meta property="og:description" content="Pick a neighborhood or draw a shape, choose columns, and download MapPLUTO tax lot data as GeoJSON, CSV or Shapefile. Free, no sign-up." />
+    <meta property="og:url" content="%VITE_SITE_URL%" />
+    <meta property="og:image" content="%VITE_SITE_URL%og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="PLUTO+: NYC tax lot data, clipped to your area. A map of city blocks with a selection box." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PLUTO+ · NYC tax lot data, clipped to your area" />
+    <meta name="twitter:description" content="Download MapPLUTO tax lot data for any NYC neighborhood or custom area as GeoJSON, CSV or Shapefile." />
+    <meta name="twitter:image" content="%VITE_SITE_URL%og-image.png" />
+    <meta name="twitter:image:alt" content="PLUTO+: NYC tax lot data, clipped to your area." />
 
-
-    <link rel="stylesheet" href="//libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-    <link rel="stylesheet" href="css/vendor/leaflet.draw.css">
-    <link rel="stylesheet" href="css/styleguide.min.css">
-    <link rel="stylesheet" type="text/css" href="css/icons.css">
-    <link rel="stylesheet" href="css/style.css">
-
-    <link rel="icon" type="image/png" href="./favicon.png">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@chris_whong">
-    <meta name="twitter:title" content="PlutoPlus - A clip and ship download tool for NYC's PLUTO dataset">
-    <meta name="twitter:description" content="PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more. It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.">
-    <meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/1833820/8522377/7719b904-23bb-11e5-936c-0fe760ed3621.png">
-  </head>
-
-  <body>
-    <div class="HeaderFixed HeaderFixed--blue color-white">
-        <div class="Grid">
-          <div class="Grid-inner Grid-inner--vcenter">
-            <div class="Grid-cell Grid-cell--col6">
-              <h1 class="u-iblock u-malign"><strong><i class="IconFont IconFont--size30 IconFont--clip"></i> NYC PLUTO Data Downloader</strong> Data Version: 19v1</h1>
-            </div>
-            <div class="Grid-cell Grid-cell--col6 clearfix u-txt-right">
-              <nav class="">
-                <ul class="u-ilist">
-                  <li class="u-malign"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://chriswhong.github.io/plutoplus" data-text="Custom download tool for NYC's PLUTO #opendata built with @carto" data-via="chris_whong">Tweet</a>
-                  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></li>
-                   <li class="u-malign u-lspace-xl">
-                    <p class="button button--white">
-                      <a class="js-about" href="#">About</a>
-                    </p>
-                  </li>
-                  <li class="u-malign u-lspace-xl">
-                    <p class="button button--white">
-                      <a href="https://github.com/chriswhong/plutoplus" target="_blank">Fork Me on Github</a>
-                    </p>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-    </div>
-    <div id="main"></div>
-    <div id="modal" class="u-valign u-txt-center" style="display:none">
-      <div class="modal-inner u-iblock u-malign u-padding-xxl">
-        <div class="modal-header navbar-custom u-vspace-xxl">
-          <h2><strong>ABOUT</strong></h2>
-        </div>
-        <div class="modal-body u-txt-left">
-          <p class="u-vspace-l">PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city&apos;s tax lots, including zoning, # of units, tax assessments, and more.  It contains information for the city&apos;s 870,000+ properties, and includes over 80 attributes for each lot! That&apos;s a lot of open data!</p>
-
-          <p class="u-vspace-l"><a href="http://www.nyc.gov/html/dcp/pdf/bytes/meta_mappluto.pdf">Get the PLUTO Metadata (PDF)</a></p>
-
-          <p class="u-vspace-l">MapPLUTO (PLUTO data plus geospatial data for each lot) is so large, that the Department of City Planning <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">publishes it by borough</a> as shapefiles. I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.</p>
-          <p class="u-vspace-l">All data is version 2018v2 and can be exported as geoJSON, zipped shapefile, and CSV. Geometries are exported in WGS84 (Latitude and Longitude).</p>
-          <p class="u-vspace-l">If you like this project, or if you hate it, let me know by tweeting to <a href="https://twitter.com/chris_whong?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">@chris_whong</a>.  Pull requests are welcomed! This project was built with the CartoDB web mapping platform. <a href="http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/">Write-up at chriswhong.com</a>
-          Support open Data!</p>
-        </div>
-      </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.min.js"></script>
-    <script src="js/vendor/react-tooltip.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
-    <script src="js/vendor/leaflet.draw.js"></script>
-
-    <script type="text/javascript" src="js/Sidebar.js"></script>
-    <script type="text/javascript" src="js/Map.js"></script>
-    <script type="text/javascript" src="js/App.js"></script>
-    <script>
-      $( document ).ready(() => {
-        $('.js-about').click(() => {
-          $('#modal').fadeIn();
-        });
-
-        $('#modal').click(() => {
-          $(this).fadeOut();
-        });
-
-        $('.modal-inner').click((event) => {
-          event.stopPropagation();
-        });
-
-        $(document).on('keyup', (evt) => {
-            if (evt.keyCode == 27) {
-              if ($('#modal').css('display')=='block') {
-               $('#modal').fadeOut();
-              }
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "%VITE_SITE_URL%#website",
+            "name": "PLUTO+",
+            "url": "%VITE_SITE_URL%",
+            "description": "Clip-and-ship download tool for NYC MapPLUTO tax lot data.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "%VITE_SITE_URL%#app",
+            "name": "PLUTO+ NYC tax lot data downloader",
+            "url": "%VITE_SITE_URL%",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any (web browser)",
+            "browserRequirements": "Requires JavaScript and WebAssembly",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "description": "Pick an area of New York City (the current map view, a 2020 Neighborhood Tabulation Area, or a drawn shape), choose from about 100 MapPLUTO columns, and download the matching tax lots as GeoJSON, CSV or Shapefile. Queries run in the browser; there is no server or sign-up.",
+            "image": "%VITE_SITE_URL%og-image.png",
+            "featureList": [
+              "Clip MapPLUTO to the map view, a neighborhood, or a drawn polygon",
+              "Choose columns by topic or alphabetically",
+              "Download GeoJSON, CSV or zipped Shapefile",
+              "Estimated file size before downloading",
+              "Shareable links that capture the selection"
+            ],
+            "isPartOf": { "@id": "%VITE_SITE_URL%#website" },
+            "about": {
+              "@type": "Dataset",
+              "name": "MapPLUTO",
+              "description": "NYC Department of City Planning's tax lot dataset combining Primary Land Use Tax Lot Output (PLUTO) attributes with Digital Tax Map lot geometry.",
+              "url": "https://www.nyc.gov/content/planning/pages/resources/datasets/mappluto-pluto-change",
+              "creator": { "@type": "GovernmentOrganization", "name": "NYC Department of City Planning", "url": "https://www.nyc.gov/site/planning/index.page" },
+              "spatialCoverage": { "@type": "Place", "name": "New York City" }
             }
-        });
-      });
+          }
+        ]
+      }
     </script>
 
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-63804901-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root">
+      <!-- Crawlable fallback; React replaces this when the app starts. -->
+      <main style="max-width:44rem;margin:4rem auto;padding:0 1rem;font-family:system-ui,sans-serif;color:#e2e8f0;line-height:1.6">
+        <h1>PLUTO+ · NYC tax lot data downloader</h1>
+        <p>Download MapPLUTO, NYC Department of City Planning's tax lot dataset, for just the area and columns you need. Pick a neighborhood or draw a shape on the map, choose from about 100 columns (zoning, land use, building area, units, ownership, assessed value and more), and export GeoJSON, CSV or a Shapefile.</p>
+        <p><a href="./neighborhoods/" style="color:#6ee7b7">Browse tax lot data by borough and neighborhood</a></p>
+        <noscript><p>The interactive downloader needs JavaScript. You can still browse neighborhood summaries using the link above.</p></noscript>
+      </main>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

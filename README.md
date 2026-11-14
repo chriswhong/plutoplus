@@ -1,69 +1,125 @@
-# plutoplus
-A "clip & ship" download tool for NYC PLUTO tax lot data, allowing the user to download only the desired columns and geographic area.
-Hosted on github pages at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)
+# PLUTO+
 
-## Data
-Current PLUTO dataset is 18v2, this app's data was last updated on 15 September 2018.
+A "clip & ship" download tool for NYC's [MapPLUTO](https://www.nyc.gov/content/planning/pages/resources/datasets/mappluto-pluto-change) tax lot data. Pick an area (the current map view, a neighborhood, or a shape you draw), choose the columns you need, and download GeoJSON, CSV or a Shapefile.
 
-![cursor_and_pluto_data_downloader_powered_by_cartodb_and_plutoplus_ _bash_ _102x35](https://cloud.githubusercontent.com/assets/1833820/8522377/7719b904-23bb-11e5-936c-0fe760ed3621.png)
+Live at [chriswhong.github.io/plutoplus](https://chriswhong.github.io/plutoplus).
 
-## Why
-PLUTO is an amazing NYC Open Data Resource that contains a wealth of information about the city's tax lots, including zoning, # of units, tax assessments, and more. It contains information for the city's 870,000+ properties, and includes over 80 attributes for each lot! That's a lot of open data!
+## How it works (no database)
 
-MapPLUTO (PLUTO data plus a polygon for each lot) is so large, that [the Department of City Planning publishes it by borough as shapefiles](https://www1.nyc.gov/site/planning/data-maps/open-data/dwn-pluto-mappluto.page). I built this downloader to help people get access to smaller chunks of the data quickly and easily for whatever they are working on.
+Earlier versions sent PostGIS queries to a hosted Carto table, which meant the data went stale whenever the table didn't get reloaded. This version has **no database or server**:
 
-## How it Works
-This app is essentially a SQL Builder, it compiles the user's settings into a PostGIS query that is sent to Carto's SQL API.  The SQL looks like `SELECT {selected PLUTO columns} FROM mapplutotable a WHERE ST_INTERSECTS({some clipping geometry}, a.the_geom)`.  The placeholders are generated and filled in by the app when the user clicks Download.
+```
+scripts/build-data.sh  (GitHub Action, monthly or on demand)
+  └─ downloads the latest MapPLUTO release from DCP and writes:
+       <version>/mappluto.parquet  GeoParquet, WGS84, Hilbert-sorted, bbox column, 4k-row row groups
+       <version>/mappluto.pmtiles  vector tiles for the map (bbl + address only)
+       <version>/fields.json       column names, types, descriptions
+       nta.geojson                 2020 Neighborhood Tabulation Areas
+       basemap.pmtiles             Protomaps basemap, NYC extract of the daily planet build
+       latest.json                 pointer to the current version
+  └─ uploads them to static object storage (Cloudflare R2)
 
-## Geography Options
-The geography filter works by adding an `ST_Intersects()` statement to the WHERE clause of the SQL applied at download.
-- _Current Map View_ - Checks the current boundaries of the map by using leflet's `getBounds()`
-- _Neighborhood_ - Does a spatial join with `the_geom` for a specific neighborhood tabulation area hosted on the same carto server as the PLUTO table
-- _Draw a Polygon_ - Uses Leaflet Draw to allow the user to draw a custom polygon or rectangle on the map.
+Static site (Vite + React, GitHub Pages)
+  ├─ MapLibre draws the Protomaps basemap (dark flavor) and the lots from PMTiles,
+  │  with an address tooltip for wayfinding
+  └─ on download, DuckDB-WASM runs in the browser:
+       SELECT <columns> FROM read_parquet('…/mappluto.parquet')
+       WHERE bbox.xmin <= … AND bbox.xmax >= … AND bbox.ymin <= … AND bbox.ymax >= …
+         AND ST_Intersects(geom, ST_GeomFromGeoJSON('<your area>'))
+```
 
-When a download button is clicked the resulting SQL query is logged in the console, so you can clearly see exactly how the app is grabbing the requested data.
-![developer_tools_-_http___chriswhong_github_io_plutoplus__and_pluto_data_downloader_powered_by_carto](https://cloud.githubusercontent.com/assets/1833820/24829573/6eb86676-1c42-11e7-8dbc-1d551bf264e3.png)
+The file is sorted along a Hilbert curve, so nearby lots sit together, and each row group's
+bbox min/max stats let DuckDB skip everything outside your area. Parquet is columnar, so only
+the columns you pick are fetched. A neighborhood extract reads a few MB of a ~110 MB file and
+takes well under a second. The exact SQL is logged to the browser console and can also be shown
+in the sidebar.
 
-## Architecture
-The app was originally built using jQuery to manage updates to the DOM, but was refactored to use React.js in early 2017.  To continue to host the site on github pages, there is no build/bundle process, and the JSX files are transpiled in the browser with babel.
+Areas with more than 150,000 lots (roughly a whole borough) are blocked in the UI; for those, download the full dataset from DCP.
 
-### Dependencies
-_React & React-DOM_ - Facebook's declarative, efficient, and flexible JavaScript library for building user interfaces.
-_jQuery_ - Because sometimes you still just need to `show()` and `hide()` things that react has no control over.
-_[React Tooltip](https://github.com/wwayne/react-tooltip)_ - For super-easy-to-implement tooltips.
-_Babel Core_ - For transpilation of react JSX scripts into browser-runnable javascript.
-_cartodb.js_ - Carto's JS library, which handles communication with the Carto SQL and Maps APIs, and also includes Leaflet.js
-_leaflet Draw_ - Geometry drawing plugin for leaflet.
+## Shareable links
 
-### Components
-_App.jsx_ - Parent component for the app, which also stores the current state and deals with inter-component communication
-_Map.jsx_ - Controls the rendering of the map and various layers & controls
-_Sidebar.jsx_ - Displays options UI to let the user specify Geography, Columns, and Download Format.
+The current selections are kept in the URL query string, so copying the address bar shares them:
 
-## Help
-I need help writing tests.  If you're good at that, I would love to learn how you would test this code.
+```
+?map=15.2/40.70312/-73.98871&area=nta&nta=BK0101&cols=bbl,address,yearbuilt
+```
 
-## Local Development
-You will need the following on your dev machine:
-- nodejs
-- [live-server](https://github.com/tapio/live-server) (a simple node development server) installed globally
+| Param | Meaning |
+| --- | --- |
+| `map` | `zoom/lat/lng` of the map view |
+| `area` | `view` (default), `nta` or `draw` |
+| `nta` | selected 2020 NTA id, e.g. `BK0101` |
+| `shape` | drawn polygon as `lng,lat;lng,lat;…` |
+| `cols` | comma-separated columns, `all`, or empty for none (omitted means the default set) |
 
-#### Clone this repository
+## Discoverability (SEO, accessibility)
 
-`git clone https://github.com/chriswhong/plutoplus.git`
+`npm run build` also runs `scripts/build-pages.ts`, which writes static, crawlable pages next to the app using the stats the data pipeline produces (`nta-stats.json`, `borough-stats.json`):
 
-#### Install dependencies
+- `/neighborhoods/`: index of boroughs and all 262 2020 Neighborhood Tabulation Areas
+- `/neighborhoods/<borough>/`: borough summary (lots, units, land use, zoning) with links to its neighborhoods
+- `/neighborhoods/<borough>/<nta-id>-<name>/`: neighborhood summary text and tables, plus the downloader embedded in an iframe (`?embed=1`) preset to that neighborhood
+- `sitemap.xml`, `robots.txt`, `llms.txt` and `404.html`
 
-`yarn install`
+Every page has a unique title and description, a canonical URL, Open Graph and Twitter tags, and JSON-LD (`WebSite`/`WebApplication` on the app; `BreadcrumbList`, `WebPage`/`CollectionPage` and `Dataset` on the generated pages). Absolute URLs come from `VITE_SITE_URL` (`.env`, or the `SITE_URL` repo variable in CI). Icons and the social card are rendered from SVG by `npm run make-images`.
 
-#### Compile and watch jsx
+GitHub Pages serves this project under `/plutoplus/`, so `robots.txt` isn't at the domain root and crawlers won't read it there. Submit `sitemap.xml` in Google Search Console and Bing Webmaster Tools instead (or move to a custom domain).
 
-`yarn dev`
+The app and page templates check clean with axe-core (WCAG 2.1 A/AA + best practices). Everything can be used by keyboard, including choosing a neighborhood (there's a list as well as the map) and the address search (an ARIA combobox).
 
-#### Load web server
+## Local development
 
-You need to run a local webserver to try out the app in development.  I've been using a plugin called `atom-live-server` for atom, but you can also use `python.http` or any other local server.
+Requires Node 22+, plus [DuckDB CLI](https://duckdb.org/docs/installation/) (≥ 1.4), [tippecanoe](https://github.com/felt/tippecanoe) and the [pmtiles CLI](https://github.com/protomaps/go-pmtiles) to build the data. Set `SKIP_BASEMAP=1` to reuse an existing basemap extract.
 
+```sh
+npm install
+npm run build-data          # latest MapPLUTO → public/data (or: scripts/build-data.sh 26v2)
+npm run dev
+```
 
-## Contact Me
-If you like this project, or if you hate it, let me know by tweeting to @chris_whong. Pull requests are welcomed! This project was built with the [Carto web mapping platform](https://carto.com/). [Write-up at chriswhong.com](http://chriswhong.com/open-data/building-a-custom-downloader-for-nycs-pluto-data/) Support open Data!
+During development the data is served from `public/data` (gitignored). The Vite dev server supports HTTP range requests, which both DuckDB and PMTiles rely on.
+
+## Configuration
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_DATA_BASE_URL` | Base URL of the data files. Defaults to `./data`. |
+
+### Hosting the data (Cloudflare R2)
+
+1. Create an R2 bucket and enable public access, either through an `r2.dev` URL or a custom domain.
+2. Add a CORS policy so the site can make range requests:
+   ```json
+   [{ "AllowedOrigins": ["https://chriswhong.github.io", "http://localhost:5173"],
+      "AllowedMethods": ["GET", "HEAD"],
+      "AllowedHeaders": ["Range", "If-Match", "If-None-Match"],
+      "ExposeHeaders": ["Content-Length", "Content-Range", "ETag", "Accept-Ranges"],
+      "MaxAgeSeconds": 86400 }]
+   ```
+3. In the GitHub repo settings, add these:
+   - Variables: `DATA_BASE_URL` (the bucket's public URL) and `R2_BUCKET`.
+   - Secrets: `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`.
+4. Run the **Build data** workflow once. After that it runs monthly and does nothing unless DCP has published a new version.
+
+The data is about 230 MB per version, plus a ~110 MB basemap. That fits within R2's free tier, and R2 doesn't charge for egress.
+
+### Deploying the site
+
+The **Deploy site** workflow builds with `VITE_DATA_BASE_URL` and publishes `dist/` to GitHub Pages. In repo settings, set **Pages → Source** to "GitHub Actions".
+
+## Project layout
+
+- `src/App.tsx`: app shell and state (area, columns, count, downloads)
+- `src/components/MapView.tsx`: MapLibre map (Protomaps basemap), PMTiles lots + address tooltip, NTA picker, terra-draw drawing
+- `src/components/Sidebar.tsx`: area and column selection (Radix UI + Font Awesome)
+- `src/components/DownloadPanel.tsx`: floating selection summary with download buttons and size estimates
+- `src/components/ColumnPicker.tsx`: column list with "By topic" and "A–Z" views
+- `src/components/GeoSearch.tsx` / `src/lib/geosearch.ts`: address and place search ([NYC GeoSearch](https://geosearch.planninglabs.nyc/))
+- `scripts/build-pages.ts`: static borough/neighborhood pages, sitemap, robots.txt, llms.txt
+- `src/lib/urlState.ts`: reads and writes the shareable URL state
+- `src/lib/fieldGroups.ts`: column themes for the topic view (unlisted columns fall into "Other")
+- `src/lib/duckdb.ts`: DuckDB-WASM setup
+- `src/lib/extract.ts`: SQL builder, lot counting, download-size estimates, CSV/GeoJSON export
+- `src/lib/shapefile.ts`: small polygon Shapefile writer (zipped .shp/.shx/.dbf/.prj/.cpg)
+- `scripts/build-data.sh`: data pipeline
+- `scripts/field-descriptions.json`: column descriptions (add new columns here when DCP adds them)
