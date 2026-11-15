@@ -1,0 +1,81 @@
+name: Build data
+
+# Rebuilds the static data files from the latest MapPLUTO release and uploads them to
+# Cloudflare R2. Runs monthly, and on demand (optionally for a specific version).
+#
+# Repo configuration:
+#   vars.DATA_BASE_URL          public URL of the bucket, e.g. https://pluto-data.example.com
+#   secrets.R2_ACCOUNT_ID
+#   secrets.R2_ACCESS_KEY_ID
+#   secrets.R2_SECRET_ACCESS_KEY
+#   vars.R2_BUCKET
+
+on:
+  schedule:
+    - cron: '0 12 3 * *'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'MapPLUTO version (e.g. 26v2). Blank = latest.'
+        required: false
+      force:
+        description: 'Rebuild even if this version is already published'
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DUCKDB_VERSION: v1.4.1
+      TIPPECANOE_VERSION: 2.79.0
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install DuckDB CLI
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -fsSL -o duckdb.zip "https://github.com/duckdb/duckdb/releases/download/${DUCKDB_VERSION}/duckdb_cli-linux-amd64.zip"
+          unzip -q duckdb.zip -d "$HOME/bin" && echo "$HOME/bin" >> "$GITHUB_PATH"
+
+      - name: Install tippecanoe
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq build-essential libsqlite3-dev zlib1g-dev
+          curl -fsSL "https://github.com/felt/tippecanoe/archive/refs/tags/${TIPPECANOE_VERSION}.tar.gz" | tar xz
+          make -C "tippecanoe-${TIPPECANOE_VERSION}" -j"$(nproc)" && sudo make -C "tippecanoe-${TIPPECANOE_VERSION}" install
+
+      - name: Install pmtiles CLI
+        run: |
+          curl -fsSL "https://github.com/protomaps/go-pmtiles/releases/download/v1.28.0/go-pmtiles_1.28.0_Linux_x86_64.tar.gz" | tar xz -C "$HOME/bin" pmtiles
+
+      - name: Fetch currently published manifest
+        if: ${{ !inputs.force }}
+        run: |
+          mkdir -p out
+          curl -fsSL "${{ vars.DATA_BASE_URL }}/latest.json" -o out/latest.json || rm -f out/latest.json
+
+      - name: Build
+        run: SKIP_IF_CURRENT=${{ inputs.force && '0' || '1' }} scripts/build-data.sh "${{ inputs.version }}" out
+
+      - name: Upload to R2
+        if: ${{ hashFiles('out/*/mappluto.parquet') != '' }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          # Newer AWS CLI versions send CRC checksum headers by default that R2 can reject.
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+        run: |
+          ENDPOINT="https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          # Versioned files first, then the small pointer files the app reads.
+          aws s3 sync out "s3://${{ vars.R2_BUCKET }}" --endpoint-url "$ENDPOINT" \
+            --exclude "latest.json" --exclude "nta.geojson" --exclude "basemap.pmtiles" \
+            --cache-control "public, max-age=31536000, immutable"
+          aws s3 cp out/basemap.pmtiles "s3://${{ vars.R2_BUCKET }}/basemap.pmtiles" --endpoint-url "$ENDPOINT" \
+            --cache-control "public, max-age=86400"
+          for f in nta.geojson latest.json; do
+            aws s3 cp "out/$f" "s3://${{ vars.R2_BUCKET }}/$f" --endpoint-url "$ENDPOINT" \
+              --content-type application/json --cache-control "public, max-age=300"
+          done

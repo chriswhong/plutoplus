@@ -1,2 +1,7 @@
 *.DS_Store
 node_modules/
+dist/
+.data-build/
+public/data/
+.env.local
+*.tsbuildinfo

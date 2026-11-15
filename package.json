@@ -1,34 +1,49 @@
 {
   "name": "plutoplus",
-  "version": "1.0.0",
-  "description": "A custom download tool for NYC PLUTO tax lot data, built with CartoDB.  View it live at [http://chriswhong.github.io/plutoplus](http://chriswhong.github.io/plutoplus)",
-  "scripts": {
-    "dev": "npx babel --watch src --out-dir js",
-    "lint": "node node_modules/eslint/bin/eslint **/*.jsx"
-  },
+  "private": true,
+  "version": "2.0.0",
+  "description": "A clip & ship download tool for NYC MapPLUTO tax lot data. No database: static GeoParquet + DuckDB-WASM.",
+  "type": "module",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chriswhong/plutoplus.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/chriswhong/plutoplus/issues"
-  },
-  "homepage": "https://github.com/chriswhong/plutoplus#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "eslint": "^6.5.1",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-config-standard-react": "^9.2.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-standard": "^4.0.1"
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build && npm run build-pages",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "build-data": "scripts/build-data.sh",
+    "build-pages": "node --experimental-strip-types --no-warnings scripts/build-pages.ts dist",
+    "make-images": "node scripts/make-images.mjs"
   },
   "dependencies": {
-    "@babel/plugin-transform-react-jsx": "^7.8.3"
+    "@duckdb/duckdb-wasm": "1.33.1-dev57.0",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-brands-svg-icons": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
+    "@protomaps/basemaps": "^5.7.2",
+    "fflate": "^0.8.3",
+    "maplibre-gl": "^6.18.0",
+    "pmtiles": "^4.5.0",
+    "radix-ui": "^1.8.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "terra-draw": "^1.39.0",
+    "terra-draw-maplibre-gl-adapter": "^1.5.0"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "axe-core": "^4.14.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
   }
 }

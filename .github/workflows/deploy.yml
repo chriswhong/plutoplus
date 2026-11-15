@@ -1,0 +1,45 @@
+name: Deploy site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+  # Rebuild the static pages after new data is published (they embed the version and stats).
+  workflow_run:
+    workflows: [Build data]
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          VITE_DATA_BASE_URL: ${{ vars.DATA_BASE_URL }}
+          # Absolute public URL (with trailing slash) for canonical links, Open Graph and the sitemap.
+          # Falls back to the value in .env when the repo variable isn't set.
+          VITE_SITE_URL: ${{ vars.SITE_URL || 'https://chriswhong.github.io/plutoplus/' }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
