@@ -35,6 +35,7 @@ jobs:
 
       - name: Install DuckDB CLI
         run: |
+          mkdir -p "$HOME/bin"
           curl -fsSL -o duckdb.zip "https://github.com/duckdb/duckdb/releases/download/${DUCKDB_VERSION}/duckdb_cli-linux-amd64.zip"
           unzip -q duckdb.zip -d "$HOME/bin" && echo "$HOME/bin" >> "$GITHUB_PATH"
 
@@ -63,6 +64,9 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: auto
+          # Newer AWS CLI versions send CRC checksum headers by default that R2 can reject.
+          AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+          AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
         run: |
           ENDPOINT="https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
           # Versioned files first, then the small pointer files the app reads.

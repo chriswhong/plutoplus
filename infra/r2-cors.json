@@ -1,0 +1,17 @@
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": [
+          "https://chriswhong.github.io",
+          "http://localhost:5173",
+          "http://localhost:4173"
+        ],
+        "methods": ["GET", "HEAD"],
+        "headers": ["Range", "If-Match", "If-None-Match", "If-Modified-Since"]
+      },
+      "exposeHeaders": ["Content-Length", "Content-Range", "Content-Type", "ETag", "Accept-Ranges"],
+      "maxAgeSeconds": 86400
+    }
+  ]
+}
