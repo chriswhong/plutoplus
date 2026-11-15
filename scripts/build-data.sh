@@ -66,10 +66,13 @@ GDB="$(find "$WORK_DIR/src" -maxdepth 2 -type d -name '*.gdb' | head -1)"
 echo "Source: $GDB"
 
 # 2. GeoParquet ---------------------------------------------------------------
-# Lowercase every attribute, drop Esri housekeeping columns, cast BBLs to integers.
+# Lowercase every attribute, drop Esri housekeeping columns, cast BBLs to integers, and
+# round lat/lng to 6 decimal places (~11 cm), the same precision as the geometry.
+PRECISION=6
 COLS=$("$DUCKDB" -list -noheader -c "LOAD spatial;
   SELECT string_agg(
     CASE WHEN column_name IN ('BBL','APPBBL') THEN format('CAST({} AS BIGINT) AS {}', column_name, lower(column_name))
+         WHEN column_name IN ('Latitude','Longitude') THEN format('round(\"{}\", $PRECISION) AS {}', column_name, lower(column_name))
          ELSE format('\"{}\" AS {}', column_name, lower(column_name)) END, ', ')
   FROM (DESCRIBE SELECT * FROM ST_Read('$GDB'))
   WHERE column_type <> 'GEOMETRY' AND column_name NOT IN ('Shape_Leng','Shape_Length','Shape_Area');")
@@ -85,6 +88,12 @@ SELECT $COLS,
 FROM ST_Read('$GDB');
 
 UPDATE raw SET geom = ST_MakeValid(geom) WHERE NOT ST_IsValid(geom);
+
+-- Snap coordinates to a 1e-6 degree grid (6 decimal places, ~11 cm). The precision reducer
+-- keeps polygons valid; a lot so small it would collapse to empty keeps its original shape.
+UPDATE raw SET geom = CASE WHEN ST_IsEmpty(ST_ReducePrecision(geom, 1e-$PRECISION)) THEN geom
+                           ELSE ST_ReducePrecision(geom, 1e-$PRECISION) END;
+SELECT count(*) FILTER (WHERE ST_IsEmpty(ST_ReducePrecision(geom, 1e-$PRECISION))) AS kept_full_precision FROM raw;
 
 CREATE TABLE lots AS
 SELECT *,

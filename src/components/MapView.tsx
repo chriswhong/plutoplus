@@ -13,6 +13,7 @@ import { icon as faIcon } from '@fortawesome/fontawesome-svg-core'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { dataUrl, type Manifest } from '../lib/data'
 import type { GeoSearchResult } from '../lib/geosearch'
+import type { AreaKind } from '../lib/filename'
 import { GeoSearch } from './GeoSearch'
 import type { ClipGeometry } from '../lib/extract'
 
@@ -22,8 +23,19 @@ export type DrawShape = 'polygon' | 'rectangle'
 export interface Clip {
   geometry: ClipGeometry
   label: string
+  kind: AreaKind
   /** set when the clip is a neighborhood */
   ntaId?: string
+  ntaName?: string
+}
+
+/** A restored URL shape counts as a rectangle if it's an axis-aligned 4-corner box. */
+function shapeKind(p: Polygon): 'polygon' | 'rectangle' {
+  const ring = p.coordinates[0]
+  if (p.coordinates.length !== 1 || ring.length !== 5) return 'polygon'
+  const xs = new Set(ring.map((c) => c[0]))
+  const ys = new Set(ring.map((c) => c[1]))
+  return xs.size === 2 && ys.size === 2 ? 'rectangle' : 'polygon'
 }
 
 export interface MapViewState {
@@ -209,7 +221,8 @@ export function MapView({
         if (feature?.geometry.type === 'Polygon') {
           // A shape restored from the URL lives in the clip layer; a new drawing replaces it.
           ;(map.getSource('clip') as maplibregl.GeoJSONSource).setData(empty)
-          onClipRef.current({ geometry: feature.geometry, label: 'Drawn shape' })
+          const kind = feature.properties?.mode === 'rectangle' ? 'rectangle' : 'polygon'
+          onClipRef.current({ geometry: feature.geometry, label: kind === 'rectangle' ? 'Drawn rectangle' : 'Drawn polygon', kind })
         }
       })
       drawRef.current = draw
@@ -224,7 +237,7 @@ export function MapView({
     map.on('load', reportView)
     map.on('moveend', () => {
       reportView()
-      if (modeRef.current === 'view') onClipRef.current({ geometry: boundsPolygon(map), label: 'Current map view' })
+      if (modeRef.current === 'view') onClipRef.current({ geometry: boundsPolygon(map), label: 'Current map view', kind: 'view' })
     })
 
     // Lot hover: address tooltip for wayfinding (not shown while picking neighborhoods/drawing).
@@ -294,7 +307,7 @@ export function MapView({
       const geom = full?.geometry
       if (!geom || (geom.type !== 'Polygon' && geom.type !== 'MultiPolygon') || modeRef.current !== 'nta') return
       ;(map.getSource('clip') as maplibregl.GeoJSONSource).setData(full)
-      onClipRef.current({ geometry: geom, label: `${full.properties?.name} (${id})`, ntaId: id })
+      onClipRef.current({ geometry: geom, label: `${full.properties?.name} (${id})`, kind: 'nta', ntaId: id, ntaName: full.properties?.name })
       if (fit) {
         const b = new maplibregl.LngLatBounds()
         const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates
@@ -325,13 +338,14 @@ export function MapView({
       draw.setMode(drawShape)
       if (restore.shape) {
         ;(map.getSource('clip') as maplibregl.GeoJSONSource).setData({ type: 'Feature', properties: {}, geometry: restore.shape })
-        onClipRef.current({ geometry: restore.shape, label: 'Drawn shape' })
+        const kind = shapeKind(restore.shape)
+        onClipRef.current({ geometry: restore.shape, label: kind === 'rectangle' ? 'Drawn rectangle' : 'Drawn polygon', kind })
       } else {
         onClipRef.current(null)
       }
     } else {
       draw.setMode('static')
-      onClipRef.current(mode === 'view' ? { geometry: boundsPolygon(map), label: 'Current map view' } : null)
+      onClipRef.current(mode === 'view' ? { geometry: boundsPolygon(map), label: 'Current map view', kind: 'view' } : null)
       if (mode === 'nta' && restore.nta) selectNta(map, restore.nta, true)
     }
   }, [mode, ready]) // eslint-disable-line react-hooks/exhaustive-deps
