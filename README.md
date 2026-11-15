@@ -28,13 +28,22 @@ Static site (Vite + React, GitHub Pages)
          AND ST_Intersects(geom, ST_GeomFromGeoJSON('<your area>'))
 ```
 
-The file is sorted along a Hilbert curve, so nearby lots sit together, and each row group's
+Coordinates are stored, queried and exported at 6 decimal places (about 11 cm). The file is sorted along a Hilbert curve, so nearby lots sit together, and each row group's
 bbox min/max stats let DuckDB skip everything outside your area. Parquet is columnar, so only
 the columns you pick are fetched. A neighborhood extract reads a few MB of a ~110 MB file and
 takes well under a second. The exact SQL is logged to the browser console and can also be shown
 in the sidebar.
 
 Areas with more than 150,000 lots (roughly a whole borough) are blocked in the UI; for those, download the full dataset from DCP.
+
+## Download file names
+
+Exports are named `pluto-<version>_<area>_<YYYYMMDD-HHMMSS>.<ext>` using local time, for example:
+
+- `pluto-26v2_mapview_20261114-174233.csv`
+- `pluto-26v2_polygon_20261114-174233.geojson`
+- `pluto-26v2_rectangle_20261114-174233_shp.zip`
+- `pluto-26v2_nta-bk0101-greenpoint_20261114-174233.geojson`
 
 ## Shareable links
 
@@ -116,6 +125,7 @@ The **Deploy site** workflow builds with `VITE_DATA_BASE_URL` and publishes `dis
 - `src/components/ColumnPicker.tsx`: column list with "By topic" and "A–Z" views
 - `src/components/GeoSearch.tsx` / `src/lib/geosearch.ts`: address and place search ([NYC GeoSearch](https://geosearch.planninglabs.nyc/))
 - `scripts/build-pages.ts`: static borough/neighborhood pages, sitemap, robots.txt, llms.txt
+- `src/lib/precision.ts` / `src/lib/filename.ts`: 6-decimal coordinate rounding and export naming
 - `src/lib/urlState.ts`: reads and writes the shareable URL state
 - `src/lib/fieldGroups.ts`: column themes for the topic view (unlisted columns fall into "Other")
 - `src/lib/duckdb.ts`: DuckDB-WASM setup

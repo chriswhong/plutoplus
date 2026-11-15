@@ -8,6 +8,7 @@ import { countLots, extract, FULL_DOWNLOAD_URL, saveBlob, type Format } from './
 import { MapView, type Clip, type DrawShape, type MapViewState, type Mode } from './components/MapView'
 import { readUrlState, writeUrlState } from './lib/urlState'
 import type { GeoSearchResult } from './lib/geosearch'
+import { exportBasename } from './lib/filename'
 import { Sidebar, type NtaOption } from './components/Sidebar'
 import { DownloadPanel, type CountState } from './components/DownloadPanel'
 
@@ -106,7 +107,7 @@ export default function App() {
       const columns = fields.map((f) => f.name).filter((n) => selected.has(n))
       const result = await extract({
         parquetUrl: dataUrl(manifest.parquet),
-        version: manifest.version,
+        basename: exportBasename(manifest.version, clip),
         clip: clip.geometry,
         columns,
         fields,

@@ -7,6 +7,7 @@
 //   shape  drawn polygon, "lng,lat;lng,lat;…" (ring closes automatically)
 //   cols   comma-separated column names, "all", or empty for none (omitted = default set)
 import type { Polygon } from 'geojson'
+import { COORD_DECIMALS } from './precision'
 
 export type AreaMode = 'view' | 'nta' | 'draw'
 
@@ -81,7 +82,7 @@ export function writeUrlState(state: {
   if (state.area === 'nta' && state.nta) parts.push(`nta=${encodeURIComponent(state.nta)}`)
   if (state.area === 'draw' && state.shape) {
     const ring = state.shape.coordinates[0].slice(0, -1) // drop the closing point
-    parts.push(`shape=${ring.map(([x, y]) => `${x.toFixed(6)},${y.toFixed(6)}`).join(';')}`)
+    parts.push(`shape=${ring.map(([x, y]) => `${+x.toFixed(COORD_DECIMALS)},${+y.toFixed(COORD_DECIMALS)}`).join(';')}`)
   }
   if (state.cols !== undefined) {
     parts.push(`cols=${state.cols === 'all' ? 'all' : state.cols.map(encodeURIComponent).join(',')}`)

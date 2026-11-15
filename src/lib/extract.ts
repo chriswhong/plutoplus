@@ -1,7 +1,8 @@
-import type { Feature, FeatureCollection, MultiPolygon, Polygon, Position } from 'geojson'
+import type { Feature, FeatureCollection, MultiPolygon, Polygon } from 'geojson'
 import type { Field } from './data'
 import { getDb } from './duckdb'
 import { toShapefileZip } from './shapefile'
+import { roundCoord, roundGeometry } from './precision'
 
 export type ClipGeometry = Polygon | MultiPolygon
 export type Format = 'geojson' | 'csv' | 'shp'
@@ -12,7 +13,6 @@ export const MAX_LOTS = 150_000
 export const FULL_DOWNLOAD_URL =
   'https://www.nyc.gov/content/planning/pages/resources/datasets/mappluto-pluto-change'
 
-const round = (n: number) => Math.round(n * 1e7) / 1e7
 
 function bboxOf(geom: ClipGeometry): [number, number, number, number] {
   const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates
@@ -24,12 +24,6 @@ function bboxOf(geom: ClipGeometry): [number, number, number, number] {
   return [minx, miny, maxx, maxy]
 }
 
-function roundGeom(geom: ClipGeometry): ClipGeometry {
-  const r = (ring: Position[]) => ring.map(([x, y]) => [round(x), round(y)])
-  return geom.type === 'Polygon'
-    ? { type: 'Polygon', coordinates: geom.coordinates.map(r) }
-    : { type: 'MultiPolygon', coordinates: geom.coordinates.map((p) => p.map(r)) }
-}
 
 /**
  * The bbox predicates let DuckDB skip whole Parquet row groups using their min/max stats
@@ -37,12 +31,12 @@ function roundGeom(geom: ClipGeometry): ClipGeometry {
  * ST_Intersects then does the exact test, just like the old PostGIS query.
  */
 function bboxWhere(clip: ClipGeometry) {
-  const [minx, miny, maxx, maxy] = bboxOf(clip).map(round)
+  const [minx, miny, maxx, maxy] = bboxOf(clip).map(roundCoord)
   return `bbox.xmin <= ${maxx} AND bbox.xmax >= ${minx} AND bbox.ymin <= ${maxy} AND bbox.ymax >= ${miny}`
 }
 
 function where(clip: ClipGeometry) {
-  const json = JSON.stringify(roundGeom(clip)).replace(/'/g, "''")
+  const json = JSON.stringify(roundGeometry(clip)).replace(/'/g, "''")
   return `${bboxWhere(clip)}\n  AND ST_Intersects(geom, ST_GeomFromGeoJSON('${json}'))`
 }
 
@@ -88,7 +82,8 @@ export function estimateBytes(format: Format, count: number, points: number, col
   if (format === 'geojson') {
     // "key": + value (+ quotes for strings) + comma, plus the Feature wrapper (~47 bytes)
     const props = columns.reduce((a, f) => a + f.name.length + 4 + (f.avgLength ?? 4) + (isString(f) ? 2 : 0), 0)
-    return 40 + count * (47 + props) + points * 46
+    // ~30 bytes per vertex at 6 decimal places, e.g. "[-73.947179,40.72816],"
+    return 40 + count * (47 + props) + points * 30
   }
   // Shapefile (zipped): .shp is 56 bytes/lot + 16 bytes/vertex and deflates to ~31%,
   // .shx is 8 bytes/lot (~39%), the space-padded .dbf deflates to roughly a third of its text.
@@ -123,17 +118,18 @@ function toPlain(v: unknown): string | number | null {
 
 export async function extract(opts: {
   parquetUrl: string
-  version: string
+  /** file name without extension, see lib/filename.ts */
+  basename: string
   clip: ClipGeometry
   columns: string[]
   fields: Field[]
   format: Format
   onStatus?: (status: string) => void
 }): Promise<ExtractResult> {
-  const { parquetUrl, version, clip, columns, fields, format, onStatus } = opts
+  const { parquetUrl, basename, clip, columns, fields, format, onStatus } = opts
   onStatus?.('Starting query engine…')
   const { db, conn } = await getDb(parquetUrl)
-  const base = `pluto_${version}`
+  const base = basename
   const cols = columns.map(quote)
 
   if (format === 'csv') {
@@ -166,7 +162,8 @@ export async function extract(opts: {
     const properties: Props = {}
     columns.forEach((c, j) => { properties[c] = toPlain(vectors[j]?.get(i)) })
     const g = geomVec?.get(i) as string | null
-    features[i] = { type: 'Feature', properties, geometry: g ? JSON.parse(g) : null }
+    // Coordinates are stored at 6 decimals; rounding here guarantees it for exports.
+    features[i] = { type: 'Feature', properties, geometry: g ? roundGeometry(JSON.parse(g)) : null }
   }
 
   if (format === 'geojson') {
